@@ -20,7 +20,11 @@ export async function gatewayText(model: string, prompt: string, systemPrompt?: 
   return { text };
 }
 
+// Image models return choices[0].message.images[].image_url.url (data URL or https URL).
 function extractImage(j: unknown): string | null {
+  const typed = j as { choices?: Array<{ message?: { images?: Array<{ image_url?: { url?: string } }>; content?: string | null } }> };
+  const url = typed.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+  if (url) return url;
   const s = JSON.stringify(j);
   const m = s.match(/"b64_json"\s*:\s*"([^"]+)"/) ?? s.match(/"image_url"\s*:\s*"(https:[^"]+)"/) ?? s.match(/"(https:\/\/[^"]*\.(?:png|jpe?g|webp)[^"]*)"/i);
   if (!m) return null;
