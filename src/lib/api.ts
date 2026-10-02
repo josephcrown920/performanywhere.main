@@ -1,4 +1,4 @@
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
+const BASE = "" + "/api";
 async function post<T>(path: string, body: unknown): Promise<T> { const res = await fetch(`${BASE}${path}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
 async function get<T>(path: string): Promise<T> { const res = await fetch(`${BASE}${path}`); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
 export type Modality = "text" | "image" | "video" | "audio";

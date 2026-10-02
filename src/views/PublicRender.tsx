@@ -46,7 +46,7 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
         </div>
 
         <a
-          href={import.meta.env.BASE_URL}
+          href={"/"}
           className="rounded-xl px-4 py-1.5 text-xs font-semibold text-white transition hover:opacity-80"
           style={{ background: "oklch(0.65 0.30 330)" }}
         >
@@ -133,7 +133,7 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
                 <p className="text-xs text-white/40 mt-0.5">Upload a reference, write direction, render in minutes.</p>
               </div>
               <a
-                href={import.meta.env.BASE_URL}
+                href={"/"}
                 className="shrink-0 rounded-xl px-5 py-2.5 text-sm font-bold text-white transition hover:opacity-90 whitespace-nowrap"
                 style={{ background: "oklch(0.65 0.30 330)" }}
               >
@@ -166,7 +166,7 @@ function NotFound() {
         This link may have expired, or the render isn't ready yet. Check back after the render completes.
       </p>
       <a
-        href={import.meta.env.BASE_URL}
+        href={"/"}
         className="inline-block mt-2 rounded-xl px-5 py-2.5 text-sm font-bold text-white"
         style={{ background: "oklch(0.65 0.30 330)" }}
       >

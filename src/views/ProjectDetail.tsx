@@ -357,7 +357,7 @@ export default function ProjectDetail({ id }: { id: string }) {
                   <button
                     type="button"
                     onClick={() => {
-                      const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+                      const base = "";
                       const shareUrl = `${window.location.origin}${base}/r/${clientId}/${project.id}`;
                       navigator.clipboard.writeText(shareUrl)
                         .then(() => toast.success("Share link copied!", { description: "Anyone with this link can watch the render." }))
