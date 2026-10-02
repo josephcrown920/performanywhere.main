@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790967004508,
+      "tag": "0000_perform_anywhere_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790967018341,
+      "tag": "0001_storage_bucket_policies",
+      "breakpoints": true
+    }
+  ]
+}
