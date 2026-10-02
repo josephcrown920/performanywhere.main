@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const AccountRoute = AccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotionTestRoute = MotionTestRouteImport.update({
+  id: '/motion-test',
+  path: '/motion-test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrchestrateRoute = OrchestrateRouteImport.update({
@@ -56,6 +62,7 @@ const RClientIdProjectIdRoute = RClientIdProjectIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/account'
+    | '/motion-test'
     | '/orchestrate'
     | '/studio'
     | '/projects/$id'
@@ -95,6 +105,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/account'
+    | '/motion-test'
     | '/orchestrate'
     | '/studio'
     | '/projects/$id'
@@ -104,6 +115,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/account'
+    | '/motion-test'
     | '/orchestrate'
     | '/studio'
     | '/projects/$id'
@@ -114,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
+  MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
   StudioRoute: typeof StudioRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/motion-test': {
+      id: '/motion-test'
+      path: '/motion-test'
+      fullPath: '/motion-test'
+      preLoaderRoute: typeof MotionTestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/orchestrate': {
@@ -178,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
+  MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,
   StudioRoute: StudioRoute,
   ProjectsIdRoute: ProjectsIdRoute,
