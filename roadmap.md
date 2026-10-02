@@ -2,7 +2,7 @@
 
 - [x] Port all screens (Landing, Library, Project, Share, Studio, Orchestrate, Settings) to this project
 - [ ] Phone-size preview + Play Store listing screenshots
-- [ ] Motion test page (animation smoothness checks)
+- [x] Motion test page (animation smoothness checks)
 - [ ] Enable Lovable Cloud: projects/assets tables, file storage (replaces old database)
 - [ ] Port API server (render, orchestrate, prompt, workflows) to server functions
 - [ ] AI motion transfer: provider keys (Kling / Runway / Fal / ModelArk) — needs user keys
