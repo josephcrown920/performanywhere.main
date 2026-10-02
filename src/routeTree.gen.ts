@@ -16,7 +16,23 @@ import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
+import { Route as ApiOrchestrateListRouteImport } from './routes/api/orchestrate/list'
+import { Route as ApiOrchestratePaystackRouteImport } from './routes/api/orchestrate/paystack'
+import { Route as ApiOrchestrateRunRouteImport } from './routes/api/orchestrate/run'
+import { Route as ApiOrchestrateWalletRouteImport } from './routes/api/orchestrate/wallet'
+import { Route as ApiPromptEnhanceRouteImport } from './routes/api/prompt/enhance'
+import { Route as ApiPublicPaystackWebhookRouteImport } from './routes/api/public/paystack-webhook'
+import { Route as ApiRenderPollRouteImport } from './routes/api/render/poll'
+import { Route as ApiRenderProvidersRouteImport } from './routes/api/render/providers'
+import { Route as ApiRenderRetryRouteImport } from './routes/api/render/retry'
+import { Route as ApiRenderStartRouteImport } from './routes/api/render/start'
+import { Route as ApiWorkflowsIndexRouteImport } from './routes/api/workflows/index'
+import { Route as ApiWorkflowsPlanRouteImport } from './routes/api/workflows/plan'
 import { Route as RClientIdProjectIdRouteImport } from './routes/r.$clientId.$projectId'
+import { Route as ApiRenderSignedUrlAssetRouteImport } from './routes/api/render/signed-url.asset'
+import { Route as ApiRenderSignedUrlRenderRouteImport } from './routes/api/render/signed-url.render'
+import { Route as ApiWorkflowsGpusRaceRouteImport } from './routes/api/workflows/gpus.race'
+import { Route as ApiRenderPublicClientIdProjectIdRouteImport } from './routes/api/render/public.$clientId.$projectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,11 +69,94 @@ const ProjectsIdRoute = ProjectsIdRouteImport.update({
   path: '/projects/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiOrchestrateListRoute = ApiOrchestrateListRouteImport.update({
+  id: '/api/orchestrate/list',
+  path: '/api/orchestrate/list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrchestratePaystackRoute = ApiOrchestratePaystackRouteImport.update({
+  id: '/api/orchestrate/paystack',
+  path: '/api/orchestrate/paystack',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrchestrateRunRoute = ApiOrchestrateRunRouteImport.update({
+  id: '/api/orchestrate/run',
+  path: '/api/orchestrate/run',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiOrchestrateWalletRoute = ApiOrchestrateWalletRouteImport.update({
+  id: '/api/orchestrate/wallet',
+  path: '/api/orchestrate/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPromptEnhanceRoute = ApiPromptEnhanceRouteImport.update({
+  id: '/api/prompt/enhance',
+  path: '/api/prompt/enhance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicPaystackWebhookRoute =
+  ApiPublicPaystackWebhookRouteImport.update({
+    id: '/api/public/paystack-webhook',
+    path: '/api/public/paystack-webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiRenderPollRoute = ApiRenderPollRouteImport.update({
+  id: '/api/render/poll',
+  path: '/api/render/poll',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRenderProvidersRoute = ApiRenderProvidersRouteImport.update({
+  id: '/api/render/providers',
+  path: '/api/render/providers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRenderRetryRoute = ApiRenderRetryRouteImport.update({
+  id: '/api/render/retry',
+  path: '/api/render/retry',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRenderStartRoute = ApiRenderStartRouteImport.update({
+  id: '/api/render/start',
+  path: '/api/render/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiWorkflowsIndexRoute = ApiWorkflowsIndexRouteImport.update({
+  id: '/api/workflows/',
+  path: '/api/workflows/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiWorkflowsPlanRoute = ApiWorkflowsPlanRouteImport.update({
+  id: '/api/workflows/plan',
+  path: '/api/workflows/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RClientIdProjectIdRoute = RClientIdProjectIdRouteImport.update({
   id: '/r/$clientId/$projectId',
   path: '/r/$clientId/$projectId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiRenderSignedUrlAssetRoute = ApiRenderSignedUrlAssetRouteImport.update({
+  id: '/api/render/signed-url/asset',
+  path: '/api/render/signed-url/asset',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRenderSignedUrlRenderRoute =
+  ApiRenderSignedUrlRenderRouteImport.update({
+    id: '/api/render/signed-url/render',
+    path: '/api/render/signed-url/render',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiWorkflowsGpusRaceRoute = ApiWorkflowsGpusRaceRouteImport.update({
+  id: '/api/workflows/gpus/race',
+  path: '/api/workflows/gpus/race',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRenderPublicClientIdProjectIdRoute =
+  ApiRenderPublicClientIdProjectIdRouteImport.update({
+    id: '/api/render/public/$clientId/$projectId',
+    path: '/api/render/public/$clientId/$projectId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -67,7 +166,23 @@ export interface FileRoutesByFullPath {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/orchestrate/list': typeof ApiOrchestrateListRoute
+  '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
+  '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
+  '/api/orchestrate/wallet': typeof ApiOrchestrateWalletRoute
+  '/api/prompt/enhance': typeof ApiPromptEnhanceRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
+  '/api/render/poll': typeof ApiRenderPollRoute
+  '/api/render/providers': typeof ApiRenderProvidersRoute
+  '/api/render/retry': typeof ApiRenderRetryRoute
+  '/api/render/start': typeof ApiRenderStartRoute
+  '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
+  '/api/workflows/': typeof ApiWorkflowsIndexRoute
+  '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
+  '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
+  '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -77,7 +192,23 @@ export interface FileRoutesByTo {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects': typeof ProjectsIndexRoute
+  '/api/orchestrate/list': typeof ApiOrchestrateListRoute
+  '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
+  '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
+  '/api/orchestrate/wallet': typeof ApiOrchestrateWalletRoute
+  '/api/prompt/enhance': typeof ApiPromptEnhanceRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
+  '/api/render/poll': typeof ApiRenderPollRoute
+  '/api/render/providers': typeof ApiRenderProvidersRoute
+  '/api/render/retry': typeof ApiRenderRetryRoute
+  '/api/render/start': typeof ApiRenderStartRoute
+  '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
+  '/api/workflows': typeof ApiWorkflowsIndexRoute
+  '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
+  '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
+  '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -88,7 +219,23 @@ export interface FileRoutesById {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/orchestrate/list': typeof ApiOrchestrateListRoute
+  '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
+  '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
+  '/api/orchestrate/wallet': typeof ApiOrchestrateWalletRoute
+  '/api/prompt/enhance': typeof ApiPromptEnhanceRoute
+  '/api/public/paystack-webhook': typeof ApiPublicPaystackWebhookRoute
+  '/api/render/poll': typeof ApiRenderPollRoute
+  '/api/render/providers': typeof ApiRenderProvidersRoute
+  '/api/render/retry': typeof ApiRenderRetryRoute
+  '/api/render/start': typeof ApiRenderStartRoute
+  '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
+  '/api/workflows/': typeof ApiWorkflowsIndexRoute
+  '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
+  '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
+  '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,7 +247,23 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects/'
+    | '/api/orchestrate/list'
+    | '/api/orchestrate/paystack'
+    | '/api/orchestrate/run'
+    | '/api/orchestrate/wallet'
+    | '/api/prompt/enhance'
+    | '/api/public/paystack-webhook'
+    | '/api/render/poll'
+    | '/api/render/providers'
+    | '/api/render/retry'
+    | '/api/render/start'
+    | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
+    | '/api/workflows/'
+    | '/api/render/signed-url/asset'
+    | '/api/render/signed-url/render'
+    | '/api/workflows/gpus/race'
+    | '/api/render/public/$clientId/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -110,7 +273,23 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects'
+    | '/api/orchestrate/list'
+    | '/api/orchestrate/paystack'
+    | '/api/orchestrate/run'
+    | '/api/orchestrate/wallet'
+    | '/api/prompt/enhance'
+    | '/api/public/paystack-webhook'
+    | '/api/render/poll'
+    | '/api/render/providers'
+    | '/api/render/retry'
+    | '/api/render/start'
+    | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
+    | '/api/workflows'
+    | '/api/render/signed-url/asset'
+    | '/api/render/signed-url/render'
+    | '/api/workflows/gpus/race'
+    | '/api/render/public/$clientId/$projectId'
   id:
     | '__root__'
     | '/'
@@ -120,7 +299,23 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects/'
+    | '/api/orchestrate/list'
+    | '/api/orchestrate/paystack'
+    | '/api/orchestrate/run'
+    | '/api/orchestrate/wallet'
+    | '/api/prompt/enhance'
+    | '/api/public/paystack-webhook'
+    | '/api/render/poll'
+    | '/api/render/providers'
+    | '/api/render/retry'
+    | '/api/render/start'
+    | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
+    | '/api/workflows/'
+    | '/api/render/signed-url/asset'
+    | '/api/render/signed-url/render'
+    | '/api/workflows/gpus/race'
+    | '/api/render/public/$clientId/$projectId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -131,7 +326,23 @@ export interface RootRouteChildren {
   StudioRoute: typeof StudioRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
+  ApiOrchestrateListRoute: typeof ApiOrchestrateListRoute
+  ApiOrchestratePaystackRoute: typeof ApiOrchestratePaystackRoute
+  ApiOrchestrateRunRoute: typeof ApiOrchestrateRunRoute
+  ApiOrchestrateWalletRoute: typeof ApiOrchestrateWalletRoute
+  ApiPromptEnhanceRoute: typeof ApiPromptEnhanceRoute
+  ApiPublicPaystackWebhookRoute: typeof ApiPublicPaystackWebhookRoute
+  ApiRenderPollRoute: typeof ApiRenderPollRoute
+  ApiRenderProvidersRoute: typeof ApiRenderProvidersRoute
+  ApiRenderRetryRoute: typeof ApiRenderRetryRoute
+  ApiRenderStartRoute: typeof ApiRenderStartRoute
+  ApiWorkflowsPlanRoute: typeof ApiWorkflowsPlanRoute
   RClientIdProjectIdRoute: typeof RClientIdProjectIdRoute
+  ApiWorkflowsIndexRoute: typeof ApiWorkflowsIndexRoute
+  ApiRenderSignedUrlAssetRoute: typeof ApiRenderSignedUrlAssetRoute
+  ApiRenderSignedUrlRenderRoute: typeof ApiRenderSignedUrlRenderRoute
+  ApiWorkflowsGpusRaceRoute: typeof ApiWorkflowsGpusRaceRoute
+  ApiRenderPublicClientIdProjectIdRoute: typeof ApiRenderPublicClientIdProjectIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,11 +396,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/orchestrate/list': {
+      id: '/api/orchestrate/list'
+      path: '/api/orchestrate/list'
+      fullPath: '/api/orchestrate/list'
+      preLoaderRoute: typeof ApiOrchestrateListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/orchestrate/paystack': {
+      id: '/api/orchestrate/paystack'
+      path: '/api/orchestrate/paystack'
+      fullPath: '/api/orchestrate/paystack'
+      preLoaderRoute: typeof ApiOrchestratePaystackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/orchestrate/run': {
+      id: '/api/orchestrate/run'
+      path: '/api/orchestrate/run'
+      fullPath: '/api/orchestrate/run'
+      preLoaderRoute: typeof ApiOrchestrateRunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/orchestrate/wallet': {
+      id: '/api/orchestrate/wallet'
+      path: '/api/orchestrate/wallet'
+      fullPath: '/api/orchestrate/wallet'
+      preLoaderRoute: typeof ApiOrchestrateWalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/prompt/enhance': {
+      id: '/api/prompt/enhance'
+      path: '/api/prompt/enhance'
+      fullPath: '/api/prompt/enhance'
+      preLoaderRoute: typeof ApiPromptEnhanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/paystack-webhook': {
+      id: '/api/public/paystack-webhook'
+      path: '/api/public/paystack-webhook'
+      fullPath: '/api/public/paystack-webhook'
+      preLoaderRoute: typeof ApiPublicPaystackWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/poll': {
+      id: '/api/render/poll'
+      path: '/api/render/poll'
+      fullPath: '/api/render/poll'
+      preLoaderRoute: typeof ApiRenderPollRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/providers': {
+      id: '/api/render/providers'
+      path: '/api/render/providers'
+      fullPath: '/api/render/providers'
+      preLoaderRoute: typeof ApiRenderProvidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/retry': {
+      id: '/api/render/retry'
+      path: '/api/render/retry'
+      fullPath: '/api/render/retry'
+      preLoaderRoute: typeof ApiRenderRetryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/start': {
+      id: '/api/render/start'
+      path: '/api/render/start'
+      fullPath: '/api/render/start'
+      preLoaderRoute: typeof ApiRenderStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/workflows/': {
+      id: '/api/workflows/'
+      path: '/api/workflows'
+      fullPath: '/api/workflows/'
+      preLoaderRoute: typeof ApiWorkflowsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/workflows/plan': {
+      id: '/api/workflows/plan'
+      path: '/api/workflows/plan'
+      fullPath: '/api/workflows/plan'
+      preLoaderRoute: typeof ApiWorkflowsPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/r/$clientId/$projectId': {
       id: '/r/$clientId/$projectId'
       path: '/r/$clientId/$projectId'
       fullPath: '/r/$clientId/$projectId'
       preLoaderRoute: typeof RClientIdProjectIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/signed-url/asset': {
+      id: '/api/render/signed-url/asset'
+      path: '/api/render/signed-url/asset'
+      fullPath: '/api/render/signed-url/asset'
+      preLoaderRoute: typeof ApiRenderSignedUrlAssetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/signed-url/render': {
+      id: '/api/render/signed-url/render'
+      path: '/api/render/signed-url/render'
+      fullPath: '/api/render/signed-url/render'
+      preLoaderRoute: typeof ApiRenderSignedUrlRenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/workflows/gpus/race': {
+      id: '/api/workflows/gpus/race'
+      path: '/api/workflows/gpus/race'
+      fullPath: '/api/workflows/gpus/race'
+      preLoaderRoute: typeof ApiWorkflowsGpusRaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/render/public/$clientId/$projectId': {
+      id: '/api/render/public/$clientId/$projectId'
+      path: '/api/render/public/$clientId/$projectId'
+      fullPath: '/api/render/public/$clientId/$projectId'
+      preLoaderRoute: typeof ApiRenderPublicClientIdProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -203,7 +526,23 @@ const rootRouteChildren: RootRouteChildren = {
   StudioRoute: StudioRoute,
   ProjectsIdRoute: ProjectsIdRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
+  ApiOrchestrateListRoute: ApiOrchestrateListRoute,
+  ApiOrchestratePaystackRoute: ApiOrchestratePaystackRoute,
+  ApiOrchestrateRunRoute: ApiOrchestrateRunRoute,
+  ApiOrchestrateWalletRoute: ApiOrchestrateWalletRoute,
+  ApiPromptEnhanceRoute: ApiPromptEnhanceRoute,
+  ApiPublicPaystackWebhookRoute: ApiPublicPaystackWebhookRoute,
+  ApiRenderPollRoute: ApiRenderPollRoute,
+  ApiRenderProvidersRoute: ApiRenderProvidersRoute,
+  ApiRenderRetryRoute: ApiRenderRetryRoute,
+  ApiRenderStartRoute: ApiRenderStartRoute,
+  ApiWorkflowsPlanRoute: ApiWorkflowsPlanRoute,
   RClientIdProjectIdRoute: RClientIdProjectIdRoute,
+  ApiWorkflowsIndexRoute: ApiWorkflowsIndexRoute,
+  ApiRenderSignedUrlAssetRoute: ApiRenderSignedUrlAssetRoute,
+  ApiRenderSignedUrlRenderRoute: ApiRenderSignedUrlRenderRoute,
+  ApiWorkflowsGpusRaceRoute: ApiWorkflowsGpusRaceRoute,
+  ApiRenderPublicClientIdProjectIdRoute: ApiRenderPublicClientIdProjectIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
