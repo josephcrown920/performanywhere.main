@@ -75,11 +75,8 @@ export async function gatewayVideoPoll(jobId: string): Promise<VideoJob> {
   if (!res.ok) throw new Error(`gateway_video_poll_${res.status}`);
   const j = (await res.json()) as Record<string, unknown>;
   const status = String(j.status ?? "running");
-  const url =
-    (j.url as string) ??
-    ((j.output as Array<{ url?: string }> | undefined)?.[0]?.url) ??
-    ((j.videos as Array<{ url?: string }> | undefined)?.[0]?.url) ??
-    ((j.data as Array<{ url?: string }> | undefined)?.[0]?.url) ??
-    undefined;
+  // The finished clip is served at /content (redirects to storage). Keep the
+  // auth header on the redirect by fetching inline rather than returning a URL.
+  const url = status === "completed" ? `${GW}/v1/videos/${jobId}/content` : undefined;
   return { id: jobId, status, url, error: j.error ? String(j.error) : undefined };
 }
