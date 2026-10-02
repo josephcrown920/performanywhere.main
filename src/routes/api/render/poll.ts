@@ -27,7 +27,7 @@ export const Route = createFileRoute("/api/render/poll")({
           if (!render.provider_task_id) return json({ status: "queued", provider: render.provider ?? undefined });
 
           const job = await gatewayVideoPoll(render.provider_task_id);
-          if (job.status === "succeeded" && job.url) {
+          if ((job.status === "succeeded" || job.status === "completed") && job.url) {
             // Persist the finished clip into private storage (job URLs expire).
             const res = await fetch(job.url);
             if (!res.ok) throw new Error(`download_${res.status}`);
