@@ -6,15 +6,15 @@ import {
 import React from "react";
 
 // Asset imports
-import portraitImg from "@assets/IMG_0978_1788519281635.png";
-import atvRainImg from "@assets/IMG_3849_1788519281635.png";
-import standingBackImg from "@assets/IMG_3850_1788519281635.png";
-import crowdImg from "@assets/IMG_3851_1788519281635.png";
-import studioSetImg from "@assets/IMG_9787_1788519281635.jpeg";
-import portraitPink2 from "@assets/IMG_9985_1788519281635.jpeg";
-import portraitPink3 from "@assets/396420DD-94AF-4D2E-9BB3-CFCB51D3AFC5_1788519281635.png";
-import uploadUiImg from "@assets/IMG_9877_1788519281635.jpeg";
-import explainerImg from "@assets/4aa8e578-1b09-4cda-97b7-19821b329f12_1788519281635.jpeg";
+import portraitImg from "@/assets/IMG_0978_1788519281635.png";
+import atvRainImg from "@/assets/IMG_3849_1788519281635.png";
+import standingBackImg from "@/assets/IMG_3850_1788519281635.png";
+import crowdImg from "@/assets/IMG_3851_1788519281635.png";
+import studioSetImg from "@/assets/IMG_9787_1788519281635.jpeg";
+import portraitPink2 from "@/assets/IMG_9985_1788519281635.jpeg";
+import portraitPink3 from "@/assets/396420DD-94AF-4D2E-9BB3-CFCB51D3AFC5_1788519281635.png";
+import uploadUiImg from "@/assets/IMG_9877_1788519281635.jpeg";
+import explainerImg from "@/assets/4aa8e578-1b09-4cda-97b7-19821b329f12_1788519281635.jpeg";
 
 export default function Landing() {
   return (
