@@ -22,10 +22,10 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-white/8 backdrop-blur-md" style={{ background: "oklch(0.10 0.04 290 / 0.88)" }}>
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src="/aurora-logo.png" alt="Aurora" className="h-8 w-8 object-contain" />
+            <img src="/aurora-logo.png" alt="Perform Anywhere" className="h-8 w-8 object-contain" />
             <div className="flex flex-col leading-none">
-              <span className="text-base font-bold tracking-tight text-white">Aurora</span>
-              <span className="text-[9px] font-medium tracking-[0.15em] uppercase" style={{ color: "oklch(0.65 0.30 330)" }}>Synthetic Intelligence</span>
+              <span className="text-base font-bold tracking-tight text-white">Perform Anywhere</span>
+              <span className="text-[9px] font-medium tracking-[0.15em] uppercase" style={{ color: "oklch(0.65 0.30 330)" }}>Powered by Aurora</span>
             </div>
           </Link>
           <nav className="flex items-center gap-1 text-sm">

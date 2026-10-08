@@ -146,7 +146,7 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
 
       {/* Footer */}
       <footer className="border-t px-6 py-4 text-center text-xs text-white/20" style={{ borderColor: "oklch(0.20 0.05 285)" }}>
-        Aurora Synthetic Intelligence — AI video generation studio
+        Perform Anywhere — powered by Aurora
       </footer>
     </div>
   );
