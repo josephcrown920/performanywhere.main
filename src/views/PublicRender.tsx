@@ -38,9 +38,9 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
             ✦
           </div>
           <div>
-            <span className="text-sm font-bold tracking-tight text-white">Aurora</span>
+            <span className="text-sm font-bold tracking-tight text-white">Perform Anywhere</span>
             <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "oklch(0.65 0.30 330)" }}>
-              Synthetic Intelligence
+              Powered by Aurora
             </span>
           </div>
         </div>

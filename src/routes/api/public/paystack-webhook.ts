@@ -31,18 +31,20 @@ export const Route = createFileRoute("/api/public/paystack-webhook")({
         const data = event.data ?? {};
         const reference = String(data.reference ?? "");
         const amountMinor = Number(data.amount ?? 0);
-        const metadata = (data.metadata ?? {}) as { clientId?: string };
+        const metadata = (data.metadata ?? {}) as { clientId?: string; credits?: number };
+        const currency = String(data.currency ?? "NGN");
         const clientId = metadata.clientId;
         if (!reference || !clientId) return json({ error: "missing_reference_or_client" }, 400);
 
         const db = serverSupabase();
-        const credits = Math.floor(amountMinor / 1000); // amountMinor/100 = naira; 1 credit per 10 naira
+        // Pack size comes from server-set metadata (signature already verified); fall back to 1 credit per 10 naira.
+        const credits = Number(metadata.credits) > 0 ? Math.floor(Number(metadata.credits)) : Math.floor(amountMinor / 1000);
         const { data: existing } = await db.from("purchases").select("id").eq("paystack_reference", reference).maybeSingle();
         if (existing) return json({ received: true, duplicate: true });
 
         const { data: purchase, error: pErr } = await db
           .from("purchases")
-          .insert({ client_id: clientId, paystack_reference: reference, amount_paid_minor: amountMinor, currency: "NGN", credits_allocated: credits, raw_event: event })
+          .insert({ client_id: clientId, paystack_reference: reference, amount_paid_minor: amountMinor, currency, credits_allocated: credits, raw_event: event })
           .select("id")
           .single();
         if (pErr) throw new Error(pErr.message);
