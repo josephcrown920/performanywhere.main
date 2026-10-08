@@ -38,9 +38,9 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
             ✦
           </div>
           <div>
-            <span className="text-sm font-bold tracking-tight text-white">Aurora</span>
+            <span className="text-sm font-bold tracking-tight text-white">Perform Anywhere</span>
             <span className="ml-1.5 text-[10px] font-semibold uppercase tracking-[0.2em]" style={{ color: "oklch(0.65 0.30 330)" }}>
-              Synthetic Intelligence
+              Powered by Aurora
             </span>
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function PublicRender({ clientId, projectId }: { clientId: string
 
       {/* Footer */}
       <footer className="border-t px-6 py-4 text-center text-xs text-white/20" style={{ borderColor: "oklch(0.20 0.05 285)" }}>
-        Aurora Synthetic Intelligence — AI video generation studio
+        Perform Anywhere — powered by Aurora
       </footer>
     </div>
   );

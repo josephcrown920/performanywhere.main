@@ -80,3 +80,20 @@ export async function gatewayVideoPoll(jobId: string): Promise<VideoJob> {
   const url = status === "completed" ? `${GW}/v1/videos/${jobId}/content` : undefined;
   return { id: jobId, status, url, error: j.error ? String(j.error) : undefined };
 }
+
+/** Image-to-image: sends a reference image with the instruction (used for depth maps). */
+export async function gatewayImageEdit(model: string, prompt: string, imageUrl: string): Promise<string> {
+  const res = await fetch(`${GW}/v1/chat/completions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${KEY()}` },
+    body: JSON.stringify({
+      model,
+      modalities: ["image", "text"],
+      messages: [{ role: "user", content: [{ type: "text", text: prompt }, { type: "image_url", image_url: { url: imageUrl } }] }],
+    }),
+  });
+  if (!res.ok) throw new Error(`gateway_image_${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const url = extractImage(await res.json());
+  if (!url) throw new Error("gateway_image_no_output");
+  return url;
+}

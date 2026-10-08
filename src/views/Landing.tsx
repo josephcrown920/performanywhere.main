@@ -40,7 +40,7 @@ function Header() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-aurora-pink to-aurora-purple flex items-center justify-center shadow-[0_0_15px_rgba(255,105,180,0.4)]">
             <Camera className="w-4 h-4 text-white" />
           </div>
-          <span>Aurora</span>
+          <span>Perform Anywhere</span>
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <a href="#pipeline" className="hidden text-muted-foreground hover:text-white transition sm:inline">
@@ -382,7 +382,7 @@ function ProductPrinciple() {
         <div className="flex flex-col items-center">
           <div className="font-semibold text-white">Product Principle</div>
           <div className="text-sm text-muted-foreground font-mono mt-1 uppercase tracking-wider">
-            Aurora Synthetic Intelligence
+            Perform Anywhere · Powered by Aurora
           </div>
           <div className="mt-4 text-[11px] text-muted-foreground/50 italic">
             (Owner note: Verified customer quotes can be added here once available)
@@ -428,7 +428,7 @@ function Footer() {
           <div className="w-6 h-6 rounded-md bg-white/10 flex items-center justify-center opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
              <Camera className="w-3 h-3 text-white" />
           </div>
-          <span className="font-display tracking-wide uppercase text-xs">Aurora Synthetic Intelligence</span>
+          <span className="font-display tracking-wide uppercase text-xs">Perform Anywhere · Powered by Aurora</span>
         </div>
         <div className="flex flex-wrap justify-center gap-6 text-xs font-mono text-white/30">
           <span>Anonymous</span>

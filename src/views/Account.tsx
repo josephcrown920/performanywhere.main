@@ -1,13 +1,30 @@
 import { useEffect, useState } from "react";
 import { api, type ProviderStatus } from "@/lib/api";
-import { getClientId, resetClientId } from "@/lib/client-id";
+import { getClientId, resetClientId, restoreClientId } from "@/lib/client-id";
 import { toast } from "sonner";
-import { Check, AlertCircle, Loader2, KeyRound, User, RotateCcw } from "lucide-react";
+import { Check, AlertCircle, Loader2, KeyRound, User, RotateCcw, CreditCard, Copy, LogIn } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
+import BuyCredits from "@/components/BuyCredits";
 
 export default function Account() {
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [clientId, setCid] = useState<string>("");
+  const [restoreKey, setRestoreKey] = useState("");
+
+  async function copyKey() {
+    await navigator.clipboard.writeText(clientId);
+    toast.success("Session key copied — keep it safe to open your projects on another device");
+  }
+
+  function handleRestore() {
+    try {
+      setCid(restoreClientId(restoreKey));
+      toast.success("Session restored");
+      setTimeout(() => window.location.reload(), 600);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not restore");
+    }
+  }
 
   useEffect(() => {
     setCid(getClientId());
@@ -39,7 +56,7 @@ export default function Account() {
         <section className="rounded-lg border border-border/50 bg-card overflow-hidden">
           <div className="flex items-center gap-3 border-b border-border/30 px-6 py-4">
             <User className="h-4 w-4 text-primary" strokeWidth={1.5} />
-            <h2 className="font-semibold">Anonymous session</h2>
+            <h2 className="font-semibold">Your session</h2>
           </div>
           <div className="px-6 py-5 space-y-5">
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -50,6 +67,18 @@ export default function Account() {
             <div className="rounded border border-border/40 bg-background px-4 py-3">
               <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Session ID</p>
               <p className="font-mono text-xs break-all text-foreground/80">{clientId || "—"}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <button onClick={copyKey} className="inline-flex items-center gap-2 rounded border border-border px-4 py-2 text-sm hover:border-primary/50 transition">
+                <Copy className="h-3.5 w-3.5" /> Copy session key
+              </button>
+            </div>
+            <div className="flex gap-2">
+              <input value={restoreKey} onChange={(e) => setRestoreKey(e.target.value)} placeholder="Paste a session key to restore"
+                className="flex-1 rounded border border-border bg-background px-3 py-2 text-xs font-mono outline-none focus:ring-1 focus:ring-ring" />
+              <button onClick={handleRestore} disabled={!restoreKey} className="inline-flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+                <LogIn className="h-3.5 w-3.5" /> Restore
+              </button>
             </div>
             <button
               onClick={handleReset}
@@ -68,7 +97,7 @@ export default function Account() {
           </div>
           <div className="px-6 py-4">
             <p className="text-sm text-muted-foreground mb-5">
-              API keys are server-side environment variables. Add them in the Replit Secrets panel to enable each provider.
+              API keys are server-side environment variables. They are stored securely on the server and enable each provider.
             </p>
 
             {providers === null ? (
@@ -94,42 +123,14 @@ export default function Account() {
           </div>
         </section>
 
-        {/* Database setup */}
-        <section className="rounded-lg border border-amber-500/20 bg-amber-500/5 overflow-hidden">
-          <div className="px-6 py-4 border-b border-amber-500/15">
-            <h2 className="font-semibold text-amber-300/90 text-sm">Database setup required</h2>
-          </div>
-          <div className="px-6 py-5 space-y-3 text-sm text-muted-foreground">
-            <p>
-              The render pipeline requires four columns that may be missing from your Supabase database.
-              Without them, renders silently fail or disappear from the library.
-            </p>
-            <ol className="list-decimal ml-5 space-y-1 text-xs leading-relaxed">
-              <li>Open your <a href="https://supabase.com/dashboard/project/dgtnkkarlwufxawfaybb/sql/new" target="_blank" rel="noopener noreferrer" className="underline text-amber-300/80 hover:text-amber-300">Supabase SQL editor</a></li>
-              <li>Paste and run the contents of <code className="rounded bg-muted px-1 py-0.5 text-[11px]">artifacts/api-server/migrations/002_render_pipeline_columns.sql</code></li>
-            </ol>
-            <p className="text-xs">This is a one-time <code className="rounded bg-muted px-1 py-0.5">ALTER TABLE … ADD COLUMN IF NOT EXISTS</code> — safe to run more than once.</p>
-          </div>
-        </section>
-
-        {/* Vast.ai status */}
+        {/* Credits */}
         <section className="rounded-lg border border-border/50 bg-card overflow-hidden">
-          <div className="px-6 py-4 border-b border-border/30">
-            <h2 className="font-semibold text-sm">Vast.ai GPU — pending deployment</h2>
+          <div className="flex items-center gap-3 border-b border-border/30 px-6 py-4">
+            <CreditCard className="h-4 w-4 text-primary" strokeWidth={1.5} />
+            <h2 className="font-semibold">Buy credits</h2>
           </div>
-          <div className="px-6 py-5 text-sm text-muted-foreground space-y-2">
-            <p>The Vast.ai API key is configured and the CLI is authenticated. Video cannot route through Vast until a serverless worker is deployed and its endpoint URL is provided.</p>
-            <p className="text-xs">To enable: deploy a video-generation worker on Vast.ai (or RunPod), then add <code className="rounded bg-muted px-1 py-0.5">RUNPOD_API_KEY</code> + <code className="rounded bg-muted px-1 py-0.5">RUNPOD_ENDPOINT_ID</code> to Secrets. The render chain will pick it up automatically.</p>
-          </div>
+          <div className="px-6 py-5"><BuyCredits /></div>
         </section>
-
-        {/* Hint */}
-        <p className="text-xs text-muted-foreground px-1">
-          fal.ai is connected via Replit connector and powers video, OmniHuman, and Kling LipSync.
-          Add <code className="rounded bg-muted px-1 py-0.5">KLING_ACCESS_KEY</code> +{" "}
-          <code className="rounded bg-muted px-1 py-0.5">KLING_SECRET_KEY</code> for direct Kling,
-          and <code className="rounded bg-muted px-1 py-0.5">PAYSTACK_SECRET_KEY</code> to accept payments.
-        </p>
       </main>
     </AppLayout>
   );
