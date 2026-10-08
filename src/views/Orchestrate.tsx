@@ -25,7 +25,6 @@ export default function Orchestrate() {
   const [prompt, setPrompt] = useState("");
   const [duration, setDuration] = useState(5);
   const [workflowId, setWorkflowId] = useState("");
-  const [email, setEmail] = useState("");
 
   useEffect(() => { setClientId(getClientId()); }, []);
 
