@@ -16,6 +16,8 @@ import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
+import { Route as ApiAgentVideoEditRouteImport } from './routes/api/agent/video-edit'
+import { Route as ApiDepthFrameRouteImport } from './routes/api/depth/frame'
 import { Route as ApiOrchestrateListRouteImport } from './routes/api/orchestrate/list'
 import { Route as ApiOrchestratePaystackRouteImport } from './routes/api/orchestrate/paystack'
 import { Route as ApiOrchestrateRunRouteImport } from './routes/api/orchestrate/run'
@@ -67,6 +69,16 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
 const ProjectsIdRoute = ProjectsIdRouteImport.update({
   id: '/projects/$id',
   path: '/projects/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentVideoEditRoute = ApiAgentVideoEditRouteImport.update({
+  id: '/api/agent/video-edit',
+  path: '/api/agent/video-edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiDepthFrameRoute = ApiDepthFrameRouteImport.update({
+  id: '/api/depth/frame',
+  path: '/api/depth/frame',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiOrchestrateListRoute = ApiOrchestrateListRouteImport.update({
@@ -166,6 +178,8 @@ export interface FileRoutesByFullPath {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
+  '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -192,6 +206,8 @@ export interface FileRoutesByTo {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects': typeof ProjectsIndexRoute
+  '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
+  '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -219,6 +235,8 @@ export interface FileRoutesById {
   '/studio': typeof StudioRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
+  '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -247,6 +265,8 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects/'
+    | '/api/agent/video-edit'
+    | '/api/depth/frame'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -273,6 +293,8 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects'
+    | '/api/agent/video-edit'
+    | '/api/depth/frame'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -299,6 +321,8 @@ export interface FileRouteTypes {
     | '/studio'
     | '/projects/$id'
     | '/projects/'
+    | '/api/agent/video-edit'
+    | '/api/depth/frame'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -326,6 +350,8 @@ export interface RootRouteChildren {
   StudioRoute: typeof StudioRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
+  ApiAgentVideoEditRoute: typeof ApiAgentVideoEditRoute
+  ApiDepthFrameRoute: typeof ApiDepthFrameRoute
   ApiOrchestrateListRoute: typeof ApiOrchestrateListRoute
   ApiOrchestratePaystackRoute: typeof ApiOrchestratePaystackRoute
   ApiOrchestrateRunRoute: typeof ApiOrchestrateRunRoute
@@ -394,6 +420,20 @@ declare module '@tanstack/react-router' {
       path: '/projects/$id'
       fullPath: '/projects/$id'
       preLoaderRoute: typeof ProjectsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agent/video-edit': {
+      id: '/api/agent/video-edit'
+      path: '/api/agent/video-edit'
+      fullPath: '/api/agent/video-edit'
+      preLoaderRoute: typeof ApiAgentVideoEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/depth/frame': {
+      id: '/api/depth/frame'
+      path: '/api/depth/frame'
+      fullPath: '/api/depth/frame'
+      preLoaderRoute: typeof ApiDepthFrameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/orchestrate/list': {
@@ -526,6 +566,8 @@ const rootRouteChildren: RootRouteChildren = {
   StudioRoute: StudioRoute,
   ProjectsIdRoute: ProjectsIdRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
+  ApiAgentVideoEditRoute: ApiAgentVideoEditRoute,
+  ApiDepthFrameRoute: ApiDepthFrameRoute,
   ApiOrchestrateListRoute: ApiOrchestrateListRoute,
   ApiOrchestratePaystackRoute: ApiOrchestratePaystackRoute,
   ApiOrchestrateRunRoute: ApiOrchestrateRunRoute,
