@@ -1,3 +1,4 @@
+import BuyCredits from "@/components/BuyCredits";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { CATALOG, estimateCredits, isModelFree, type Modality } from "@/lib/catalog";
@@ -57,15 +58,6 @@ export default function Orchestrate() {
     },
   });
 
-  const buy = useMutation({
-    mutationFn: (amountNaira: number) => {
-      if (!email) throw new Error("Enter an email address first");
-      return api.initPaystack({ clientId, amountNaira, email });
-    },
-    onSuccess: (r) => { if (r?.authorization_url) window.location.href = r.authorization_url; },
-    onError: (e: Error) => toast_error(e.message),
-  });
-
   function toast_error(msg: string) {
     const t = document.createElement("div");
     t.textContent = msg;
@@ -108,21 +100,7 @@ export default function Orchestrate() {
             <div className="mt-2 font-display text-4xl">
               {wallet.isLoading ? <Loader2 className="h-6 w-6 animate-spin" /> : balance.toLocaleString()}
             </div>
-            <div className="mt-4 space-y-2">
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="email for receipt"
-                className="w-full rounded border border-border bg-background px-3 py-1.5 text-xs outline-none focus:ring-1 focus:ring-ring"
-              />
-              <div className="flex gap-1.5">
-                {[500, 2000, 5000].map((n) => (
-                  <button key={n} onClick={() => buy.mutate(n)} disabled={buy.isPending}
-                    className="flex-1 rounded border border-border py-1 text-xs hover:bg-accent hover:border-primary/50 transition disabled:opacity-50"
-                  >
-                    +{n}₦
-                  </button>
-                ))}
-              </div>
-            </div>
+            <div className="mt-4"><BuyCredits compact /></div>
           </div>
         </div>
 
