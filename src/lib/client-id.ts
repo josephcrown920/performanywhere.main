@@ -26,3 +26,8 @@ export function restoreClientId(key: string): string {
   window.localStorage.setItem(KEY, id);
   return id;
 }
+
+/** Set by the sign-in gate: the signed-in user's id is the client id. */
+export function setClientId(id: string): void {
+  window.localStorage.setItem(KEY, id);
+}

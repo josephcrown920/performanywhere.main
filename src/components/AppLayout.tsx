@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@/lib/nav";
 import type { ReactNode } from "react";
+import AuthGate from "@/components/AuthGate";
 import { Film, PlusSquare, Layers, Settings, Activity } from "lucide-react";
 
 const NAV = [
@@ -47,7 +48,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           </nav>
         </div>
       </header>
-      <div>{children}</div>
+      <div><AuthGate>{children}</AuthGate></div>
     </div>
   );
 }
