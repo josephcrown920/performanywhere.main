@@ -1,45 +1,29 @@
 import { useEffect, useState } from "react";
 import { api, type ProviderStatus } from "@/lib/api";
-import { getClientId, resetClientId, restoreClientId } from "@/lib/client-id";
+import { getClientId } from "@/lib/client-id";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Check, AlertCircle, Loader2, KeyRound, User, RotateCcw, CreditCard, Copy, LogIn } from "lucide-react";
+import { Check, AlertCircle, Loader2, KeyRound, User, CreditCard, LogOut } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import BuyCredits from "@/components/BuyCredits";
 
 export default function Account() {
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [clientId, setCid] = useState<string>("");
-  const [restoreKey, setRestoreKey] = useState("");
+  const [email, setEmail] = useState("");
 
-  async function copyKey() {
-    await navigator.clipboard.writeText(clientId);
-    toast.success("Session key copied — keep it safe to open your projects on another device");
-  }
-
-  function handleRestore() {
-    try {
-      setCid(restoreClientId(restoreKey));
-      toast.success("Session restored");
-      setTimeout(() => window.location.reload(), 600);
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Could not restore");
-    }
+  async function signOut() {
+    await supabase.auth.signOut();
+    window.location.href = "/";
   }
 
   useEffect(() => {
     setCid(getClientId());
+    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
     api.providerStatus()
       .then(setProviders)
       .catch(() => setProviders([]));
   }, []);
-
-  function handleReset() {
-    if (!confirm("Reset session? Your current projects will no longer be visible from this browser.")) return;
-    const next = resetClientId();
-    setCid(next);
-    toast.success("Session reset — new identity generated");
-    setTimeout(() => window.location.reload(), 600);
-  }
 
   const configured = providers?.filter((p) => p.configured) ?? [];
   const unconfigured = providers?.filter((p) => !p.configured) ?? [];
@@ -56,35 +40,15 @@ export default function Account() {
         <section className="rounded-lg border border-border/50 bg-card overflow-hidden">
           <div className="flex items-center gap-3 border-b border-border/30 px-6 py-4">
             <User className="h-4 w-4 text-primary" strokeWidth={1.5} />
-            <h2 className="font-semibold">Your session</h2>
+            <h2 className="font-semibold">Your account</h2>
           </div>
           <div className="px-6 py-5 space-y-5">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              No account is required. Projects are tied to this browser via a UUID stored
-              in localStorage. Clearing browser data or resetting the session hides them
-              from this device.
-            </p>
             <div className="rounded border border-border/40 bg-background px-4 py-3">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Session ID</p>
-              <p className="font-mono text-xs break-all text-foreground/80">{clientId || "—"}</p>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1.5">Signed in as</p>
+              <p className="text-sm text-foreground/80 break-all">{email || clientId || "—"}</p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              <button onClick={copyKey} className="inline-flex items-center gap-2 rounded border border-border px-4 py-2 text-sm hover:border-primary/50 transition">
-                <Copy className="h-3.5 w-3.5" /> Copy session key
-              </button>
-            </div>
-            <div className="flex gap-2">
-              <input value={restoreKey} onChange={(e) => setRestoreKey(e.target.value)} placeholder="Paste a session key to restore"
-                className="flex-1 rounded border border-border bg-background px-3 py-2 text-xs font-mono outline-none focus:ring-1 focus:ring-ring" />
-              <button onClick={handleRestore} disabled={!restoreKey} className="inline-flex items-center gap-2 rounded bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">
-                <LogIn className="h-3.5 w-3.5" /> Restore
-              </button>
-            </div>
-            <button
-              onClick={handleReset}
-              className="inline-flex items-center gap-2 rounded border border-border px-4 py-2 text-sm hover:border-destructive/50 hover:text-destructive hover:bg-destructive/5 transition"
-            >
-              <RotateCcw className="h-3.5 w-3.5" /> Reset session
+            <button onClick={signOut} className="inline-flex items-center gap-2 rounded border border-border px-4 py-2 text-sm hover:border-destructive/50 hover:text-destructive transition">
+              <LogOut className="h-3.5 w-3.5" /> Sign out
             </button>
           </div>
         </section>

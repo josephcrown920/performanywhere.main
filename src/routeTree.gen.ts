@@ -13,7 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
 import { Route as ApiAgentVideoEditRouteImport } from './routes/api/agent/video-edit'
@@ -56,9 +58,19 @@ const OrchestrateRoute = OrchestrateRouteImport.update({
   path: '/orchestrate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
@@ -175,7 +187,9 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountRoute
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
+  '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
@@ -203,7 +217,9 @@ export interface FileRoutesByTo {
   '/account': typeof AccountRoute
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
+  '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
@@ -232,7 +248,9 @@ export interface FileRoutesById {
   '/account': typeof AccountRoute
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
+  '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
+  '/terms': typeof TermsRoute
   '/projects/$id': typeof ProjectsIdRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
@@ -262,7 +280,9 @@ export interface FileRouteTypes {
     | '/account'
     | '/motion-test'
     | '/orchestrate'
+    | '/privacy'
     | '/studio'
+    | '/terms'
     | '/projects/$id'
     | '/projects/'
     | '/api/agent/video-edit'
@@ -290,7 +310,9 @@ export interface FileRouteTypes {
     | '/account'
     | '/motion-test'
     | '/orchestrate'
+    | '/privacy'
     | '/studio'
+    | '/terms'
     | '/projects/$id'
     | '/projects'
     | '/api/agent/video-edit'
@@ -318,7 +340,9 @@ export interface FileRouteTypes {
     | '/account'
     | '/motion-test'
     | '/orchestrate'
+    | '/privacy'
     | '/studio'
+    | '/terms'
     | '/projects/$id'
     | '/projects/'
     | '/api/agent/video-edit'
@@ -347,7 +371,9 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
+  PrivacyRoute: typeof PrivacyRoute
   StudioRoute: typeof StudioRoute
+  TermsRoute: typeof TermsRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAgentVideoEditRoute: typeof ApiAgentVideoEditRoute
@@ -401,11 +427,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OrchestrateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studio': {
       id: '/studio'
       path: '/studio'
       fullPath: '/studio'
       preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects/': {
@@ -563,7 +603,9 @@ const rootRouteChildren: RootRouteChildren = {
   AccountRoute: AccountRoute,
   MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,
+  PrivacyRoute: PrivacyRoute,
   StudioRoute: StudioRoute,
+  TermsRoute: TermsRoute,
   ProjectsIdRoute: ProjectsIdRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAgentVideoEditRoute: ApiAgentVideoEditRoute,

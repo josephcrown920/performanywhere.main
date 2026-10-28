@@ -12,7 +12,7 @@
 # AGENTS.md — Technical rules
 
 - Backend: all app-internal logic lives in TanStack server routes under `src/routes/api/**` (port of the original api-server). Public HTTP callers go under `src/routes/api/public/*` (e.g. paystack-webhook) and must verify the caller inside the handler.
-- Identity model: no login. Every browser generates a UUID `client_id` (src/lib/client-id.ts); all tables are keyed by `client_id` and RLS is intentionally open to anon/authenticated (original app design). Don't add auth-scoped policies without changing this model.
+- Identity model: Lovable Cloud auth (email, Google, Lovable). `client_id` = auth.uid(); AuthGate (in AppLayout) shows sign-in, api.ts attaches the bearer, server routes verify via authClientId and RLS scopes rows to auth.uid().
 - AI generation runs through the Lovable AI Gateway (`src/lib/ai/gateway.ts`): text/images via `/v1/chat/completions` (images come back at `choices[0].message.images[0].image_url.url` as data URLs); video via job endpoints `POST /v1/videos` → `GET /v1/videos/{id}` → clip downloaded from `/v1/videos/{id}/content` (follows redirect; the job URL expires, so `/render/poll` copies finished clips into the private `renders` bucket).
 - Video model chain: google/veo-3.1-lite → google/gemini-omni-1.1-flash. Text: gemini-3.6-flash → gpt-5.6-luna → gemini-3.1-flash-lite. Image: gemini-3.1-flash-image → gpt-image-2.
 - Credits: free providers (lovable/modelark/gemini/groq/cohere/pollinations/veo) cost 0; paid: 1/text, 50/image, 200/video-second, 75/audio. Spent/refunded atomically via the `spend_credits`/`grant_credits` security-definer RPCs.

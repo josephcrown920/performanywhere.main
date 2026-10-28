@@ -1,6 +1,8 @@
+import { supabase } from "@/integrations/supabase/client";
 const BASE = "" + "/api";
-async function post<T>(path: string, body: unknown): Promise<T> { const res = await fetch(`${BASE}${path}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
-async function get<T>(path: string): Promise<T> { const res = await fetch(`${BASE}${path}`); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
+async function authHeaders(): Promise<Record<string, string>> { const { data } = await supabase.auth.getSession(); return data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {}; }
+async function post<T>(path: string, body: unknown): Promise<T> { const res = await fetch(`${BASE}${path}`, { method: "POST", headers: { "Content-Type": "application/json", ...(await authHeaders()) }, body: JSON.stringify(body) }); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
+async function get<T>(path: string): Promise<T> { const res = await fetch(`${BASE}${path}`, { headers: await authHeaders() }); if (!res.ok) throw new Error((await res.text().catch(() => "")) || `HTTP ${res.status}`); return res.json() as Promise<T>; }
 export type Modality = "text" | "image" | "video" | "audio";
 export type WalletData = { balance: number; lifetime_purchased: number; lifetime_spent: number };
 export type GenerationRow = { id: string; modality: string; provider: string; model: string; prompt: string | null; status: string; output_url: string | null; output_text: string | null; credits_used: number; created_at: string };
