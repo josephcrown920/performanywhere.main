@@ -15,6 +15,13 @@
       "when": 1790967018341,
       "tag": "0001_storage_bucket_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793209482665,
+      "tag": "0002_owner_scoped_access",
+      "breakpoints": true
     }
   ]
 }

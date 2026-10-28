@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 
 export const Route = createFileRoute("/api/orchestrate/list")({
   server: {
@@ -7,8 +7,8 @@ export const Route = createFileRoute("/api/orchestrate/list")({
       POST: async ({ request }) => {
         try {
           const body = (await request.json()) as { clientId?: string };
-          const clientId = assertClientId(body.clientId);
-          const db = serverSupabase();
+          const clientId = await authClientId(request, body.clientId);
+          const db = serverSupabase(request);
           const { data, error } = await db
             .from("generations")
             .select("id, modality, provider, model, prompt, status, output_url, output_text, credits_used, created_at")

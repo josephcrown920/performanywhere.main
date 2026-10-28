@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { adminSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
 
 export const Route = createFileRoute("/api/render/public/$clientId/$projectId")({
   server: {
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/api/render/public/$clientId/$projectId")(
         try {
           const clientId = assertClientId(params.clientId);
           const projectId = assertClientId(params.projectId);
-          const db = serverSupabase();
+          const db = await adminSupabase();
           const { data: project } = await db.from("projects").select("*").eq("id", projectId).eq("client_id", clientId).maybeSingle();
           if (!project) return json({ error: "not_found" }, 404);
           const { data: render } = await db

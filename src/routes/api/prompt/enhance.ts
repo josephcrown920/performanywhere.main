@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { json } from "@/lib/server-supabase";
+import { json, errJson, authClientId } from "@/lib/server-supabase";
 import { gatewayText } from "@/lib/ai/gateway";
 
 export const Route = createFileRoute("/api/prompt/enhance")({
   server: {
     handlers: {
       POST: async ({ request }) => {
+        try { await authClientId(request); } catch (e) { return errJson(e); }
         const body = (await request.json()) as {
           scenePrompt?: string;
           stylePrompt?: string;
