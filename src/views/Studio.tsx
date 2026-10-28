@@ -11,7 +11,6 @@ import {
 import { toast } from "sonner";
 import { Loader2, Sparkles, Upload, X, CheckCircle2, Zap, Star, History, Move3d, Ratio, Timer, AudioLines, LockKeyhole } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
-import DemoShowcase from "@/components/DemoShowcase";
 import { WORKFLOWS, getWorkflow } from "@/lib/workflows";
 
 type AssetKind = "performance" | "identity" | "outfit" | "scene" | "audio";
@@ -285,7 +284,6 @@ export default function Studio() {
   return (
     <AppLayout>
       <main className="mx-auto max-w-5xl px-6 py-14">
-        <DemoShowcase onUse={(d) => { setTitle(d.title); setScenePrompt(d.scene); setStylePrompt(d.style); setStep(2); toast.success("Demo loaded — add your own clip and photo to render it"); }} />
 
         {/* Header */}
         <div className="mb-10 flex items-start justify-between gap-4">
