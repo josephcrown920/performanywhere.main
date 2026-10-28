@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, adminSupabase, json, errJson } from "@/lib/server-supabase";
 import { runOrchestrated } from "@/lib/ai/run";
 import { isFreeModelId } from "@/lib/ai/run";
 import { estimateCredits, type Modality } from "@/lib/ai/catalog";

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { json, errJson } from "@/lib/server-supabase";
+import { json, errJson, authClientId } from "@/lib/server-supabase";
 import { gatewayText } from "@/lib/ai/gateway";
 
 // Prompt-driven video editing agent. Turns a natural-language instruction plus the
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/api/agent/video-edit")({
     handlers: {
       POST: async ({ request }) => {
         try {
+          await authClientId(request);
           const body = (await request.json()) as { agent?: string; instruction?: string; timeline?: unknown };
           const instruction = (body.instruction ?? "").slice(0, 2000);
           if (!instruction.trim()) throw new Error("empty_instruction");
