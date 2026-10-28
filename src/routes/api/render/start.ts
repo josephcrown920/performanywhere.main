@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoStart } from "@/lib/ai/gateway";
 
 export const Route = createFileRoute("/api/render/start")({
@@ -13,9 +13,9 @@ export const Route = createFileRoute("/api/render/start")({
             model?: string;
             options?: { duration?: number; aspectRatio?: string; motionStrength?: number; lipSync?: boolean };
           };
-          const clientId = assertClientId(body.clientId);
+          const clientId = await authClientId(request, body.clientId);
           const projectId = assertClientId(body.projectId);
-          const db = serverSupabase();
+          const db = serverSupabase(request);
 
           const { data: project, error: pErr } = await db.from("projects").select("*").eq("id", projectId).maybeSingle();
           if (pErr) throw new Error(pErr.message);

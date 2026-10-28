@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "crypto";
-import { serverSupabase, json } from "@/lib/server-supabase";
+import { adminSupabase, json } from "@/lib/server-supabase";
 
 // Paystack webhook: verifies the x-paystack-signature (HMAC SHA512 of the raw body
 // with PAYSTACK_SECRET_KEY) before granting any credits. Credits: 1 per 10 naira.
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/api/public/paystack-webhook")({
         const clientId = metadata.clientId;
         if (!reference || !clientId) return json({ error: "missing_reference_or_client" }, 400);
 
-        const db = serverSupabase();
+        const db = await adminSupabase();
         // Pack size comes from server-set metadata (signature already verified); fall back to 1 credit per 10 naira.
         const credits = Number(metadata.credits) > 0 ? Math.floor(Number(metadata.credits)) : Math.floor(amountMinor / 1000);
         const { data: existing } = await db.from("purchases").select("id").eq("paystack_reference", reference).maybeSingle();

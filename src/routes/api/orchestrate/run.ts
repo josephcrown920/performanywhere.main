@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { runOrchestrated } from "@/lib/ai/run";
 import { isFreeModelId } from "@/lib/ai/run";
 import { estimateCredits, type Modality } from "@/lib/ai/catalog";
@@ -16,13 +16,13 @@ export const Route = createFileRoute("/api/orchestrate/run")({
             prompt?: string;
             options?: Record<string, unknown>;
           };
-          const clientId = assertClientId(body.clientId);
+          const clientId = await authClientId(request, body.clientId);
           const modality = (body.modality ?? "text") as Modality;
           const modelId = body.modelId ?? "lovable/google/gemini-3.6-flash";
           const prompt = body.prompt ?? "";
           if (!prompt.trim()) throw new Error("prompt_required");
 
-          const db = serverSupabase();
+          const db = serverSupabase(request);
           const cost = isFreeModelId(modelId) ? 0 : estimateCredits(modality, body.options ?? {});
           const { data: gen, error: genErr } = await db
             .from("generations")
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/api/orchestrate/run")({
           const generationId = gen.id;
 
           if (cost > 0) {
-            const { error: spendErr } = await db.rpc("spend_credits", {
+            const { error: spendErr } = await (await adminSupabase()).rpc("spend_credits", {
               _client_id: clientId,
               _amount: cost,
               _reason: "generation",
@@ -71,7 +71,7 @@ export const Route = createFileRoute("/api/orchestrate/run")({
             });
           } catch (runErr) {
             if (cost > 0) {
-              await db.rpc("grant_credits", {
+              await (await adminSupabase()).rpc("grant_credits", {
                 _client_id: clientId,
                 _amount: cost,
                 _reason: "refund",

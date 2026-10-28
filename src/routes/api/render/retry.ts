@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoStart } from "@/lib/ai/gateway";
 
 export const Route = createFileRoute("/api/render/retry")({
@@ -8,9 +8,9 @@ export const Route = createFileRoute("/api/render/retry")({
       POST: async ({ request }) => {
         try {
           const body = (await request.json()) as { clientId?: string; projectId?: string; provider?: string };
-          const clientId = assertClientId(body.clientId);
+          const clientId = await authClientId(request, body.clientId);
           const projectId = assertClientId(body.projectId);
-          const db = serverSupabase();
+          const db = serverSupabase(request);
 
           const { data: render } = await db
             .from("project_renders")

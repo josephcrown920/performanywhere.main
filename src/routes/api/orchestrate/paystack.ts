@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { assertClientId, json, errJson } from "@/lib/server-supabase";
+import { assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { PLANS, CREDIT_PACK, type Region } from "@/lib/pricing";
 
 export const Route = createFileRoute("/api/orchestrate/paystack")({
@@ -8,7 +8,7 @@ export const Route = createFileRoute("/api/orchestrate/paystack")({
       POST: async ({ request }) => {
         try {
           const body = (await request.json()) as { clientId?: string; region?: Region; email?: string };
-          const clientId = assertClientId(body.clientId);
+          const clientId = await authClientId(request, body.clientId);
           const region: Region = body.region === "africa" ? "africa" : "international";
           const plan = PLANS[region];
           const email = body.email ?? "";

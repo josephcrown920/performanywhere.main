@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoPoll } from "@/lib/ai/gateway";
 
 export const Route = createFileRoute("/api/render/poll")({
@@ -8,9 +8,9 @@ export const Route = createFileRoute("/api/render/poll")({
       POST: async ({ request }) => {
         try {
           const body = (await request.json()) as { clientId?: string; projectId?: string };
-          const clientId = assertClientId(body.clientId);
+          const clientId = await authClientId(request, body.clientId);
           const projectId = assertClientId(body.projectId);
-          const db = serverSupabase();
+          const db = serverSupabase(request);
 
           const { data: render } = await db
             .from("project_renders")
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/api/render/poll")({
             if (!res.ok) throw new Error(`download_${res.status}`);
             const buf = await res.arrayBuffer();
             const path = `${clientId}/${projectId}/${render.id}.mp4`;
-            const up = await serverSupabase().storage.from("renders").upload(path, buf, { contentType: "video/mp4", upsert: true });
+            const up = await serverSupabase(request).storage.from("renders").upload(path, buf, { contentType: "video/mp4", upsert: true });
             if (up.error) throw new Error(up.error.message);
             await db.from("project_renders").update({ status: "succeeded", output_path: path }).eq("id", render.id);
             return json({ status: "succeeded", outputPath: path, provider: render.provider ?? undefined });
