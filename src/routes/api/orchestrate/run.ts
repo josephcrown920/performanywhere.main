@@ -76,7 +76,7 @@ export const Route = createFileRoute("/api/orchestrate/run")({
                 _amount: cost,
                 _reason: "refund",
                 _description: `Refund for failed generation ${generationId}`,
-                _purchase_id: null,
+                _purchase_id: null as unknown as string,
               });
             }
             const msg = runErr instanceof Error ? runErr.message : String(runErr);

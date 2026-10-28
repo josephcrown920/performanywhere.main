@@ -44,7 +44,7 @@ export const Route = createFileRoute("/api/public/paystack-webhook")({
 
         const { data: purchase, error: pErr } = await db
           .from("purchases")
-          .insert({ client_id: clientId, paystack_reference: reference, amount_paid_minor: amountMinor, currency, credits_allocated: credits, raw_event: event })
+          .insert({ client_id: clientId, paystack_reference: reference, amount_paid_minor: amountMinor, currency, credits_allocated: credits, raw_event: event as never })
           .select("id")
           .single();
         if (pErr) throw new Error(pErr.message);
