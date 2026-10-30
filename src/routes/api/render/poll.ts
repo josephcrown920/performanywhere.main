@@ -21,7 +21,9 @@ export const Route = createFileRoute("/api/render/poll")({
             .limit(1)
             .maybeSingle();
           if (!render) throw new Error("render_not_found");
+          const syncProject = (patch: Record<string, unknown>) => db.from("projects").update(patch).eq("id", projectId);
           if (render.status === "succeeded" || render.status === "failed") {
+            await syncProject(render.status === "succeeded" ? { status: "succeeded", output_path: render.output_path } : { status: "failed", error_message: render.error_message });
             return json({ status: render.status, outputPath: render.output_path ?? undefined, error: render.error_message ?? undefined, provider: render.provider ?? undefined });
           }
           if (!render.provider_task_id) return json({ status: "queued", provider: render.provider ?? undefined });
@@ -36,15 +38,18 @@ export const Route = createFileRoute("/api/render/poll")({
             const up = await serverSupabase(request).storage.from("renders").upload(path, buf, { contentType: "video/mp4", upsert: true });
             if (up.error) throw new Error(up.error.message);
             await db.from("project_renders").update({ status: "succeeded", output_path: path }).eq("id", render.id);
+            await syncProject({ status: "succeeded", output_path: path, error_message: null });
             return json({ status: "succeeded", outputPath: path, provider: render.provider ?? undefined });
           }
           if (job.status === "failed") {
             await db.from("project_renders").update({ status: "failed", error_message: job.error ?? "video job failed" }).eq("id", render.id);
+            await syncProject({ status: "failed", error_message: job.error ?? "video job failed" });
             return json({ status: "failed", error: job.error ?? "video job failed", provider: render.provider ?? undefined });
           }
           if (render.status !== job.status) {
             await db.from("project_renders").update({ status: job.status === "queued" ? "queued" : "running" }).eq("id", render.id);
           }
+          await syncProject({ status: job.status === "queued" ? "queued" : "running" });
           return json({ status: job.status === "queued" ? "queued" : "running", provider: render.provider ?? undefined });
         } catch (e) {
           return errJson(e);
