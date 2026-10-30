@@ -1,5 +1,6 @@
+import photos from "./env-photos.json";
 export type PresetGroup = "studio" | "outdoor" | "rooms" | "wardrobes";
-export type ScenePreset = { id: string; name: string; group: PresetGroup; swatch: string; prompt: string };
+export type ScenePreset = { id: string; name: string; group: PresetGroup; swatch: string; prompt: string; image?: string };
 
 export const GROUPS: { id: PresetGroup; label: string; mode: "perform" | "grwm" }[] = [
   { id: "studio", label: "Color studios", mode: "perform" },
@@ -14,6 +15,36 @@ const studio = (id: string, name: string, swatch: string, desc: string): ScenePr
 });
 
 export const SCENE_PRESETS: ScenePreset[] = [
+  { id: "photo-crimson", name: "Crimson", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["crimson"], prompt: "Crimson environment matching the reference photo" },
+  { id: "photo-pink", name: "Pink", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["pink"], prompt: "Pink environment matching the reference photo" },
+  { id: "photo-purple", name: "Purple", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["purple"], prompt: "Purple environment matching the reference photo" },
+  { id: "photo-teal", name: "Teal", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["teal"], prompt: "Teal environment matching the reference photo" },
+  { id: "photo-white", name: "White", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["white"], prompt: "White environment matching the reference photo" },
+  { id: "photo-red-room", name: "Red Room", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["red-room"], prompt: "Red Room environment matching the reference photo" },
+  { id: "photo-spotlight", name: "Spotlight", group: "studio", swatch: "#222", image: (photos as Record<string,string>)["spotlight"], prompt: "Spotlight environment matching the reference photo" },
+  { id: "photo-lagos-beach-sunset", name: "Lagos Beach Sunset", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lagos-beach-sunset"], prompt: "Lagos Beach Sunset environment matching the reference photo" },
+  { id: "photo-lagos-beach-club", name: "Lagos Beach Club", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lagos-beach-club"], prompt: "Lagos Beach Club environment matching the reference photo" },
+  { id: "photo-lagos-marina", name: "Lagos Marina", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lagos-marina"], prompt: "Lagos Marina environment matching the reference photo" },
+  { id: "photo-lagos-villa", name: "Lagos Villa", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lagos-villa"], prompt: "Lagos Villa environment matching the reference photo" },
+  { id: "photo-lagos-danfo-street", name: "Lagos Danfo Street", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lagos-danfo-street"], prompt: "Lagos Danfo Street environment matching the reference photo" },
+  { id: "photo-lekki-bridge", name: "Lekki Bridge", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["lekki-bridge"], prompt: "Lekki Bridge environment matching the reference photo" },
+  { id: "photo-street", name: "Street", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["street"], prompt: "Street environment matching the reference photo" },
+  { id: "photo-graffiti-color", name: "Graffiti Color", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["graffiti-color"], prompt: "Graffiti Color environment matching the reference photo" },
+  { id: "photo-graffiti-night", name: "Graffiti Night", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["graffiti-night"], prompt: "Graffiti Night environment matching the reference photo" },
+  { id: "photo-basketball-court", name: "Basketball Court", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["basketball-court"], prompt: "Basketball Court environment matching the reference photo" },
+  { id: "photo-car-park", name: "Car Park", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["car-park"], prompt: "Car Park environment matching the reference photo" },
+  { id: "photo-parking-lot", name: "Parking Lot", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["parking-lot"], prompt: "Parking Lot environment matching the reference photo" },
+  { id: "photo-playground", name: "Playground", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["playground"], prompt: "Playground environment matching the reference photo" },
+  { id: "photo-surreal-islands", name: "Surreal Islands", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["surreal-islands"], prompt: "Surreal Islands environment matching the reference photo" },
+  { id: "photo-surreal-mirror", name: "Surreal Mirror", group: "outdoor", swatch: "#222", image: (photos as Record<string,string>)["surreal-mirror"], prompt: "Surreal Mirror environment matching the reference photo" },
+  { id: "photo-bedroom", name: "Bedroom", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["bedroom"], prompt: "Bedroom environment matching the reference photo" },
+  { id: "photo-vanity", name: "Vanity", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["vanity"], prompt: "Vanity environment matching the reference photo" },
+  { id: "photo-hotel-suite", name: "Hotel Suite", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["hotel-suite"], prompt: "Hotel Suite environment matching the reference photo" },
+  { id: "photo-deluxe-cinema", name: "Deluxe Cinema", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["deluxe-cinema"], prompt: "Deluxe Cinema environment matching the reference photo" },
+  { id: "photo-nightclub", name: "Nightclub", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["nightclub"], prompt: "Nightclub environment matching the reference photo" },
+  { id: "photo-art-museum", name: "Art Museum", group: "rooms", swatch: "#222", image: (photos as Record<string,string>)["art-museum"], prompt: "Art Museum environment matching the reference photo" },
+  { id: "photo-wardrobe-modern", name: "Wardrobe Modern", group: "wardrobes", swatch: "#222", image: (photos as Record<string,string>)["wardrobe-modern"], prompt: "Wardrobe Modern environment matching the reference photo" },
+  { id: "photo-wardrobe-warm", name: "Wardrobe Warm", group: "wardrobes", swatch: "#222", image: (photos as Record<string,string>)["wardrobe-warm"], prompt: "Wardrobe Warm environment matching the reference photo" },
   studio("white", "White", "linear-gradient(135deg,#ffffff,#d9d9d9)", "pure white"),
   studio("black", "Black", "linear-gradient(135deg,#1a1a1a,#000)", "matte black"),
   studio("grey", "Grey", "linear-gradient(135deg,#9a9a9a,#555)", "neutral grey"),

@@ -25,7 +25,7 @@ export default function ScenePicker({ open, onClose, onPick, onUpload }: { open:
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
               {SCENE_PRESETS.filter((p) => p.group === g.id).map((p) => (
                 <button key={p.id} onClick={() => onPick(p)} className="group text-left">
-                  <div className="aspect-[3/4] rounded-xl border border-white/10 transition group-hover:scale-[1.03] group-hover:border-fuchsia-400/60" style={{ background: p.swatch }} />
+                  <div className="aspect-[3/4] rounded-xl border border-white/10 transition group-hover:scale-[1.03] group-hover:border-fuchsia-400/60" style={p.image ? { backgroundImage: `url(${p.image})`, backgroundSize: "cover", backgroundPosition: "center" } : { background: p.swatch }} />
                   <div className="mt-1.5 text-xs font-medium">{p.name}</div>
                 </button>
               ))}
