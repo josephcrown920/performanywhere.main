@@ -31,7 +31,9 @@ export const Route = createFileRoute("/api/render/start")({
 
           const scene = project.scene_prompt as string | null;
           const style = project.style_prompt as string | null;
+          const enhanced = (project.enhanced_prompt as string | null)?.trim();
           const prompt =
+            enhanced ||
             [scene, style].filter(Boolean).join(" — ") ||
             `${(project.title as string) || "A performance"} restaged cinematically: the same performer, same choreography, new world.`;
 
@@ -53,10 +55,12 @@ export const Route = createFileRoute("/api/render/start")({
               .from("project_renders")
               .update({ status: "running", provider_task_id: job.id })
               .eq("id", render.id);
+            await db.from("projects").update({ status: "running", provider: "lovable", error_message: null }).eq("id", projectId);
             return json({ ok: true, provider: "lovable", jobId: render.id });
           } catch (jobErr) {
             const msg = jobErr instanceof Error ? jobErr.message : String(jobErr);
             await db.from("project_renders").update({ status: "failed", error_message: msg }).eq("id", render.id);
+            await db.from("projects").update({ status: "failed", error_message: msg }).eq("id", projectId);
             return json({ error: msg }, 502);
           }
         } catch (e) {

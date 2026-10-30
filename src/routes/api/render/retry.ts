@@ -28,6 +28,7 @@ export const Route = createFileRoute("/api/render/retry")({
             .from("project_renders")
             .update({ status: "running", provider: "lovable", provider_task_id: job.id, error_message: null, output_path: null })
             .eq("id", render.id);
+          await db.from("projects").update({ status: "running", error_message: null, output_path: null }).eq("id", projectId);
           return json({ ok: true });
         } catch (e) {
           return errJson(e);
