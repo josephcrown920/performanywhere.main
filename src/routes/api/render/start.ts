@@ -44,12 +44,26 @@ export const Route = createFileRoute("/api/render/start")({
             .single();
           if (rErr) throw new Error(rErr.message);
 
+          // Send the scene photo (uploaded or picked preset) as the visual reference.
+          let imageDataUrl: string | undefined;
+          const sceneAsset = (assets ?? []).find((a: { kind: string }) => a.kind === "scene") as { storage_path: string; mime_type?: string | null } | undefined;
+          if (sceneAsset) {
+            const { data: blob } = await db.storage.from("uploads").download(sceneAsset.storage_path);
+            if (blob && blob.size < 8_000_000) {
+              const bytes = new Uint8Array(await blob.arrayBuffer());
+              let bin = "";
+              for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+              imageDataUrl = `data:${sceneAsset.mime_type || blob.type || "image/jpeg"};base64,${btoa(bin)}`;
+            }
+          }
+
           try {
             const job = await gatewayVideoStart({
               prompt,
               model: body.model?.startsWith("lovable/") ? body.model.slice("lovable/".length) : undefined,
               durationSeconds: body.options?.duration,
               aspectRatio: body.options?.aspectRatio,
+              imageDataUrl,
             });
             await db
               .from("project_renders")

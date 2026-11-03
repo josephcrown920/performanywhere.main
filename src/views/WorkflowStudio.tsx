@@ -73,8 +73,9 @@ export default function WorkflowStudio() {
       let { data: project, error } = await supabase.from("projects").insert({ ...base, selected_model: plan.model }).select("id").single();
       if (error?.message?.includes("selected_model")) ({ data: project, error } = await supabase.from("projects").insert(base).select("id").single());
       if (error || !project) throw new Error(error?.message || "Could not create project");
+      const sceneFile = !files.scene && scenePreset?.image ? await fetch(scenePreset.image).then(async (r) => { if (!r.ok) throw new Error("Could not load the scene photo"); const b = await r.blob(); return new File([b], `scene.${(b.type.split("/")[1] || "jpg").replace("jpeg", "jpg")}`, { type: b.type || "image/jpeg" }); }) : null;
       for (const kind of kinds) {
-        const asset = files[kind]; if (!asset) continue;
+        const asset = kind === "scene" && sceneFile ? { file: sceneFile } : files[kind]; if (!asset) continue;
         const ext = asset.file.name.split(".").pop() || "bin";
         const path = `${clientId}/${project.id}/${kind}.${ext}`;
         const up = await supabase.storage.from("uploads").upload(path, asset.file, { contentType: asset.file.type, upsert: true });

@@ -2,7 +2,20 @@ import { useEffect, useState, type ReactNode } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
-import { setClientId } from "@/lib/client-id";
+import { setClientId, takeLegacyClientId, clearLegacyClientId } from "@/lib/client-id";
+
+/** Moves projects, renders and credits made on this device before sign-in onto the signed-in account. */
+async function claimLegacy(s: Session) {
+  const legacyId = takeLegacyClientId();
+  if (!legacyId || legacyId === s.user.id) return;
+  try {
+    const r = await fetch("/api/account/claim-legacy", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${s.access_token}` }, body: JSON.stringify({ legacyId }) });
+    if (!r.ok) return;
+    clearLegacyClientId();
+    const { moved } = (await r.json()) as { moved?: number };
+    if (moved) toast.success("Your earlier projects and credits were added to your account");
+  } catch { /* try again next visit */ }
+}
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -16,7 +29,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       setSession(s);
     });
     supabase.auth.getSession().then(({ data: { session: s } }) => {
-      if (s) setClientId(s.user.id);
+      if (s) { setClientId(s.user.id); void claimLegacy(s); }
       setSession(s);
     });
     return () => data.subscription.unsubscribe();
