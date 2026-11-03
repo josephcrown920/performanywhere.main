@@ -28,13 +28,13 @@ import { StudioNav } from "@/agent/components/studio/StudioNav";
 export const Route = createFileRoute("/agent/")({
   head: () => ({
     meta: [
-      { title: "Aurora Creative Studio — AI Images & Videos in Seconds" },
+      { title: "Perform Anywhere Video Agent — AI Images & Videos in Seconds" },
       {
         name: "description",
         content:
           "Create AI images and videos in seconds. Seedream, Seedance and Seed models — turn any idea into stunning visuals, no design skills needed.",
       },
-      { property: "og:title", content: "Aurora Creative Studio — AI Images & Videos" },
+      { property: "og:title", content: "Perform Anywhere Video Agent — AI Images & Videos" },
       {
         property: "og:description",
         content:
@@ -78,7 +78,7 @@ const IMAGE_SIZES: Record<Aspect, Record<"2K" | "4K", string>> = {
 
 const WELCOME: ChatMsg = {
   role: "a",
-  text: "Yo Josh — Aurora here. Tell me the idea and I'll turn it into a shootable, out-the-mud visual. 🎬",
+  text: "Yo Josh — Perform Anywhere here. Tell me the idea and I'll turn it into a shootable, out-the-mud visual. 🎬",
 };
 
 const STORE_KEY = "aurora_state_v2";
@@ -246,7 +246,7 @@ function Index() {
         else if (file.type.startsWith("image/")) setRefs((prev) => [...prev, blob.url].slice(0, MAX_REFS));
       }
     } catch {
-      setReferenceError("Aurora couldn’t add that reference. Try the upload again.");
+      setReferenceError("Perform Anywhere couldn’t add that reference. Try the upload again.");
     }
   };
 
@@ -488,10 +488,10 @@ function Index() {
     } catch (err) {
       const rawError = err instanceof Error ? err.message : "Something went wrong.";
       const referenceFailure = classifySeedanceReferenceError(rawError);
-      if (referenceFailure) setReferenceError("This reference needs a quick identity check before Aurora can use it. Choose an authorized reference or use the reference only for motion, framing, or style.");
+      if (referenceFailure) setReferenceError("This reference needs a quick identity check before Perform Anywhere can use it. Choose an authorized reference or use the reference only for motion, framing, or style.");
       updateCreation(id, {
         status: "error",
-        error: referenceFailure ? "Aurora needs an authorized reference for this person. Try a different reference or continue without the person's identity." : rawError,
+        error: referenceFailure ? "Perform Anywhere needs an authorized reference for this person. Try a different reference or continue without the person's identity." : rawError,
       });
     } finally {
       setBusy(false);
@@ -757,7 +757,7 @@ function Index() {
 
       <div className="aurora-logo-top">
         <div className="aurora-logo-mark">A</div>
-        Aurora
+        Perform Anywhere
         <div className="aurora-bg-switch" role="group" aria-label="Background">
           {(["court", "moon", "chrome", "collage"] as BgTheme[]).map((t) => (
             <button
@@ -920,8 +920,8 @@ function Index() {
                 className="aurora-prompt-input"
                 placeholder={
                   mode === "image"
-                    ? "What should Aurora create?"
-                    : "What should Aurora create?"
+                    ? "What should Perform Anywhere create?"
+                    : "What should Perform Anywhere create?"
                 }
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -1329,7 +1329,7 @@ function Index() {
                   }
                 }}
               >
-                <span>{voiceOn ? "🔊 Aurora speaks its replies" : "🔇 Voice replies are off"}</span>
+                <span>{voiceOn ? "🔊 Perform Anywhere speaks its replies" : "🔇 Voice replies are off"}</span>
                 <span className="aurora-toggle-dot" />
               </button>
             </div>
@@ -1375,7 +1375,7 @@ function Index() {
                       setMemoryDraft("");
                     }
                   }}
-                  placeholder="Add something Aurora should always remember"
+                  placeholder="Add something Perform Anywhere should always remember"
                 />
                 <button
                   className="aurora-btn-s"
