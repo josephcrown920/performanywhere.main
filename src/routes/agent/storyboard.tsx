@@ -11,9 +11,9 @@ import { loadTimeline, newId, saveTimeline } from "@/agent/lib/timeline-state";
 export const Route = createFileRoute("/agent/storyboard")({
   head: () => ({
     meta: [
-      { title: "Storyboard Agent — Aurora Studio" },
+      { title: "Storyboard Agent — Perform Anywhere" },
       { name: "description", content: "Type a scene brief and get a shot-by-shot storyboard with ready-to-use generation prompts." },
-      { property: "og:title", content: "Storyboard Agent — Aurora Studio" },
+      { property: "og:title", content: "Storyboard Agent — Perform Anywhere" },
       { property: "og:description", content: "Scene brief in, shot list with camera, light and prompts out." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

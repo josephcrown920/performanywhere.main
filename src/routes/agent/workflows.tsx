@@ -23,9 +23,9 @@ import { loadTimeline, newId, saveTimeline, type Clip, type TrackId } from "@/ag
 export const Route = createFileRoute("/agent/workflows")({
   head: () => ({
     meta: [
-      { title: "Workflows — Aurora Studio" },
+      { title: "Workflows — Perform Anywhere" },
       { name: "description", content: "Import ComfyUI workflows, build your own node pipelines and run them in the studio." },
-      { property: "og:title", content: "Workflows — Aurora Studio" },
+      { property: "og:title", content: "Workflows — Perform Anywhere" },
       { property: "og:description", content: "ComfyUI import and export, node editor and a runner that feeds the timeline." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

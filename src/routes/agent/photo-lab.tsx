@@ -7,9 +7,9 @@ import { DEFAULT_ADJUST, LOOKS, cssFilter, type Adjust } from "@/agent/lib/pro-p
 export const Route = createFileRoute("/agent/photo-lab")({
   head: () => ({
     meta: [
-      { title: "Photo Lab — Aurora Studio" },
+      { title: "Photo Lab — Perform Anywhere" },
       { name: "description", content: "Retouch stills with Out The Mud looks, manual sliders and a one-click upscale." },
-      { property: "og:title", content: "Photo Lab — Aurora Studio" },
+      { property: "og:title", content: "Photo Lab — Perform Anywhere" },
       { property: "og:description", content: "Ten cinematic looks, fine sliders and export at up to 4x." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

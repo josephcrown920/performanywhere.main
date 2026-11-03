@@ -33,12 +33,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/flow/canvas")({
   head: () => ({
     meta: [
-      { title: "Canvas — Flowaurora" },
+      { title: "Canvas — Perform Anywhere Director" },
       {
         name: "description",
         content: "The node-based generation canvas: wire script, shots, characters and image outputs.",
       },
-      { property: "og:title", content: "Canvas — Flowaurora" },
+      { property: "og:title", content: "Canvas — Perform Anywhere Director" },
       { property: "og:description", content: "Your whole generation pipeline, wired on one node canvas." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

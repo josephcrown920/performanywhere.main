@@ -10,9 +10,9 @@ import { loadTimeline, newId, saveTimeline, type Clip, type TimelineDoc } from "
 export const Route = createFileRoute("/agent/beat-director")({
   head: () => ({
     meta: [
-      { title: "Beat Sync Director — Aurora Studio" },
+      { title: "Beat Sync Director — Perform Anywhere" },
       { name: "description", content: "Upload a trap or drill track and turn its beats into a shot-and-effects timeline." },
-      { property: "og:title", content: "Beat Sync Director — Aurora Studio" },
+      { property: "og:title", content: "Beat Sync Director — Perform Anywhere" },
       { property: "og:description", content: "Beat detection plus an AI music video director that cuts on the kick." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
