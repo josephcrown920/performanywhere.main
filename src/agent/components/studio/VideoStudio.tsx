@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from "react";
 export type StudioTab = "generator" | "timeline" | "storyboard" | "beats" | "workflows" | "photo" | "crew";
 
 const paths: Record<StudioTab, string> = {
-  generator: "/", timeline: "/timeline", storyboard: "/storyboard",
-  beats: "/beat-director", workflows: "/workflows", photo: "/agent/photo-lab", crew: "/studio",
+  generator: "/agent", timeline: "/agent/timeline", storyboard: "/agent/storyboard",
+  beats: "/agent/beat-director", workflows: "/agent/workflows", photo: "/agent/photo-lab", crew: "/agent/studio",
 };
 
 export interface VideoStudioProps {
-  /** Absolute URL of your hosted Aurora studio. Defaults to this origin. */
+  /** Absolute URL of your hosted Perform Anywhere studio. Defaults to this origin. */
   studioUrl?: string;
   defaultTab?: StudioTab;
   title?: string;

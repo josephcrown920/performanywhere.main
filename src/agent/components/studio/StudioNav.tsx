@@ -60,6 +60,9 @@ export function StudioNav() {
       <Link to="/agent" className="aurora-nav-brand">
         <span className="dot" /> Perform Anywhere
       </Link>
+      <Link to="/" className="aurora-nav-tab" title="Back to Perform Anywhere" style={{ marginBottom: 6 }}>
+        <span className="ico">←</span><span>Perform Anywhere home</span>
+      </Link>
 
       <nav className="aurora-nav-tabs" aria-label="Studio">
         {!embedded && <Link to="/agent/editor" className="aurora-nav-tab" title="Open the connected editor"><span className="ico">▣</span><span>Unified editor</span></Link>}
