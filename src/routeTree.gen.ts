@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as AgentRouteImport } from './routes/agent'
+import { Route as EditorRouteImport } from './routes/editor'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -94,6 +95,11 @@ const AgentRoute = AgentRouteImport.update({
   path: '/agent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EditorRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MotionTestRoute = MotionTestRouteImport.update({
   id: '/motion-test',
   path: '/motion-test',
@@ -160,19 +166,19 @@ const AgentWorkflowsRoute = AgentWorkflowsRouteImport.update({
   getParentRoute: () => AgentRoute,
 } as any)
 const EditorIndexRoute = EditorIndexRouteImport.update({
-  id: '/editor/',
-  path: '/editor/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditorRoute,
 } as any)
 const EditorAdminRoute = EditorAdminRouteImport.update({
-  id: '/editor/admin',
-  path: '/editor/admin',
-  getParentRoute: () => rootRouteImport,
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => EditorRoute,
 } as any)
 const EditorAuthRoute = EditorAuthRouteImport.update({
-  id: '/editor/auth',
-  path: '/editor/auth',
-  getParentRoute: () => rootRouteImport,
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => EditorRoute,
 } as any)
 const FlowCanvasRoute = FlowCanvasRouteImport.update({
   id: '/flow/canvas',
@@ -432,6 +438,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
+  '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
@@ -574,6 +581,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
+  '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
@@ -647,6 +655,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
+    | '/editor'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
@@ -788,6 +797,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
+    | '/editor'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
@@ -860,18 +870,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
   AgentRoute: typeof AgentRouteWithChildren
+  EditorRoute: typeof EditorRouteWithChildren
   MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
   PrivacyRoute: typeof PrivacyRoute
   StudioRoute: typeof StudioRoute
   TermsRoute: typeof TermsRoute
-  EditorAdminRoute: typeof EditorAdminRoute
-  EditorAuthRoute: typeof EditorAuthRoute
   FlowCanvasRoute: typeof FlowCanvasRoute
   FlowDirectorRoute: typeof FlowDirectorRoute
   FlowStoryboardRoute: typeof FlowStoryboardRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
-  EditorIndexRoute: typeof EditorIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAccountClaimLegacyRoute: typeof ApiAccountClaimLegacyRoute
   ApiAgentCoDirectorRoute: typeof ApiAgentCoDirectorRoute
@@ -937,6 +945,13 @@ declare module '@tanstack/react-router' {
       path: '/agent'
       fullPath: '/agent'
       preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editor': {
+      id: '/editor'
+      path: '/editor'
+      fullPath: '/editor'
+      preLoaderRoute: typeof EditorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/motion-test': {
@@ -1032,24 +1047,24 @@ declare module '@tanstack/react-router' {
     }
     '/editor/': {
       id: '/editor/'
-      path: '/editor'
+      path: '/'
       fullPath: '/editor/'
       preLoaderRoute: typeof EditorIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EditorRoute
     }
     '/editor/admin': {
       id: '/editor/admin'
-      path: '/editor/admin'
+      path: '/admin'
       fullPath: '/editor/admin'
       preLoaderRoute: typeof EditorAdminRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EditorRoute
     }
     '/editor/auth': {
       id: '/editor/auth'
-      path: '/editor/auth'
+      path: '/auth'
       fullPath: '/editor/auth'
       preLoaderRoute: typeof EditorAuthRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EditorRoute
     }
     '/flow/canvas': {
       id: '/flow/canvas'
@@ -1428,6 +1443,21 @@ const AgentRouteChildren: AgentRouteChildren = {
 
 const AgentRouteWithChildren = AgentRoute._addFileChildren(AgentRouteChildren)
 
+interface EditorRouteChildren {
+  EditorAdminRoute: typeof EditorAdminRoute
+  EditorAuthRoute: typeof EditorAuthRoute
+  EditorIndexRoute: typeof EditorIndexRoute
+}
+
+const EditorRouteChildren: EditorRouteChildren = {
+  EditorAdminRoute: EditorAdminRoute,
+  EditorAuthRoute: EditorAuthRoute,
+  EditorIndexRoute: EditorIndexRoute,
+}
+
+const EditorRouteWithChildren =
+  EditorRoute._addFileChildren(EditorRouteChildren)
+
 interface ApiEdVideoIdRouteChildren {
   ApiEdVideoIdContentRoute: typeof ApiEdVideoIdContentRoute
 }
@@ -1480,18 +1510,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
   AgentRoute: AgentRouteWithChildren,
+  EditorRoute: EditorRouteWithChildren,
   MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,
   PrivacyRoute: PrivacyRoute,
   StudioRoute: StudioRoute,
   TermsRoute: TermsRoute,
-  EditorAdminRoute: EditorAdminRoute,
-  EditorAuthRoute: EditorAuthRoute,
   FlowCanvasRoute: FlowCanvasRoute,
   FlowDirectorRoute: FlowDirectorRoute,
   FlowStoryboardRoute: FlowStoryboardRoute,
   ProjectsIdRoute: ProjectsIdRoute,
-  EditorIndexRoute: EditorIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAccountClaimLegacyRoute: ApiAccountClaimLegacyRoute,
   ApiAgentCoDirectorRoute: ApiAgentCoDirectorRoute,
