@@ -560,7 +560,6 @@ function CanvasPage() {
           )}
 
           <CanvasAgentDock graph={{ nodes, links }} setGraph={setGraph} imageModel={imageModel} />
-        </div>
       </div>
       </div>
     </AppShell>
