@@ -1,0 +1,5 @@
+{
+  "1": { "class_type": "CLIPTextEncode", "inputs": { "prompt": "cinematic chrome portrait, rain, high contrast" } },
+  "2": { "class_type": "KSampler", "inputs": { "steps": 24, "cfg": 6 } },
+  "3": { "class_type": "SaveImage", "inputs": { "filename_prefix": "aurora" } }
+}
