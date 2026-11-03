@@ -127,7 +127,7 @@ export function AgentDock() {
         <aside className="aurora-agent-dock">
           <header>
             <div>
-              <strong>Aurora Film Studio agent</strong>
+              <strong>Perform Anywhere agent</strong>
               <em>Dola Seed · GLM-5 · ModelArk</em>
             </div>
             <button className={`aurora-agent-auto${auto ? " on" : ""}`} onClick={toggleAuto} title="Auto mode: agent generates without asking, and results go straight onto the timeline">

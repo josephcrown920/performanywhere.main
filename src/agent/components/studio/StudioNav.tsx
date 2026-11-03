@@ -58,7 +58,10 @@ export function StudioNav() {
     {open && <div className="aurora-side-scrim" onClick={() => setOpen(false)} />}
     <div className={`aurora-nav aurora-side${open ? " open" : ""}`} ref={wrap}>
       <Link to="/agent" className="aurora-nav-brand">
-        <span className="dot" /> Aurora Studio
+        <span className="dot" /> Perform Anywhere
+      </Link>
+      <Link to="/projects" className="aurora-nav-tab" title="Back to Perform Anywhere" style={{ marginBottom: 6 }}>
+        <span className="ico">←</span><span>Perform Anywhere home</span>
       </Link>
 
       <nav className="aurora-nav-tabs" aria-label="Studio">

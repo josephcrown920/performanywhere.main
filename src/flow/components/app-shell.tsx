@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS = [
   { to: "/flow/storyboard", label: "Storyboard", icon: Clapperboard },
   { to: "/flow/director", label: "AI Director", icon: Sparkles },
-  { to: "/", label: "Perform Anywhere", icon: Users },
+  { to: "/projects", label: "Perform Anywhere", icon: Users },
   { to: "/flow/canvas", label: "Canvas", icon: Network },
 ] as const;
 
@@ -16,8 +16,11 @@ export function Logo({ className }: { className?: string }) {
       <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-holo-violet via-holo-magenta to-holo-cyan shadow-[0_0_18px_-2px] shadow-holo-violet/60">
         <FolderKanban className="h-4.5 w-4.5 text-foreground" strokeWidth={2.4} />
       </span>
-      <span className="font-display text-sm uppercase tracking-[0.18em] text-foreground">
-        Flow<span className="holo-text">aurora</span>
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-sm uppercase tracking-[0.18em] text-foreground">
+          Perform <span className="holo-text">Anywhere</span>
+        </span>
+        <span className="font-head text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Director</span>
       </span>
     </Link>
   );

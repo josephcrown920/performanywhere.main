@@ -21,12 +21,12 @@ import { Textarea } from "@/components/ui/textarea";
 export const Route = createFileRoute("/flow/director")({
   head: () => ({
     meta: [
-      { title: "AI Director — Flowaurora" },
+      { title: "AI Director — Perform Anywhere Director" },
       {
         name: "description",
         content: "Give the AI Director a logline and get a full cinematic shot list with camera notes.",
       },
-      { property: "og:title", content: "AI Director — Flowaurora" },
+      { property: "og:title", content: "AI Director — Perform Anywhere Director" },
       { property: "og:description", content: "A logline in, a full shot list out." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

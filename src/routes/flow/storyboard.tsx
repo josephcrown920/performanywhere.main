@@ -13,12 +13,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/flow/storyboard")({
   head: () => ({
     meta: [
-      { title: "Storyboard — Flowaurora" },
+      { title: "Storyboard — Perform Anywhere Director" },
       {
         name: "description",
         content: "The filmstrip board: every shot with its number, description, camera move and frame preview.",
       },
-      { property: "og:title", content: "Storyboard — Flowaurora" },
+      { property: "og:title", content: "Storyboard — Perform Anywhere Director" },
       {
         property: "og:description",
         content: "A filmstrip grid of shots with camera notes and prismatic frame previews.",

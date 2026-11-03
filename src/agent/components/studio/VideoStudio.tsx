@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from "react";
 export type StudioTab = "generator" | "timeline" | "storyboard" | "beats" | "workflows" | "photo" | "crew";
 
 const paths: Record<StudioTab, string> = {
-  generator: "/", timeline: "/timeline", storyboard: "/storyboard",
-  beats: "/beat-director", workflows: "/workflows", photo: "/agent/photo-lab", crew: "/studio",
+  generator: "/agent", timeline: "/agent/timeline", storyboard: "/agent/storyboard",
+  beats: "/agent/beat-director", workflows: "/agent/workflows", photo: "/agent/photo-lab", crew: "/agent/studio",
 };
 
 export interface VideoStudioProps {
-  /** Absolute URL of your hosted Aurora studio. Defaults to this origin. */
+  /** Absolute URL of your hosted Perform Anywhere studio. Defaults to this origin. */
   studioUrl?: string;
   defaultTab?: StudioTab;
   title?: string;
@@ -16,7 +16,7 @@ export interface VideoStudioProps {
 }
 
 /** Portable React embed. The hosted studio owns accounts, tools, styles and providers. */
-export function VideoStudio({ studioUrl, defaultTab = "timeline", title = "Aurora Video Studio", className = "" }: VideoStudioProps) {
+export function VideoStudio({ studioUrl, defaultTab = "timeline", title = "Perform Anywhere Video Studio", className = "" }: VideoStudioProps) {
   const [source, setSource] = useState("");
   const [status, setStatus] = useState<"loading" | "loaded" | "slow" | "invalid">("loading");
   const [attempt, setAttempt] = useState(0);

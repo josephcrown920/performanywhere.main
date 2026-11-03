@@ -2,7 +2,6 @@ import { ArrowUpRight, Clapperboard, Film, Layers3, Plus, Workflow } from "lucid
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DEFAULT_SITE, readSite, type SiteSettings } from "@/agent/lib/guy/site-settings";
-import studioLogo from "@/agent/assets/guy/gui-video-studio-logo.png";
 import scene1 from "@/agent/assets/guy/scene1.jpg";
 import tileEditor from "@/agent/assets/guy/tile-editor.png";
 import tileCanvas from "@/agent/assets/guy/tile-canvas.png";
@@ -52,7 +51,9 @@ export function StudioCover({
       <img src={site.heroImage || scene1} alt="" aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] w-full object-cover opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
       <div className="mx-auto flex w-full max-w-3xl flex-col px-4 pb-16 pt-12 sm:pt-20">
         <p className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          <img src={studioLogo} width={1536} height={512} alt="GUI Video Studio" className="h-9 w-auto max-w-full object-contain" />
+          <img src="/aurora-logo.png" width={36} height={36} alt="" className="h-9 w-9 object-contain" />
+          <span className="text-foreground">Perform Anywhere</span>
+          <span>Studio</span>
         </p>
         <h1 className="font-display text-4xl font-bold leading-[1.02] tracking-tight sm:text-6xl">
           {site.headline} <span className="text-accent">{site.accentWord}</span>

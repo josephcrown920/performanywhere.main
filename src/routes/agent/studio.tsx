@@ -99,13 +99,13 @@ import scene3 from "@/agent/assets/guy/scene3.jpg";
 export const Route = createFileRoute("/agent/studio")({
   head: () => ({
     meta: [
-      { title: "GUI Video Studio — Creative editor" },
+      { title: "Perform Anywhere — Creative editor" },
       {
         name: "description",
         content:
           "Create images and videos, direct your edit with AI, and preview every cut on your timeline.",
       },
-      { property: "og:title", content: "GUI Video Studio — Creative editor" },
+      { property: "og:title", content: "Perform Anywhere — Creative editor" },
       {
         property: "og:description",
         content:
