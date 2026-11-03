@@ -17,7 +17,7 @@ export type SiteSettings = {
 
 export const SITE_KEY = "reel-site-settings";
 export const DEFAULT_SITE: SiteSettings = {
-  brand: "GUI Video Studio",
+  brand: "Perform Anywhere Editor",
   headline: "What are we making",
   accentWord: "today?",
   tagline: "Describe it once. The studio writes the storyboard, makes every shot and lines them up on your timeline.",

@@ -46,7 +46,7 @@ export async function openRouterImage(prompt: string, images: string[] = []): Pr
   const content: unknown[] = [{ type: "text", text: prompt }, ...images.map((url) => ({ type: "image_url", image_url: { url } }))];
   const r = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-Title": "GUI Video Studio" },
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-Title": "Perform Anywhere" },
     body: JSON.stringify({ model: "google/gemini-2.5-flash-image", modalities: ["image", "text"], messages: [{ role: "user", content }] }),
   });
   const d = (await r.json().catch(() => ({}))) as { choices?: { message?: { images?: { image_url?: { url?: string } }[] } }[]; error?: { message?: string } };

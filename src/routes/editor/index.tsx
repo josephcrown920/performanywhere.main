@@ -4,7 +4,6 @@ import { generationIntent } from "@/editor/lib/chat-intent";
 import { CreativeTools } from "@/editor/components/CreativeTools";
 import { WorkflowStudio } from "@/editor/components/WorkflowStudio";
 import { PerformStudio } from "@/editor/components/PerformStudio";
-import logoIcon from "@/editor/assets/gui-video-studio-logo.png";
 import { TimelineHoverPreview } from "@/editor/components/TimelineHoverPreview";
 import { sourceTime } from "@/editor/lib/media-time";
 import { EffectPreview } from "@/editor/components/EffectPreview";
@@ -927,7 +926,7 @@ function Editor() {
             <i className="size-2.5 rounded-full bg-chart-5" />
             <i className="size-2.5 rounded-full bg-chart-3" />
           </span>
-          <img src={logoIcon} width={32} height={32} alt="" className="size-8 shrink-0 object-contain" />
+          <img src="/pa-mark.svg" width={32} height={32} alt="" className="size-8 shrink-0 object-contain" />
           <span className="hidden font-display text-xs font-bold sm:inline">Perform Anywhere Editor</span>
         </div>
         <div className="studio-header-tools ml-auto flex min-w-0 items-center gap-1.5">
