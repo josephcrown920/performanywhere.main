@@ -136,3 +136,161 @@
     scroll-behavior: auto !important;
   }
 }
+/* FlowAurora + Video Agent extras */
+@theme inline {
+  --color-holo-violet: var(--holo-violet);
+  --color-holo-cyan: var(--holo-cyan);
+  --color-holo-magenta: var(--holo-magenta);
+  --color-holo-amber: var(--holo-amber);
+  --color-surface: var(--surface);
+  --font-display: "Archivo Black", "Archivo", sans-serif;
+  --font-head: "Archivo", sans-serif;
+  --font-flow: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+:root {
+  --holo-violet: oklch(0.67 0.25 300);
+  --holo-cyan: oklch(0.8 0.14 200);
+  --holo-magenta: oklch(0.68 0.26 350);
+  --holo-amber: oklch(0.83 0.14 80);
+  --surface: oklch(0.14 0.024 285);
+}
+@layer components {
+  /* Frosted dark glass panel */
+  .glass {
+    background: color-mix(in oklab, var(--card) 62%, transparent);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  .glass-strong {
+    background: color-mix(in oklab, var(--card) 88%, transparent);
+    border: 1px solid oklch(1 0 0 / 14%);
+    backdrop-filter: blur(28px) saturate(150%);
+  }
+
+  /* Holographic gradient display type */
+  .holo-text {
+    background: linear-gradient(
+      100deg,
+      var(--holo-cyan) 0%,
+      var(--holo-violet) 38%,
+      var(--holo-magenta) 70%,
+      var(--holo-amber) 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: holo-shift 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes holo-shift {
+    from {
+      background-position: 0% 50%;
+    }
+    to {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Thin prismatic rule */
+  .holo-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--holo-violet) 25%,
+      var(--holo-cyan) 50%,
+      var(--holo-magenta) 75%,
+      transparent
+    );
+    opacity: 0.7;
+  }
+
+  /* Holographic iridescent card edge */
+  .holo-edge {
+    position: relative;
+  }
+  .holo-edge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--holo-cyan) 70%, transparent),
+      color-mix(in oklab, var(--holo-violet) 45%, transparent) 35%,
+      transparent 55%,
+      color-mix(in oklab, var(--holo-magenta) 60%, transparent)
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Cinematic film grain overlay */
+  .film-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Ambient aurora glow backdrop */
+  .aurora {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(42% 34% at 18% 12%, color-mix(in oklab, var(--holo-violet) 26%, transparent), transparent 70%),
+      radial-gradient(38% 30% at 82% 18%, color-mix(in oklab, var(--holo-magenta) 20%, transparent), transparent 70%),
+      radial-gradient(46% 40% at 62% 88%, color-mix(in oklab, var(--holo-cyan) 16%, transparent), transparent 70%);
+    filter: blur(10px);
+  }
+
+  /* Animated shimmer sweep for loading states */
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      transparent 30%,
+      color-mix(in oklab, var(--holo-violet) 22%, transparent) 50%,
+      transparent 70%
+    );
+    animation: shimmer-sweep 1.4s linear infinite;
+  }
+
+  @keyframes shimmer-sweep {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Node canvas grid backdrop */
+  .canvas-grid {
+    background-color: oklch(0.1 0.018 285);
+    background-image:
+      linear-gradient(oklch(1 0 0 / 4%) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 4%) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+}
