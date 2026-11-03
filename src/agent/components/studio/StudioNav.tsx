@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { LLMS, type LlmId } from "@/agent/lib/pro-presets";
 
 export const WORKSPACES = [
-  { to: "/agent/", icon: "🎨", name: "Generator & Director", note: "Images, video and the creative director" },
+  { to: "/agent", icon: "🎨", name: "Generator & Director", note: "Images, video and the creative director" },
   { to: "/agent/storyboard", icon: "🗂", name: "Storyboard", note: "Scene brief to shot-by-shot prompts" },
   { to: "/agent/timeline", icon: "🎬", name: "Multi-Track Timeline", note: "V1–V4, A1–A3, beat markers, effects" },
   { to: "/agent/beat-director", icon: "⚡", name: "Beat Sync Director", note: "Upload a track, get a cut on the beat" },
@@ -57,7 +57,7 @@ export function StudioNav() {
     <button className="aurora-side-toggle" aria-label="Open menu" onClick={() => setOpen((v) => !v)}>☰</button>
     {open && <div className="aurora-side-scrim" onClick={() => setOpen(false)} />}
     <div className={`aurora-nav aurora-side${open ? " open" : ""}`} ref={wrap}>
-      <Link to="/agent/" className="aurora-nav-brand">
+      <Link to="/agent" className="aurora-nav-brand">
         <span className="dot" /> Aurora Studio
       </Link>
 

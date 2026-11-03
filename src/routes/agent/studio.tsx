@@ -962,7 +962,7 @@ function Editor() {
             <Button size="sm" variant="ghost" aria-label="Perform Anywhere" aria-pressed={mode === "perform"} onClick={() => setMode("perform")}><Film className="size-3" /><span className="hidden sm:inline">Perform</span></Button>
             <Button size="sm" variant="ghost" aria-label="Creative tools" aria-pressed={mode === "creative"} onClick={() => setMode("creative")}><Wand2 className="size-3" /><span className="hidden sm:inline">Tools</span></Button>
           </nav>
-          <Button asChild size="sm" variant="ghost"><Link to="/agent/" aria-label="Visual settings"><Gauge className="size-3.5" /><span className="hidden sm:inline">Visual settings</span></Link></Button>
+          <Button asChild size="sm" variant="ghost"><Link to="/agent" aria-label="Visual settings"><Gauge className="size-3.5" /><span className="hidden sm:inline">Visual settings</span></Link></Button>
           {signedIn ? (
             <Button size="sm" variant="ghost" aria-label="Sign out" onClick={() => void supabase.auth.signOut()}>
               <LogIn className="size-3.5" /><span className="hidden sm:inline">Sign out</span>
