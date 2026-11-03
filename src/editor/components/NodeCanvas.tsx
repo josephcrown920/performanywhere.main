@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Type, ImageUp, ImageIcon, Film, Plus, Minus, Maximize, Play, Loader2, Trash2, FolderInput, Hand, MousePointer2, Bot } from "lucide-react";
-import { IMAGE_ENGINES, VIDEO_ENGINES, DEFAULT_IMAGE_ENGINE, DEFAULT_VIDEO_ENGINE, motionPhrase, type Motion } from "@/lib/engines";
-import { AGENTS } from "@/lib/agents";
-import { readSse } from "@/lib/agent-stream";
-import { generateImage, generateVideo, urlToBlob } from "@/lib/generate";
+import { IMAGE_ENGINES, VIDEO_ENGINES, DEFAULT_IMAGE_ENGINE, DEFAULT_VIDEO_ENGINE, motionPhrase, type Motion } from "@/editor/lib/engines";
+import { AGENTS } from "@/editor/lib/agents";
+import { readSse } from "@/editor/lib/agent-stream";
+import { generateImage, generateVideo, urlToBlob } from "@/editor/lib/generate";
 import { cn } from "@/lib/utils";
 
 type NodeType = "prompt" | "upload" | "image" | "video" | "agent";
@@ -177,7 +177,7 @@ export function NodeCanvas({ motion, onAsset }: { motion: Motion; onAsset: (url:
     patch(n.id, { busy: true, error: undefined, reply: undefined, log: [...log] });
     const say = (l: string) => { log.push(l); patch(n.id, { log: [...log] }); };
     try {
-      const r = await fetch("/api/agent", {
+      const r = await fetch("/api/ed/agent", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ agent: "orchestrator", assets: [], clips: [], brief: `${brief}\n\nAlways return a storyboard of 3-6 shots for this.` }),
       });

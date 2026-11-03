@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import { ModelLogo } from "@/components/ModelLogo";
+import { ModelLogo } from "@/editor/components/ModelLogo";
 import { Paperclip, CheckCircle2, Loader2, AlertCircle, CircleDashed, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Conversation,
   ConversationContent,
   ConversationScrollButton,
-} from "@/components/ai-elements/conversation";
-import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
+} from "@/editor/components/ai-elements/conversation";
+import { Message, MessageContent, MessageResponse } from "@/editor/components/ai-elements/message";
 import {
   PromptInput,
   PromptInputTextarea,
   PromptInputFooter,
   PromptInputSubmit,
-} from "@/components/ai-elements/prompt-input";
+} from "@/editor/components/ai-elements/prompt-input";
 import { cn } from "@/lib/utils";
-import { VoiceControls } from "@/components/VoiceControls";
+import { VoiceControls } from "@/editor/components/VoiceControls";
 
 export type CreativeMessage = {
   role: "user" | "assistant";

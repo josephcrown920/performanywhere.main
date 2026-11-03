@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Volume2 } from "lucide-react";
-import { listVoices, readVoice, saveVoice, speak, type VoiceSettings } from "@/lib/voice";
+import { listVoices, readVoice, saveVoice, speak, type VoiceSettings } from "@/editor/lib/voice";
 
 /** Voice picker + volume for spoken replies; sits in the chat box. */
 export function VoiceControls() {

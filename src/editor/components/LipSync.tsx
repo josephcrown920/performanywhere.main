@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Bot, ImageIcon, Loader2, Mic2, Music, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { generateVideo } from "@/lib/generate";
-import { readSse } from "@/lib/agent-stream";
-import { CreativeContext } from "@/components/CreativeContext";
+import { generateVideo } from "@/editor/lib/generate";
+import { readSse } from "@/editor/lib/agent-stream";
+import { CreativeContext } from "@/editor/components/CreativeContext";
 
 const ENGINES = [
   { id: "omni", label: "Gemini Omni (built-in)" },
@@ -45,7 +45,7 @@ export function LipSync({ onDone }: { onDone: (url: string) => void }) {
     if (!face) return "";
     setStatus("Lip sync agent is studying your references…");
     const data = await toJpeg(face);
-    const r = await fetch("/api/agent", {
+    const r = await fetch("/api/ed/agent", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         agent: "gemini", assets: [], clips: [],

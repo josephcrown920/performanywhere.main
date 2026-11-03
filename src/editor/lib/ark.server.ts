@@ -1,4 +1,4 @@
-import { ARK_BASE, arkKey } from "@/lib/gateway.server";
+import { ARK_BASE, arkKey } from "@/editor/lib/gateway.server";
 
 /** Calls ModelArk with the server-held key; returns a JSON error Response when not configured. */
 export async function arkFetch(path: string, init: RequestInit = {}) {

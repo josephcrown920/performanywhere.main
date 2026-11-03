@@ -1,4 +1,4 @@
-import type { TrackId } from "@/lib/agents";
+import type { TrackId } from "@/editor/lib/agents";
 
 export type MediaKind = "video" | "image" | "audio";
 export type EditorAsset = { id: string; name: string; kind: MediaKind; url: string; dur: number; generated?: boolean };

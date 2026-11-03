@@ -1,4 +1,4 @@
-import { sequence, buildSequencePrompt, shotCode, type Shot } from "@/lib/layers-storyboard";
+import { sequence, buildSequencePrompt, shotCode, type Shot } from "@/editor/lib/layers-storyboard";
 
 export type LayersProject = {
   id: string; name: string; prompt: string; engine: string; videoEngine: string;

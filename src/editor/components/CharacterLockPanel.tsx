@@ -4,7 +4,7 @@ import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { MAX_CHARACTER_REFS, readCharacterLock, saveCharacterLock, type CharacterLock } from "@/lib/character-lock";
+import { MAX_CHARACTER_REFS, readCharacterLock, saveCharacterLock, type CharacterLock } from "@/editor/lib/character-lock";
 
 export function useCharacterLock(): [CharacterLock, (l: CharacterLock) => void] {
   const [lock, setLock] = useState<CharacterLock>({ on: false, name: "", notes: "", refs: [] });

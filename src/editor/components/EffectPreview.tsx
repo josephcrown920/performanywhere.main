@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
-import { FILTERS, type Preset } from "@/lib/engines";
-import demo from "@/assets/vfx-camera-demo.webm.asset.json";
-import still from "@/assets/vfx-demo-still.jpg";
-import { vfxClass } from "@/components/Terminal";
+import { FILTERS, type Preset } from "@/editor/lib/engines";
+import demo from "@/editor/assets/vfx-camera-demo.webm.asset.json";
+import still from "@/editor/assets/vfx-demo-still.jpg";
+import { vfxClass } from "@/editor/components/Terminal";
 
 /** Two-second effect demo that plays while the pointer (or focus/touch) is on it. */
 export function EffectPreview({ preset, source }: { preset: Preset; source?: string | undefined }) {

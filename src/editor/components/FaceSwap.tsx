@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { generateImage } from "@/lib/generate";
-import { IMAGE_ENGINES, DEFAULT_IMAGE_ENGINE } from "@/lib/engines";
+import { generateImage } from "@/editor/lib/generate";
+import { IMAGE_ENGINES, DEFAULT_IMAGE_ENGINE } from "@/editor/lib/engines";
 import { Loader2, ScanFace } from "lucide-react";
 
 export function FaceSwap({ onAsset }: { onAsset: (url: string, kind: "image" | "video", name: string) => void }) {

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Box, Download, Film, ImagePlus, Layers, Loader2, Scissors, Sparkles, Upload, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { DEPTH_GUIDE, depthMap, generateImage, generateVideo, urlToBlob } from "@/lib/generate";
-import { removeImageBackground } from "@/lib/remove-background";
-import { readSite } from "@/lib/site-settings";
-import { FaceSwap } from "@/components/FaceSwap";
-import burningHouse from "@/assets/burning-house-background.jpg";
-import { DEFAULT_VIDEO_ENGINE, VIDEO_ENGINES } from "@/lib/engines";
+import { DEPTH_GUIDE, depthMap, generateImage, generateVideo, urlToBlob } from "@/editor/lib/generate";
+import { removeImageBackground } from "@/editor/lib/remove-background";
+import { readSite } from "@/editor/lib/site-settings";
+import { FaceSwap } from "@/editor/components/FaceSwap";
+import burningHouse from "@/editor/assets/burning-house-background.jpg";
+import { DEFAULT_VIDEO_ENGINE, VIDEO_ENGINES } from "@/editor/lib/engines";
 
 type AddAsset = (url: string, kind: "image" | "video", name: string, place?: boolean) => void;
 type Tab = "perform" | "motion" | "background" | "blender" | "face";

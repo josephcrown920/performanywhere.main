@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowDownToLine, ArrowUpFromLine, Check, Film, ImagePlus, Loader2, Network, Palette, Play, Plug, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { downloadJson, missingComfyNodes, normalizeComfyUrl, parseComfyWorkflow, prepareComfyWorkflow, stylePrompt, STYLE_KEY, type ComfyWorkflow, type Moodboard } from "@/lib/creative-tools";
-import importedWorkflow from "@/data/krea-style-workflow.json";
-import pop from "@/assets/vintage-pop-reference.jpg";
-import thermal from "@/assets/thermal-airbrush-reference.jpg";
-import motionThumb from "@/assets/thumb-motion.jpg";
-import upscaleThumb from "@/assets/thumb-upscale.jpg";
+import { downloadJson, missingComfyNodes, normalizeComfyUrl, parseComfyWorkflow, prepareComfyWorkflow, stylePrompt, STYLE_KEY, type ComfyWorkflow, type Moodboard } from "@/editor/lib/creative-tools";
+import importedWorkflow from "@/editor/data/krea-style-workflow.json";
+import pop from "@/editor/assets/vintage-pop-reference.jpg";
+import thermal from "@/editor/assets/thermal-airbrush-reference.jpg";
+import motionThumb from "@/editor/assets/thumb-motion.jpg";
+import upscaleThumb from "@/editor/assets/thumb-upscale.jpg";
 
 const BOARDS: Moodboard[] = [
   { id: "vintage-pop", name: "Vintage Pop Graphic", profile: "Bold vintage comic-book and pop-art 2D illustration, playful dense composition, nostalgic surrealism.", keywords: ["thick black outlines", "flat saturated colors", "stippled halftone", "hard-edged shadows", "four-point stars"], images: [pop] },

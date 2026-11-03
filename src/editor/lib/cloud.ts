@@ -1,6 +1,6 @@
 /** Cloud sync: gallery uploads and saved sessions, scoped to the signed-in user. */
 import { supabase } from "@/integrations/supabase/client";
-import type { SavedSession } from "@/lib/editor-state";
+import type { SavedSession } from "@/editor/lib/editor-state";
 
 export async function currentUserId(): Promise<string | null> {
   const { data } = await supabase.auth.getUser();

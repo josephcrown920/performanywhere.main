@@ -1,14 +1,14 @@
 import { ArrowUpRight, Clapperboard, Film, Layers3, Plus, Workflow } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { DEFAULT_SITE, readSite, type SiteSettings } from "@/lib/site-settings";
-import studioLogo from "@/assets/gui-video-studio-logo.png";
-import scene1 from "@/assets/scene1.jpg";
-import tileEditor from "@/assets/tile-editor.png";
-import tileCanvas from "@/assets/tile-canvas.png";
-import tileLayers from "@/assets/tile-layers.png";
-import tilePerform from "@/assets/tile-perform.png";
-import tileWorkflows from "@/assets/tile-workflows.png";
+import { DEFAULT_SITE, readSite, type SiteSettings } from "@/editor/lib/site-settings";
+import studioLogo from "@/editor/assets/gui-video-studio-logo.png";
+import scene1 from "@/editor/assets/scene1.jpg";
+import tileEditor from "@/editor/assets/tile-editor.png";
+import tileCanvas from "@/editor/assets/tile-canvas.png";
+import tileLayers from "@/editor/assets/tile-layers.png";
+import tilePerform from "@/editor/assets/tile-perform.png";
+import tileWorkflows from "@/editor/assets/tile-workflows.png";
 
 type StudioMode = "edit" | "canvas" | "layers" | "workflows" | "perform";
 

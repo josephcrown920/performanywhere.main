@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Check } from "lucide-react";
-import { readCreativeContext, saveCreativeContext } from "@/lib/creative-context";
+import { readCreativeContext, saveCreativeContext } from "@/editor/lib/creative-context";
 
 export function CreativeContext() {
   const [context, setContext] = useState("");

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Palette } from "lucide-react";
-import { THEMES, applyTheme, readTheme, type ThemeId } from "@/lib/theme";
+import { THEMES, applyTheme, readTheme, type ThemeId } from "@/editor/lib/theme";
 
 export function ThemePicker() {
   const [theme, setTheme] = useState<ThemeId>("crimson");

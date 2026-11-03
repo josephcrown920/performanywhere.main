@@ -1,10 +1,10 @@
-import p1 from "@/assets/library/prop-1.jpeg.asset.json";
-import p2 from "@/assets/library/prop-2.png.asset.json";
-import p3 from "@/assets/library/prop-3.jpeg.asset.json";
-import p4 from "@/assets/library/prop-4.jpeg.asset.json";
-import p5 from "@/assets/library/prop-5.jpeg.asset.json";
-import p6 from "@/assets/library/prop-6.jpeg.asset.json";
-import p7 from "@/assets/library/prop-7.jpeg.asset.json";
+import p1 from "@/editor/assets/library/prop-1.jpeg.asset.json";
+import p2 from "@/editor/assets/library/prop-2.png.asset.json";
+import p3 from "@/editor/assets/library/prop-3.jpeg.asset.json";
+import p4 from "@/editor/assets/library/prop-4.jpeg.asset.json";
+import p5 from "@/editor/assets/library/prop-5.jpeg.asset.json";
+import p6 from "@/editor/assets/library/prop-6.jpeg.asset.json";
+import p7 from "@/editor/assets/library/prop-7.jpeg.asset.json";
 
 /** Project props: real photos the editor can drop straight onto the timeline. */
 export const LIBRARY = [

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { SquareTerminal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { readCreativeContext, saveCreativeContext } from "@/lib/creative-context";
+import { readCreativeContext, saveCreativeContext } from "@/editor/lib/creative-context";
 
 /** Maps a clip filter name to its animated overlay class (see styles.css). */
 export function vfxClass(filter: string) {

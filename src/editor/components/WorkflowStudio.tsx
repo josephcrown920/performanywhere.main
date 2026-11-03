@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { generateVideo } from "@/lib/generate";
-import { DEFAULT_VIDEO_ENGINE, VIDEO_ENGINES } from "@/lib/engines";
-import type { EditorAsset, EditorClip } from "@/lib/editor-state";
-import genjutsuPackage from "@/assets/genjutsu-source-workflow.asset.json";
+import { generateVideo } from "@/editor/lib/generate";
+import { DEFAULT_VIDEO_ENGINE, VIDEO_ENGINES } from "@/editor/lib/engines";
+import type { EditorAsset, EditorClip } from "@/editor/lib/editor-state";
+import genjutsuPackage from "@/editor/assets/genjutsu-source-workflow.asset.json";
 
 type Props = {
   assets: EditorAsset[];

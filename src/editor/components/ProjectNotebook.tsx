@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NotebookPen } from "lucide-react";
-import { readNotebook, saveNotebook } from "@/lib/creative-context";
+import { readNotebook, saveNotebook } from "@/editor/lib/creative-context";
 
 /** Running project log; every request is appended automatically and fed to the AI. */
 export function ProjectNotebook() {

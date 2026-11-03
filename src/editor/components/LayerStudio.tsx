@@ -2,16 +2,16 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Upload, Layers3, Loader2, Wand2, FolderInput, Undo2, Eraser, Sun, ArrowUpRight, Plus, Save, Download, Trash2, ArrowUp, ArrowDown, LockKeyhole, UnlockKeyhole, Copy, Film, ImagePlus, ZoomIn, ZoomOut, Scan, Check, X, UserRound, Sparkles, Camera, Shirt, Gem, Box, Palette, Megaphone, Mic } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { generateImage, generateVideo, urlToBlob } from "@/lib/generate";
-import { IMAGE_ENGINES, VIDEO_ENGINES, DEFAULT_IMAGE_ENGINE, DEFAULT_VIDEO_ENGINE, CAMERA_MOVES } from "@/lib/engines";
-import { removeImageBackground } from "@/lib/remove-background";
-import { CreativeContext } from "@/components/CreativeContext";
-import { sequence, upsertShot, moveShot, patchShot, removeShot, shotCode, buildSequencePrompt, type Shot } from "@/lib/layers-storyboard";
-import { listLayersProjects, storeLayersProject, deleteLayersProject, exportLayersProject, downloadLayer, composeLayersSheet, referencePlate, type LayersProject } from "@/lib/layers-projects";
-import armor from "@/assets/aurora-layer-armor.jpg.asset.json";
-import braids from "@/assets/aurora-layer-braids.jpg.asset.json";
-import bandana from "@/assets/aurora-layer-bandana.jpg.asset.json";
-import chains from "@/assets/aurora-layer-chains.jpg.asset.json";
+import { generateImage, generateVideo, urlToBlob } from "@/editor/lib/generate";
+import { IMAGE_ENGINES, VIDEO_ENGINES, DEFAULT_IMAGE_ENGINE, DEFAULT_VIDEO_ENGINE, CAMERA_MOVES } from "@/editor/lib/engines";
+import { removeImageBackground } from "@/editor/lib/remove-background";
+import { CreativeContext } from "@/editor/components/CreativeContext";
+import { sequence, upsertShot, moveShot, patchShot, removeShot, shotCode, buildSequencePrompt, type Shot } from "@/editor/lib/layers-storyboard";
+import { listLayersProjects, storeLayersProject, deleteLayersProject, exportLayersProject, downloadLayer, composeLayersSheet, referencePlate, type LayersProject } from "@/editor/lib/layers-projects";
+import armor from "@/editor/assets/aurora-layer-armor.jpg.asset.json";
+import braids from "@/editor/assets/aurora-layer-braids.jpg.asset.json";
+import bandana from "@/editor/assets/aurora-layer-bandana.jpg.asset.json";
+import chains from "@/editor/assets/aurora-layer-chains.jpg.asset.json";
 
 type Region = { x: number; y: number; w: number; h: number };
 const TARGETS = [
