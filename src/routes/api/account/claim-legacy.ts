@@ -28,7 +28,7 @@ export const Route = createFileRoute("/api/account/claim-legacy")({
             return error ? path : next;
           };
           const { data: assets } = await admin.from("project_assets").select("id, storage_path").eq("client_id", legacyId);
-          for (const a of assets ?? []) await admin.from("project_assets").update({ client_id: uid, storage_path: await movePath("uploads", a.storage_path) }).eq("id", a.id);
+          for (const a of assets ?? []) await admin.from("project_assets").update({ client_id: uid, storage_path: (await movePath("uploads", a.storage_path)) ?? a.storage_path }).eq("id", a.id);
           for (const t of ["project_renders", "projects"] as const) {
             const { data: rows } = await admin.from(t).select("id, output_path").eq("client_id", legacyId);
             for (const r of rows ?? []) await admin.from(t).update({ client_id: uid, output_path: await movePath("renders", r.output_path) }).eq("id", r.id);
