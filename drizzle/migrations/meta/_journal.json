@@ -22,6 +22,13 @@
       "when": 1793209482665,
       "tag": "0002_owner_scoped_access",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793665064455,
+      "tag": "0003_video_agent_tables",
+      "breakpoints": true
     }
   ]
 }
