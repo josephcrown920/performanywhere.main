@@ -2,7 +2,6 @@ import { ArrowUpRight, Clapperboard, Film, Layers3, Plus, Workflow } from "lucid
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DEFAULT_SITE, readSite, type SiteSettings } from "@/agent/lib/guy/site-settings";
-import studioLogo from "@/agent/assets/guy/gui-video-studio-logo.png";
 import scene1 from "@/agent/assets/guy/scene1.jpg";
 import tileEditor from "@/agent/assets/guy/tile-editor.png";
 import tileCanvas from "@/agent/assets/guy/tile-canvas.png";
