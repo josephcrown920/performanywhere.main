@@ -35,7 +35,7 @@ export default function CoDirector({ onApply, busy, context }: { onApply: (s: Co
       const res = await fetch("/api/agent/co-director", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...(data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {}) },
-        body: JSON.stringify({ messages: next.map(({ role, content }) => ({ role, content: content + (role === "assistant" && (msgs.find((m) => m.content === content)?.shot) ? "" : "") })), context }),
+        body: JSON.stringify({ messages: next.map(({ role, content }) => ({ role, content })), context }),
       });
       const j = await res.json();
       if (!res.ok) throw new Error(j.error || "The co-director is unavailable");
