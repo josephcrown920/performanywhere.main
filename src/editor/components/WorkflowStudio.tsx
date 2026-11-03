@@ -60,7 +60,7 @@ function Genjutsu({ onAsset, onComfy }: { onAsset: Props["onAsset"]; onComfy: ()
     <div className="grid flex-1 gap-3 md:grid-cols-2">
       <div className="flex flex-col gap-2 text-xs">
         <p className="text-muted-foreground">Create a character-reference draft, then approve HD. Exact source subject replacement, mask review and original-audio restoration run in the downloadable Genjutsu workflow.</p>
-        <a href={genjutsuPackage.url} download="genjutsu-source-workflow.zip" className="font-bold text-primary">Download updated Genjutsu workflow</a>
+        {genjutsuPackage.url ? <a href={genjutsuPackage.url} download="genjutsu-source-workflow.zip" className="font-bold text-primary">Download updated Genjutsu workflow</a> : null}
         <label className="font-bold">1. Source video
           <input type="file" accept="video/*" className="mt-1 block w-full" onChange={(e) => { setSource(e.target.files?.[0] ?? null); setApproved(false); }} />
         </label>
@@ -89,7 +89,7 @@ function Genjutsu({ onAsset, onComfy }: { onAsset: Props["onAsset"]; onComfy: ()
           <div className="flex flex-col gap-2 rounded-md border border-border bg-background/30 p-2">
             <p className="text-muted-foreground">Download the Genjutsu workflow, import it into your ComfyUI server, then connect the studio to run it on your GPU.</p>
             <div className="flex flex-wrap gap-2">
-              <Button asChild size="sm" variant="outline"><a href={genjutsuPackage.url} download="genjutsu-source-workflow.zip">Download workflow</a></Button>
+              {genjutsuPackage.url ? <Button asChild size="sm" variant="outline"><a href={genjutsuPackage.url} download="genjutsu-source-workflow.zip">Download workflow</a></Button> : null}
               <Button size="sm" onClick={onComfy}>Connect ComfyUI server</Button>
             </div>
           </div>
