@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as AgentRouteImport } from './routes/agent'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -78,6 +79,11 @@ const AccountRoute = AccountRouteImport.update({
   path: '/account',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentRoute = AgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MotionTestRoute = MotionTestRouteImport.update({
   id: '/motion-test',
   path: '/motion-test',
@@ -104,44 +110,44 @@ const TermsRoute = TermsRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentIndexRoute = AgentIndexRouteImport.update({
-  id: '/agent/',
-  path: '/agent/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentBeatDirectorRoute = AgentBeatDirectorRouteImport.update({
-  id: '/agent/beat-director',
-  path: '/agent/beat-director',
-  getParentRoute: () => rootRouteImport,
+  id: '/beat-director',
+  path: '/beat-director',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentEditorRoute = AgentEditorRouteImport.update({
-  id: '/agent/editor',
-  path: '/agent/editor',
-  getParentRoute: () => rootRouteImport,
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentPhotoLabRoute = AgentPhotoLabRouteImport.update({
-  id: '/agent/photo-lab',
-  path: '/agent/photo-lab',
-  getParentRoute: () => rootRouteImport,
+  id: '/photo-lab',
+  path: '/photo-lab',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentStoryboardRoute = AgentStoryboardRouteImport.update({
-  id: '/agent/storyboard',
-  path: '/agent/storyboard',
-  getParentRoute: () => rootRouteImport,
+  id: '/storyboard',
+  path: '/storyboard',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentStudioRoute = AgentStudioRouteImport.update({
-  id: '/agent/studio',
-  path: '/agent/studio',
-  getParentRoute: () => rootRouteImport,
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentTimelineRoute = AgentTimelineRouteImport.update({
-  id: '/agent/timeline',
-  path: '/agent/timeline',
-  getParentRoute: () => rootRouteImport,
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => AgentRoute,
 } as any)
 const AgentWorkflowsRoute = AgentWorkflowsRouteImport.update({
-  id: '/agent/workflows',
-  path: '/agent/workflows',
-  getParentRoute: () => rootRouteImport,
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => AgentRoute,
 } as any)
 const FlowCanvasRoute = FlowCanvasRouteImport.update({
   id: '/flow/canvas',
@@ -365,6 +371,7 @@ const ApiVaVideoIdContentRoute = ApiVaVideoIdContentRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/agent': typeof AgentRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
@@ -486,6 +493,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/agent': typeof AgentRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
@@ -548,6 +556,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/account'
+    | '/agent'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
@@ -668,6 +677,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/account'
+    | '/agent'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
@@ -729,23 +739,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
+  AgentRoute: typeof AgentRouteWithChildren
   MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
   PrivacyRoute: typeof PrivacyRoute
   StudioRoute: typeof StudioRoute
   TermsRoute: typeof TermsRoute
-  AgentBeatDirectorRoute: typeof AgentBeatDirectorRoute
-  AgentEditorRoute: typeof AgentEditorRoute
-  AgentPhotoLabRoute: typeof AgentPhotoLabRoute
-  AgentStoryboardRoute: typeof AgentStoryboardRoute
-  AgentStudioRoute: typeof AgentStudioRoute
-  AgentTimelineRoute: typeof AgentTimelineRoute
-  AgentWorkflowsRoute: typeof AgentWorkflowsRoute
   FlowCanvasRoute: typeof FlowCanvasRoute
   FlowDirectorRoute: typeof FlowDirectorRoute
   FlowStoryboardRoute: typeof FlowStoryboardRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
-  AgentIndexRoute: typeof AgentIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAgentVideoEditRoute: typeof ApiAgentVideoEditRoute
   ApiDepthFrameRoute: typeof ApiDepthFrameRoute
@@ -801,6 +804,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agent': {
+      id: '/agent'
+      path: '/agent'
+      fullPath: '/agent'
+      preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/motion-test': {
       id: '/motion-test'
       path: '/motion-test'
@@ -838,59 +848,59 @@ declare module '@tanstack/react-router' {
     }
     '/agent/': {
       id: '/agent/'
-      path: '/agent'
+      path: '/'
       fullPath: '/agent/'
       preLoaderRoute: typeof AgentIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/beat-director': {
       id: '/agent/beat-director'
-      path: '/agent/beat-director'
+      path: '/beat-director'
       fullPath: '/agent/beat-director'
       preLoaderRoute: typeof AgentBeatDirectorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/editor': {
       id: '/agent/editor'
-      path: '/agent/editor'
+      path: '/editor'
       fullPath: '/agent/editor'
       preLoaderRoute: typeof AgentEditorRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/photo-lab': {
       id: '/agent/photo-lab'
-      path: '/agent/photo-lab'
+      path: '/photo-lab'
       fullPath: '/agent/photo-lab'
       preLoaderRoute: typeof AgentPhotoLabRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/storyboard': {
       id: '/agent/storyboard'
-      path: '/agent/storyboard'
+      path: '/storyboard'
       fullPath: '/agent/storyboard'
       preLoaderRoute: typeof AgentStoryboardRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/studio': {
       id: '/agent/studio'
-      path: '/agent/studio'
+      path: '/studio'
       fullPath: '/agent/studio'
       preLoaderRoute: typeof AgentStudioRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/timeline': {
       id: '/agent/timeline'
-      path: '/agent/timeline'
+      path: '/timeline'
       fullPath: '/agent/timeline'
       preLoaderRoute: typeof AgentTimelineRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/agent/workflows': {
       id: '/agent/workflows'
-      path: '/agent/workflows'
+      path: '/workflows'
       fullPath: '/agent/workflows'
       preLoaderRoute: typeof AgentWorkflowsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AgentRoute
     }
     '/flow/canvas': {
       id: '/flow/canvas'
@@ -1196,6 +1206,30 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AgentRouteChildren {
+  AgentBeatDirectorRoute: typeof AgentBeatDirectorRoute
+  AgentEditorRoute: typeof AgentEditorRoute
+  AgentPhotoLabRoute: typeof AgentPhotoLabRoute
+  AgentStoryboardRoute: typeof AgentStoryboardRoute
+  AgentStudioRoute: typeof AgentStudioRoute
+  AgentTimelineRoute: typeof AgentTimelineRoute
+  AgentWorkflowsRoute: typeof AgentWorkflowsRoute
+  AgentIndexRoute: typeof AgentIndexRoute
+}
+
+const AgentRouteChildren: AgentRouteChildren = {
+  AgentBeatDirectorRoute: AgentBeatDirectorRoute,
+  AgentEditorRoute: AgentEditorRoute,
+  AgentPhotoLabRoute: AgentPhotoLabRoute,
+  AgentStoryboardRoute: AgentStoryboardRoute,
+  AgentStudioRoute: AgentStudioRoute,
+  AgentTimelineRoute: AgentTimelineRoute,
+  AgentWorkflowsRoute: AgentWorkflowsRoute,
+  AgentIndexRoute: AgentIndexRoute,
+}
+
+const AgentRouteWithChildren = AgentRoute._addFileChildren(AgentRouteChildren)
+
 interface ApiVaVideoIdRouteChildren {
   ApiVaVideoIdContentRoute: typeof ApiVaVideoIdContentRoute
 }
@@ -1223,23 +1257,16 @@ const ApiVaVideoRouteWithChildren = ApiVaVideoRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
+  AgentRoute: AgentRouteWithChildren,
   MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,
   PrivacyRoute: PrivacyRoute,
   StudioRoute: StudioRoute,
   TermsRoute: TermsRoute,
-  AgentBeatDirectorRoute: AgentBeatDirectorRoute,
-  AgentEditorRoute: AgentEditorRoute,
-  AgentPhotoLabRoute: AgentPhotoLabRoute,
-  AgentStoryboardRoute: AgentStoryboardRoute,
-  AgentStudioRoute: AgentStudioRoute,
-  AgentTimelineRoute: AgentTimelineRoute,
-  AgentWorkflowsRoute: AgentWorkflowsRoute,
   FlowCanvasRoute: FlowCanvasRoute,
   FlowDirectorRoute: FlowDirectorRoute,
   FlowStoryboardRoute: FlowStoryboardRoute,
   ProjectsIdRoute: ProjectsIdRoute,
-  AgentIndexRoute: AgentIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAgentVideoEditRoute: ApiAgentVideoEditRoute,
   ApiDepthFrameRoute: ApiDepthFrameRoute,

@@ -1,11 +1,13 @@
 import { Link, useLocation } from "@/lib/nav";
 import type { ReactNode } from "react";
 import AuthGate from "@/components/AuthGate";
-import { Film, PlusSquare, Layers, Settings, Activity } from "lucide-react";
+import { Film, PlusSquare, Layers, Settings, Activity, Bot, Clapperboard } from "lucide-react";
 
 const NAV = [
   { to: "/projects",    label: "Library",     Icon: Film },
   { to: "/studio",      label: "New",         Icon: PlusSquare },
+  { to: "/agent",       label: "Video Agent", Icon: Bot },
+  { to: "/flow/director", label: "Director",  Icon: Clapperboard },
   { to: "/orchestrate", label: "Orchestrate", Icon: Layers },
   { to: "/motion-test", label: "Motion",      Icon: Activity },
   { to: "/account",     label: "Settings",    Icon: Settings },
