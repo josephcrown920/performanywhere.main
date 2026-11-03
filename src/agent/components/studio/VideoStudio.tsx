@@ -16,7 +16,7 @@ export interface VideoStudioProps {
 }
 
 /** Portable React embed. The hosted studio owns accounts, tools, styles and providers. */
-export function VideoStudio({ studioUrl, defaultTab = "timeline", title = "Aurora Video Studio", className = "" }: VideoStudioProps) {
+export function VideoStudio({ studioUrl, defaultTab = "timeline", title = "Perform Anywhere Video Studio", className = "" }: VideoStudioProps) {
   const [source, setSource] = useState("");
   const [status, setStatus] = useState<"loading" | "loaded" | "slow" | "invalid">("loading");
   const [attempt, setAttempt] = useState(0);

@@ -61,7 +61,7 @@ export function AuthPanel({ onSignedIn, onClose }: Props) {
   return (
     <div className="aurora-modal" onClick={() => onClose?.()}>
       <div className="aurora-modal-box aurora-auth-box" onClick={(e) => e.stopPropagation()}>
-        <h2>{mode === "signup" ? "Create your Aurora account" : "Sign in to Aurora"}</h2>
+        <h2>{mode === "signup" ? "Create your Perform Anywhere account" : "Sign in to Perform Anywhere"}</h2>
         <p className="aurora-auth-sub">
           Your gallery, packs, storyboards and drafts sync to the cloud — same studio on every device.
         </p>
