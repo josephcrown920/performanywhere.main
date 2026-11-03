@@ -19,4 +19,4 @@
 - Paystack: initialize needs `PAYSTACK_SECRET_KEY` (returns 503 `paystack_not_configured` until set). Webhook at `/api/public/paystack-webhook` verifies the x-paystack-signature HMAC-SHA512 and grants 1 credit per 10 naira.
 - Storage: private buckets `uploads` (project assets) and `renders` (finished clips); signed URLs minted server-side by `/api/render/signed-url/*`.
 - `src/lib/supabase.ts` is a re-export of the generated `@/integrations/supabase/client`; views import from `@/lib/supabase`.
-- Merged apps: FlowAurora lives under src/flow (routes /flow/*, APIs /api/fl/*) and the Aurora Video Agent under src/agent (routes /agent/*, APIs /api/va/*); keep each namespaced so their libs never collide with Perform Anywhere code.
+- Merged apps: FlowAurora lives under src/flow (routes /flow/*, APIs /api/fl/*), the Aurora Video Agent under src/agent (routes /agent/*, APIs /api/va/*), and the GUI Video Editor under src/editor (routes /editor/*, APIs /api/ed/*, styles scoped to .gve which the /editor layout also puts on <body> for portals); keep each namespaced so their libs never collide with Perform Anywhere code.

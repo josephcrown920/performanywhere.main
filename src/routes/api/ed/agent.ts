@@ -1,0 +1,331 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { GATEWAY, ARK_BASE, apiKey, arkKey, chatCompletionsUrl, isOpenRouterKey } from "@/editor/lib/gateway.server";
+import { AGENTS, agentById } from "@/editor/lib/agents";
+import { readSse, partialReply } from "@/editor/lib/agent-stream";
+import { z } from "zod";
+
+type Img = { name: string; data: string; mime: string };
+type Body = {
+  agent: string;
+  brief: string;
+  history?: { role: "user" | "assistant"; text: string }[];
+  assets: { id: string; name: string; kind: string; dur: number }[];
+  clips: { id: string; assetId: string; track: string; start: number; dur: number }[];
+};
+
+const bodySchema = z.object({
+  agent: z.string().max(80), brief: z.string().min(1).max(20000),
+  history: z.array(z.object({ role: z.enum(["user", "assistant"]), text: z.string().max(20000) })).max(8).optional(),
+  assets: z.array(z.object({ id: z.string().max(100), name: z.string().max(500), kind: z.enum(["image", "video", "audio"]), dur: z.number().finite().nonnegative() })).max(1000),
+  images: z.array(z.object({ name: z.string().max(300), data: z.string().max(2_000_000), mime: z.enum(["image/jpeg", "image/png", "image/webp"]) })).max(4).optional(),
+  clips: z.array(z.object({ id: z.string().max(100), assetId: z.string().max(100), track: z.enum(["V1", "V2", "V3", "A1", "A2"]), start: z.number().finite().nonnegative(), dur: z.number().finite().nonnegative() })).max(2000),
+});
+
+const LOOKS = "none, gold hour, noir, violet dusk, teal & orange, bleach, dreamy, crimson";
+
+const BASE_SYSTEM = `You are an AI video co-editor working inside a multi-track non-linear editor.
+Tracks, top to bottom: V3 (titles/overlays), V2 (b-roll/inserts), V1 (main footage), A1 (dialogue/VO), A2 (music/SFX).
+You receive the user's media bin and the current timeline, then respond with edit decisions.
+
+Reply with ONLY a JSON object, no markdown fence:
+{
+  "reply": "short conversational answer to the editor, first person, under 60 words",
+  "steps": ["short log lines describing what you did, e.g. 'Cut rush_02 at 00:04:12'"],
+  "actions": [ ... ]
+}
+Action shapes (seconds, decimals allowed):
+{"op":"add","assetId":"<id from media bin>","track":"V1","start":0,"dur":4,"name":"optional label"}
+{"op":"move","clipId":"<id>","track":"V2","start":3.5}
+{"op":"trim","clipId":"<id>","dur":2.5}
+{"op":"split","clipId":"<id>","at":1.8}
+{"op":"remove","clipId":"<id>"}
+{"op":"set","clipId":"<id>","volume":0.4,"opacity":0.8,"speed":1.5,"filter":"noir"}
+Looks: ${LOOKS}.
+Only use assetIds and clipIds that exist. Never leave gaps on V1 unless asked. Keep audio under the video it belongs to.
+If the media bin is empty, ask for files and return an empty actions array.`;
+
+const ORCHESTRATOR_SYSTEM = `${BASE_SYSTEM}
+
+You are the ORCHESTRATOR: you run a crew of specialist editing agents and answer on their behalf.
+Crew: ${AGENTS.filter((a) => a.available && a.id !== "orchestrator").map((a) => `${a.name} (${a.role})`).join("; ")}.
+Also add a "crew" field: an array of 1-3 short strings naming which specialists you routed this brief to and why, e.g. "Claude Codex — timecode-accurate cuts".
+Begin your steps with the routing decision, then the concrete edits you made.
+
+YOU ARE FULLY AGENTIC. When the brief asks for a video, film, ad, music video, trailer or scene and the media bin lacks the needed shots, write a storyboard and the studio will generate every shot automatically and cut them onto the timeline in order.
+Add a "storyboard" field: an array of 3-8 shots, each {"kind":"video" or "image","prompt":"full visual prompt with subject, setting, lighting, lens, framing (wide/medium/close-up) and camera move","dur":4}. Keep the subject, wardrobe and style consistent across shots. Do not ask questions first unless the brief is completely empty — make confident creative choices.`;
+
+const SPECIALIST_BRIEFS = [
+  { id: "astra", task: "Direct pacing, visual structure, and the overall creative arc." },
+  { id: "codex", task: "Propose precise timeline cuts, trims, track placement, and assembly." },
+  { id: "fable", task: "Strengthen story clarity, emotion, and the ending." },
+  { id: "gemini", task: "Look at the attached frames: describe subjects, colour and lighting, and spot b-roll or continuity issues." },
+] as const;
+const ARK_CREW = ["ark-dola", "ark-seed-pro"];
+
+function arkMessage(raw: string) {
+  try {
+    const e = (JSON.parse(raw) as { error?: { code?: string; message?: string } }).error;
+    if (e?.code === "AccountOverdueError") return "Your ModelArk account has an overdue balance. Top it up in the BytePlus console to use ModelArk agents.";
+    return e?.message?.split(" Request id")[0] ?? raw.slice(0, 200);
+  } catch { return raw.slice(0, 200); }
+}
+
+function extractJson(text: string) {
+  const m = text.match(/\{[\s\S]*\}/);
+  if (!m) return { reply: text.slice(0, 400), steps: [], actions: [], crew: [], storyboard: [] };
+  try {
+    const p = JSON.parse(m[0]) as Record<string, unknown>;
+    const board = Array.isArray(p["storyboard"]) ? (p["storyboard"] as Record<string, unknown>[]) : [];
+    return {
+      reply: typeof p["reply"] === "string" ? p["reply"] : "Done.",
+      steps: Array.isArray(p["steps"]) ? (p["steps"] as string[]).slice(0, 12) : [],
+      actions: Array.isArray(p["actions"]) ? p["actions"] : [],
+      crew: Array.isArray(p["crew"]) ? (p["crew"] as string[]).slice(0, 4) : [],
+      storyboard: board.filter((s) => typeof s["prompt"] === "string").slice(0, 8).map((s) => ({
+        kind: s["kind"] === "image" ? "image" : "video",
+        prompt: String(s["prompt"]).slice(0, 2000),
+        dur: Math.min(10, Math.max(2, Number(s["dur"]) || 4)),
+      })),
+    };
+  } catch {
+    return { reply: text.slice(0, 400), steps: [], actions: [], crew: [], storyboard: [] };
+  }
+}
+
+async function runOpenAI(model: string, key: string, system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal, images: Img[] = []) {
+  const content = images.length ? [{ type: "text", text: user }, ...images.map((i) => ({ type: "image_url", image_url: { url: `data:${i.mime};base64,${i.data}` } }))] : user;
+  const messages = [
+    { role: "system", content: system },
+    ...(history ?? []).slice(-8).map((h) => ({ role: h.role, content: h.text })),
+    { role: "user", content },
+  ];
+  const openRouter = isOpenRouterKey(key);
+  const res = await fetch(chatCompletionsUrl(key), {
+    method: "POST",
+    signal: signal ?? null,
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", ...(openRouter ? { "X-Title": "REEL Studio" } : { "X-Lovable-AIG-SDK": "fetch" }) },
+    body: JSON.stringify(openRouter
+      ? { model, messages, max_tokens: 4000, stream: true }
+      : { model, messages, reasoning_effort: "low", max_completion_tokens: 4000, stream: true, response_format: { type: "json_object" } }),
+  });
+  if (!res.ok) return { error: await res.text(), status: res.status };
+  if (!res.body) return { error: "Empty provider response", status: 502 };
+  let text = "";
+  let streamError = false;
+  await readSse(res.body, (_event, data) => {
+    if (data === "[DONE]") return;
+    const frame = JSON.parse(data) as { error?: unknown; choices?: { delta?: { content?: string } }[] };
+    if (frame.error) { streamError = true; return; }
+    const delta = frame.choices?.[0]?.delta?.content;
+    if (delta) { text += delta; onText?.(text); }
+  });
+  return streamError ? { error: "Provider stream failed", status: 502 } : { text };
+}
+
+async function runModelArk(model: string, system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal) {
+  const key = arkKey();
+  if (!key) {
+    return { error: "ModelArk is not connected on this workspace. Add a ModelArk API key to use these agents.", status: 401 };
+  }
+  const messages = [
+    { role: "system", content: system },
+    ...(history ?? []).slice(-8).map((h) => ({ role: h.role, content: h.text })),
+    { role: "user", content: user },
+  ];
+  // Custom ModelArk agents/bots (ids like "agent-…" or "bot-…") are served from the bots endpoint.
+  const path = /^(agent|bot)-/.test(model) ? "/bots/chat/completions" : "/chat/completions";
+  const res = await fetch(`${ARK_BASE}${path}`, {
+    method: "POST",
+    signal: signal ?? null,
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ model, messages, temperature: 0.4, stream: true }),
+  });
+  if (!res.ok) return { error: await res.text(), status: res.status };
+  if (!res.body) return { error: "Empty provider response", status: 502 };
+  let text = "";
+  let streamError = false;
+  await readSse(res.body, (_event, data) => {
+    if (data === "[DONE]") return;
+    const frame = JSON.parse(data) as { error?: unknown; choices?: { delta?: { content?: string } }[] };
+    if (frame.error) { streamError = true; return; }
+    const delta = frame.choices?.[0]?.delta?.content;
+    if (delta) { text += delta; onText?.(text); }
+  });
+  return streamError ? { error: "Provider stream failed", status: 502 } : { text };
+}
+
+function claudeContent(user: string, images: Img[]) {
+  return images.length ? [...images.map((i) => ({ type: "image", source: { type: "base64", media_type: i.mime, data: i.data } })), { type: "text", text: user }] : user;
+}
+
+async function runAnthropic(model: string, key: string, system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal, images: Img[] = []) {
+  const messages = [
+    ...(history ?? []).slice(-8).map((h) => ({ role: h.role, content: h.text })),
+    { role: "user" as const, content: claudeContent(user, images) },
+  ];
+  const res = await fetch(`${GATEWAY}/v1/messages`, {
+    method: "POST",
+    signal: signal ?? null,
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json", "X-Lovable-AIG-SDK": "fetch" },
+    body: JSON.stringify({ model, max_tokens: 6000, system, messages, stream: true }),
+  });
+  if (!res.ok || !res.body) return { error: await res.text(), status: res.status };
+  let text = "";
+  let streamError = false;
+  await readSse(res.body, (event, data) => {
+    const frame = JSON.parse(data) as { type?: string; delta?: { type?: string; text?: string } };
+    if (event === "error" || frame.type === "error") { streamError = true; return; }
+    if (frame.type === "content_block_delta" && frame.delta?.type === "text_delta") {
+      text += frame.delta.text ?? "";
+      onText?.(text);
+    }
+  });
+  if (streamError) return { error: "Provider stream failed", status: 502 };
+  return { text };
+}
+
+async function runChatCompat(url: string, headers: Record<string, string>, model: string, system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal) {
+  const messages = [{ role: "system", content: system }, ...(history ?? []).slice(-8).map((h) => ({ role: h.role, content: h.text })), { role: "user", content: user }];
+  const res = await fetch(url, { method: "POST", signal: signal ?? null, headers: { ...headers, "Content-Type": "application/json" }, body: JSON.stringify({ model, messages, stream: true }) });
+  if (!res.ok || !res.body) return { error: await res.text(), status: res.status };
+  let text = "";
+  await readSse(res.body, (_e, data) => {
+    if (data === "[DONE]" || data.startsWith(":")) return;
+    try { const d = (JSON.parse(data) as { choices?: { delta?: { content?: string } }[] }).choices?.[0]?.delta?.content; if (d) { text += d; onText?.(text); } } catch { /* skip */ }
+  });
+  return text ? { text } : { error: "Empty reply", status: 502 };
+}
+
+/** OpenRouter — fallback when the main provider fails, and host for the open-source crew. */
+async function runOpenRouter(system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal, model = "openrouter/free") {
+  const key = process.env["OPENROUTER_API_KEY"];
+  if (!key) return { error: "OpenRouter not configured", status: 401 };
+  return runChatCompat("https://openrouter.ai/api/v1/chat/completions", { Authorization: `Bearer ${key}`, "X-Title": "REEL Studio" }, model, system, user, history, onText, signal);
+}
+
+/** Claude on the user's own Anthropic key. */
+async function runClaudeKey(model: string, system: string, user: string, history: Body["history"], onText?: (text: string) => void, signal?: AbortSignal, images: Img[] = []) {
+  const key = process.env["ANTHROPIC_API_KEY"];
+  if (!key) return { error: "Anthropic key not configured", status: 401 };
+  const messages = [...(history ?? []).slice(-8).map((h) => ({ role: h.role, content: h.text })), { role: "user" as const, content: claudeContent(user, images) }];
+  const res = await fetch("https://api.anthropic.com/v1/messages", { method: "POST", signal: signal ?? null, headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "Content-Type": "application/json" }, body: JSON.stringify({ model, max_tokens: 6000, system, messages, stream: true }) });
+  if (!res.ok || !res.body) return { error: await res.text(), status: res.status };
+  let text = "";
+  await readSse(res.body, (_e, data) => {
+    try { const f = JSON.parse(data) as { type?: string; delta?: { type?: string; text?: string } }; if (f.type === "content_block_delta" && f.delta?.type === "text_delta") { text += f.delta.text ?? ""; onText?.(text); } } catch { /* skip */ }
+  });
+  return text ? { text } : { error: "Empty reply", status: 502 };
+}
+
+export const Route = createFileRoute("/api/ed/agent")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        const parsedBody = bodySchema.safeParse(await request.json().catch(() => null));
+        if (!parsedBody.success) return Response.json({ reply: "Please send a valid creative brief." }, { status: 400 });
+        const b = parsedBody.data;
+        const agent = agentById(b.agent);
+        const images: Img[] = b.images ?? [];
+        const abort = new AbortController();
+        request.signal.addEventListener("abort", () => abort.abort(), { once: true });
+        let closed = false;
+        const encoder = new TextEncoder();
+        const stream = new ReadableStream<Uint8Array>({
+          start(controller) {
+            const emit = (event: string, data: unknown) => {
+              if (!closed && !abort.signal.aborted) controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+            };
+            const json = (value: unknown, status = 200) => {
+              emit(status >= 400 ? "error" : "done", value);
+              return undefined;
+            };
+            const onText = (text: string) => emit("reply", { text: partialReply(text) });
+            const heartbeat = setInterval(() => emit("ping", {}), 15000);
+            const execute = async () => {
+
+        if (!agent.available || !agent.model) {
+          return json({ reply: `${agent.name} isn't available on this workspace yet. Pick another editor.`, steps: [], actions: [], crew: [] });
+        }
+
+        const system = agent.id === "orchestrator" ? ORCHESTRATOR_SYSTEM : BASE_SYSTEM;
+        const user = [
+          `MEDIA BIN:\n${b.assets.length ? b.assets.map((a) => `- ${a.id} | ${a.name} | ${a.kind} | ${a.dur.toFixed(1)}s`).join("\n") : "(empty)"}`,
+          `TIMELINE:\n${b.clips.length ? b.clips.map((c) => `- ${c.id} | asset ${c.assetId} | ${c.track} | ${c.start.toFixed(1)}s → ${(c.start + c.dur).toFixed(1)}s`).join("\n") : "(empty)"}`,
+          images.length ? `ATTACHED FRAMES: ${images.map((i) => i.name).join(", ")} (look at them)` : "",
+          `BRIEF: ${b.brief}`,
+        ].join("\n\n");
+
+        let out: { text?: string; error?: string; status?: number };
+        if (agent.id === "orchestrator") {
+          const key = apiKey();
+          const modelArkAgents = ARK_CREW.map((id) => agentById(id)).filter((candidate) => candidate.available && candidate.model);
+          const specialists = [
+            ...SPECIALIST_BRIEFS.map((specialist) => ({ ...specialist, model: agentById(specialist.id).model, api: agentById(specialist.id).api })),
+            ...modelArkAgents.map((specialist) => ({ id: specialist.id, task: specialist.role, model: specialist.model, api: specialist.api })),
+          ].filter((specialist) => specialist.model);
+          const results = await Promise.all(specialists.map(async (specialist) => {
+            const specialistSystem = `${BASE_SYSTEM}\nYou are ${agentById(specialist.id).name}. ${specialist.task} Return advice and proposed actions for the Orchestrator.`;
+            const response = specialist.api === "modelark"
+              ? await runModelArk(specialist.model ?? "", specialistSystem, user, b.history)
+              : specialist.api === "anthropic"
+                ? await runAnthropic(specialist.model ?? "", key, specialistSystem, user, b.history)
+                : await runOpenAI(specialist.model ?? "", key, specialistSystem, user, b.history, undefined, abort.signal, specialist.id === "gemini" || specialist.id === "astra" ? images : []);
+            return { name: agentById(specialist.id).name, task: specialist.task, ...response };
+          }));
+          const successful = results.filter((result) => result.text);
+          const report = successful.map((result) => `${result.name}: ${result.text}`).join("\n\n");
+          const synthesis = `${user}\n\nSPECIALIST PASSES (completed in parallel):\n${report || "No specialist completed a pass."}\n\nCombine the strongest compatible decisions. Return one valid JSON edit plan and include every specialist name in the crew field.`;
+          // Claude is the brain: your own key first, then built-in Claude, then GPT-6 Astra.
+          let brain = "Claude (your key)";
+          out = await runClaudeKey("claude-sonnet-4-5", ORCHESTRATOR_SYSTEM, synthesis, b.history, onText, abort.signal, images);
+          if (!out.text && !abort.signal.aborted) { brain = "Claude Opus (built-in)"; out = await runAnthropic("anthropic/claude-opus-5-5", key, ORCHESTRATOR_SYSTEM, synthesis, b.history, onText, abort.signal, images); }
+          if (!out.text && !abort.signal.aborted) { brain = "GPT-6 Astra (backup)"; out = await runOpenAI(agent.model, key, ORCHESTRATOR_SYSTEM, synthesis, b.history, onText, abort.signal, images); }
+          if (out.text) {
+            const parsed = extractJson(out.text);
+            return json({
+              ...parsed,
+              steps: [`Final decisions by ${brain}`, ...parsed.steps],
+              crew: results.map((result) => ({ name: result.name, task: result.task, status: result.text ? "complete" : result.status === 401 ? "skipped" : "failed" })),
+            });
+          }
+        } else if (agent.api === "modelark") {
+          out = await runModelArk(agent.model, system, user, b.history, onText, abort.signal);
+        } else if (agent.api === "openrouter") {
+          out = await runOpenRouter(system, user, b.history, onText, abort.signal, agent.model);
+        } else if (agent.api === "claude-key") {
+          out = await runClaudeKey(agent.model, system, user, b.history, onText, abort.signal, images);
+        } else {
+          const key = apiKey();
+          out = agent.api === "anthropic"
+            ? await runAnthropic(agent.model, key, system, user, b.history, onText, abort.signal, images)
+            : await runOpenAI(agent.model, key, system, user, b.history, undefined, abort.signal, images);
+        }
+
+        if (out.error && (out.status !== 403 || agent.api === "modelark") && !abort.signal.aborted) {
+          const fb = await runOpenRouter(system, user, b.history, onText, abort.signal);
+          if (fb.text) out = fb;
+        }
+        if (out.error) {
+          const status = out.status ?? 500;
+          const msg =
+            agent.api === "modelark" ? arkMessage(out.error)
+            : status === 402 ? "The workspace is out of AI credits."
+            : status === 429 ? "Rate limited — try again in a moment."
+            : "The editor agent couldn't respond.";
+          return json({ reply: msg, steps: [], actions: [], crew: [] }, status);
+        }
+        if (!out.text) return json({ reply: "The editor returned an empty reply. Please try again." }, 502);
+        return json(extractJson(out.text));
+            };
+            void execute().catch(() => emit("error", { reply: "The creative crew lost connection. Please try again." })).finally(() => {
+              clearInterval(heartbeat);
+              if (!closed) { closed = true; controller.close(); }
+            });
+          },
+          cancel() { closed = true; abort.abort(); },
+        });
+        return new Response(stream, { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache, no-transform", "X-Accel-Buffering": "no" } });
+      },
+    },
+  },
+});
