@@ -146,7 +146,7 @@ export function LayerStudio({ onAsset }: { onAsset: (url: string, kind: "image" 
   return (
     <div className="layers-app mx-auto w-full max-w-[1500px]">
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border px-5 py-5 sm:px-7">
-        <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-lg bg-primary/15 text-primary"><Layers3 /></span><div><p className="font-mono text-[10px] text-muted-foreground">AURORA PERFORMANCE STUDIO</p><h1 className="font-display text-2xl font-extrabold">Layers</h1></div></div>
+        <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-lg bg-primary/15 text-primary"><Layers3 /></span><div><p className="font-mono text-[10px] text-muted-foreground">PERFORM ANYWHERE</p><h1 className="font-display text-2xl font-extrabold">Layers</h1></div></div>
         <div className="flex items-center gap-2"><span className="hidden text-xs text-muted-foreground sm:inline">{ordered.length} shots</span><Button variant="outline" size="sm" onClick={newProject} disabled={!!busy}><Plus />New shoot</Button><Button size="sm" onClick={() => void save()} disabled={!hasRenders || !!busy}><Save />Save shoot</Button></div>
       </div>
       <div className="grid gap-7 p-4 sm:p-7 lg:grid-cols-[0.95fr_1.05fr]">
