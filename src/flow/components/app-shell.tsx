@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS = [
   { to: "/flow/storyboard", label: "Storyboard", icon: Clapperboard },
   { to: "/flow/director", label: "AI Director", icon: Sparkles },
-  { to: "/", label: "Perform Anywhere", icon: Users },
+  { to: "/projects", label: "Perform Anywhere", icon: Users },
   { to: "/flow/canvas", label: "Canvas", icon: Network },
 ] as const;
 

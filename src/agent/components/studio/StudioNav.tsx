@@ -60,7 +60,7 @@ export function StudioNav() {
       <Link to="/agent" className="aurora-nav-brand">
         <span className="dot" /> Perform Anywhere
       </Link>
-      <Link to="/" className="aurora-nav-tab" title="Back to Perform Anywhere" style={{ marginBottom: 6 }}>
+      <Link to="/projects" className="aurora-nav-tab" title="Back to Perform Anywhere" style={{ marginBottom: 6 }}>
         <span className="ico">←</span><span>Perform Anywhere home</span>
       </Link>
 
