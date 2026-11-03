@@ -4,6 +4,7 @@ import {
   ArrowRight, Box, Clapperboard, Sparkles, ChevronRight, Play, Camera, Video
 } from "lucide-react";
 import React from "react";
+import BrandMark from "@/components/BrandMark";
 
 // Asset imports
 import portraitImg from "@/assets/IMG_0978_1788519281635.png";
@@ -37,10 +38,7 @@ function Header() {
     <header className="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-background/50 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 font-display text-xl tracking-tight font-medium hover:opacity-80 transition-opacity">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-aurora-pink to-aurora-purple flex items-center justify-center shadow-[0_0_15px_rgba(255,105,180,0.4)]">
-            <Camera className="w-4 h-4 text-white" />
-          </div>
-          <span>Perform Anywhere</span>
+<BrandMark size={34} />
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <a href="#pipeline" className="hidden text-muted-foreground hover:text-white transition sm:inline">
