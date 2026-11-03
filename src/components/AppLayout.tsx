@@ -1,56 +1,46 @@
 import { Link, useLocation } from "@/lib/nav";
 import type { ReactNode } from "react";
 import AuthGate from "@/components/AuthGate";
+import BrandMark from "@/components/BrandMark";
 import { Film, PlusSquare, Layers, Settings, Activity, Bot, Clapperboard } from "lucide-react";
 
 const NAV = [
-  { to: "/projects",    label: "Library",     Icon: Film },
-  { to: "/studio",      label: "New",         Icon: PlusSquare },
-  { to: "/agent",       label: "Video Agent", Icon: Bot },
-  { to: "/flow/director", label: "Director",  Icon: Clapperboard },
+  { to: "/projects", label: "Library", Icon: Film },
+  { to: "/studio", label: "New shoot", Icon: PlusSquare },
+  { to: "/agent", label: "Video Agent", Icon: Bot },
+  { to: "/flow/director", label: "Director", Icon: Clapperboard },
   { to: "/orchestrate", label: "Orchestrate", Icon: Layers },
-  { to: "/motion-test", label: "Motion",      Icon: Activity },
-  { to: "/account",     label: "Settings",    Icon: Settings },
+  { to: "/motion-test", label: "Motion", Icon: Activity },
+  { to: "/account", label: "Settings", Icon: Settings },
 ];
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
-
-  function isActive(path: string) {
-    return location === path || location.startsWith(path + "/");
-  }
+  const isActive = (p: string) => location === p || location.startsWith(p + "/");
 
   return (
-    <div className="min-h-screen aurora-grid" style={{ background: "oklch(0.10 0.04 290)" }}>
-      <header className="sticky top-0 z-40 border-b border-white/8 backdrop-blur-md" style={{ background: "oklch(0.10 0.04 290 / 0.88)" }}>
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-3">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src="/aurora-logo.png" alt="Perform Anywhere" className="h-8 w-8 object-contain" />
-            <div className="flex flex-col leading-none">
-              <span className="text-base font-bold tracking-tight text-white">Perform Anywhere</span>
-              <span className="text-[9px] font-medium tracking-[0.15em] uppercase" style={{ color: "oklch(0.65 0.30 330)" }}>Powered by Aurora</span>
-            </div>
-          </Link>
-          <nav className="flex items-center gap-1 text-sm">
+    <div className="pa-shell min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
+          <Link to="/" className="shrink-0"><BrandMark size={34} /></Link>
+          <nav className="flex items-center gap-0.5 overflow-x-auto text-sm">
             {NAV.map(({ to, label, Icon }) => (
               <Link
                 key={to}
                 to={to}
-                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-all ${
-                  isActive(to)
-                    ? "font-semibold text-white"
-                    : "text-white/45 hover:text-white/80"
+                className={`relative flex items-center gap-1.5 whitespace-nowrap px-3 py-2 uppercase tracking-[0.12em] text-[11px] font-semibold transition-colors ${
+                  isActive(to) ? "text-primary" : "text-muted-foreground hover:text-foreground"
                 }`}
-                style={isActive(to) ? { background: "oklch(0.58 0.26 290 / 0.25)", border: "1px solid oklch(0.58 0.26 290 / 0.35)" } : {}}
               >
-                <Icon className="h-3.5 w-3.5" strokeWidth={1.5} />
-                <span className="hidden sm:inline">{label}</span>
+                <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+                <span className="hidden md:inline">{label}</span>
+                {isActive(to) && <span className="absolute inset-x-2 -bottom-[13px] h-[2px] bg-primary" />}
               </Link>
             ))}
           </nav>
         </div>
       </header>
-      <div><AuthGate>{children}</AuthGate></div>
+      <AuthGate>{children}</AuthGate>
     </div>
   );
 }

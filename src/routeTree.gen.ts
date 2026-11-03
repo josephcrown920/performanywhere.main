@@ -31,6 +31,7 @@ import { Route as FlowStoryboardRouteImport } from './routes/flow/storyboard'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
 import { Route as ApiAccountClaimLegacyRouteImport } from './routes/api/account/claim-legacy'
+import { Route as ApiAgentCoDirectorRouteImport } from './routes/api/agent/co-director'
 import { Route as ApiAgentVideoEditRouteImport } from './routes/api/agent/video-edit'
 import { Route as ApiDepthFrameRouteImport } from './routes/api/depth/frame'
 import { Route as ApiFlCanvasAgentRouteImport } from './routes/api/fl/canvas-agent'
@@ -178,6 +179,11 @@ const ProjectsIdRoute = ProjectsIdRouteImport.update({
 const ApiAccountClaimLegacyRoute = ApiAccountClaimLegacyRouteImport.update({
   id: '/api/account/claim-legacy',
   path: '/api/account/claim-legacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentCoDirectorRoute = ApiAgentCoDirectorRouteImport.update({
+  id: '/api/agent/co-director',
+  path: '/api/agent/co-director',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAgentVideoEditRoute = ApiAgentVideoEditRouteImport.update({
@@ -397,6 +403,7 @@ export interface FileRoutesByFullPath {
   '/agent/': typeof AgentIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/claim-legacy': typeof ApiAccountClaimLegacyRoute
+  '/api/agent/co-director': typeof ApiAgentCoDirectorRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
@@ -458,6 +465,7 @@ export interface FileRoutesByTo {
   '/agent': typeof AgentIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/api/account/claim-legacy': typeof ApiAccountClaimLegacyRoute
+  '/api/agent/co-director': typeof ApiAgentCoDirectorRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
@@ -521,6 +529,7 @@ export interface FileRoutesById {
   '/agent/': typeof AgentIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/claim-legacy': typeof ApiAccountClaimLegacyRoute
+  '/api/agent/co-director': typeof ApiAgentCoDirectorRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
   '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
@@ -585,6 +594,7 @@ export interface FileRouteTypes {
     | '/agent/'
     | '/projects/'
     | '/api/account/claim-legacy'
+    | '/api/agent/co-director'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
     | '/api/fl/canvas-agent'
@@ -646,6 +656,7 @@ export interface FileRouteTypes {
     | '/agent'
     | '/projects'
     | '/api/account/claim-legacy'
+    | '/api/agent/co-director'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
     | '/api/fl/canvas-agent'
@@ -708,6 +719,7 @@ export interface FileRouteTypes {
     | '/agent/'
     | '/projects/'
     | '/api/account/claim-legacy'
+    | '/api/agent/co-director'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
     | '/api/fl/canvas-agent'
@@ -763,6 +775,7 @@ export interface RootRouteChildren {
   ProjectsIdRoute: typeof ProjectsIdRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAccountClaimLegacyRoute: typeof ApiAccountClaimLegacyRoute
+  ApiAgentCoDirectorRoute: typeof ApiAgentCoDirectorRoute
   ApiAgentVideoEditRoute: typeof ApiAgentVideoEditRoute
   ApiDepthFrameRoute: typeof ApiDepthFrameRoute
   ApiFlCanvasAgentRoute: typeof ApiFlCanvasAgentRoute
@@ -955,6 +968,13 @@ declare module '@tanstack/react-router' {
       path: '/api/account/claim-legacy'
       fullPath: '/api/account/claim-legacy'
       preLoaderRoute: typeof ApiAccountClaimLegacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agent/co-director': {
+      id: '/api/agent/co-director'
+      path: '/api/agent/co-director'
+      fullPath: '/api/agent/co-director'
+      preLoaderRoute: typeof ApiAgentCoDirectorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/agent/video-edit': {
@@ -1289,6 +1309,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsIdRoute: ProjectsIdRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAccountClaimLegacyRoute: ApiAccountClaimLegacyRoute,
+  ApiAgentCoDirectorRoute: ApiAgentCoDirectorRoute,
   ApiAgentVideoEditRoute: ApiAgentVideoEditRoute,
   ApiDepthFrameRoute: ApiDepthFrameRoute,
   ApiFlCanvasAgentRoute: ApiFlCanvasAgentRoute,

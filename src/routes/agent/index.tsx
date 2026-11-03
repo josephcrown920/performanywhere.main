@@ -756,7 +756,7 @@ function Index() {
       </div>
 
       <div className="aurora-logo-top">
-        <div className="aurora-logo-mark">A</div>
+        <img src="/pa-mark.svg" alt="" width={34} height={34} style={{ width: 34, height: 34 }} />
         Perform Anywhere
         <div className="aurora-bg-switch" role="group" aria-label="Background">
           {(["court", "moon", "chrome", "collage"] as BgTheme[]).map((t) => (

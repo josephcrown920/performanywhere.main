@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
 
   --color-aurora-pink: hsl(var(--aurora-pink));
@@ -38,29 +38,29 @@
 }
 
 :root, .dark {
-  --background: 260 20% 4%;
-  --foreground: 260 10% 95%;
-  --card: 260 20% 6%;
-  --card-foreground: 260 10% 95%;
-  --popover: 260 20% 6%;
-  --popover-foreground: 260 10% 95%;
-  --primary: 315 100% 60%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 275 80% 60%;
+  --background: 24 18% 4%;
+  --foreground: 36 30% 94%;
+  --card: 24 14% 7%;
+  --card-foreground: 36 30% 94%;
+  --popover: 24 14% 7%;
+  --popover-foreground: 36 30% 94%;
+  --primary: 32 100% 58%;
+  --primary-foreground: 24 30% 6%;
+  --secondary: 14 100% 56%;
   --secondary-foreground: 0 0% 100%;
-  --muted: 260 20% 12%;
-  --muted-foreground: 260 15% 65%;
-  --accent: 260 30% 12%;
-  --accent-foreground: 260 10% 95%;
+  --muted: 24 10% 12%;
+  --muted-foreground: 30 10% 62%;
+  --accent: 24 12% 13%;
+  --accent-foreground: 36 30% 94%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --border: 260 15% 15%;
-  --input: 260 15% 12%;
-  --ring: 315 100% 60%;
+  --border: 24 10% 16%;
+  --input: 24 10% 13%;
+  --ring: 32 100% 58%;
 
-  --aurora-pink: 315 100% 60%;
-  --aurora-purple: 275 80% 60%;
-  --aurora-cyan: 190 100% 60%;
+  --aurora-pink: 14 100% 56%;
+  --aurora-purple: 32 100% 58%;
+  --aurora-cyan: 44 100% 70%;
 
   --radius: 1rem;
 }
@@ -143,7 +143,7 @@
   --color-holo-magenta: var(--holo-magenta);
   --color-holo-amber: var(--holo-amber);
   --color-surface: var(--surface);
-  --font-display: "Archivo Black", "Archivo", sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
   --font-head: "Archivo", sans-serif;
   --font-flow: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
@@ -294,3 +294,12 @@
     background-size: 36px 36px;
   }
 }
+
+.pa-shell {
+  background-image:
+    radial-gradient(60rem 30rem at 85% -10%, hsl(var(--primary) / 0.10), transparent 60%),
+    radial-gradient(40rem 25rem at -10% 110%, hsl(var(--secondary) / 0.08), transparent 60%);
+  background-attachment: fixed;
+}
+.pa-panel { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 1rem; }
+.pa-letterbox { box-shadow: inset 0 14px 0 hsl(var(--background)), inset 0 -14px 0 hsl(var(--background)); }
