@@ -11,7 +11,7 @@ function sessionUserId(): string | null {
 
 export function getClientId(): string {
   const uid = sessionUserId();
-  if (uid) { window.localStorage.setItem(KEY, uid); return uid; }
+  if (uid) { setClientId(uid); return uid; }
   let id = window.localStorage.getItem(KEY);
   if (!id || !isUuid(id)) {
     id = crypto.randomUUID();
@@ -40,5 +40,12 @@ export function restoreClientId(key: string): string {
 
 /** Set by the sign-in gate: the signed-in user's id is the client id. */
 export function setClientId(id: string): void {
+  const prev = window.localStorage.getItem(KEY);
+  // Keep the pre-sign-in device id so its projects and credits can be moved onto the account.
+  if (prev && prev !== id && isUuid(prev) && !window.localStorage.getItem(LEGACY_KEY)) window.localStorage.setItem(LEGACY_KEY, prev);
   window.localStorage.setItem(KEY, id);
 }
+
+const LEGACY_KEY = "ps_legacy_client_id";
+export function takeLegacyClientId(): string | null { return window.localStorage.getItem(LEGACY_KEY); }
+export function clearLegacyClientId(): void { window.localStorage.removeItem(LEGACY_KEY); }
