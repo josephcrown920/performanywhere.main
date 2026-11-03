@@ -143,7 +143,7 @@
   --color-holo-magenta: var(--holo-magenta);
   --color-holo-amber: var(--holo-amber);
   --color-surface: var(--surface);
-  --font-display: "Archivo Black", "Archivo", sans-serif;
+  --font-display: "Bebas Neue", sans-serif;
   --font-head: "Archivo", sans-serif;
   --font-flow: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
