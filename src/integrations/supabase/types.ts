@@ -14,6 +14,108 @@ export type Database = {
   }
   public: {
     Tables: {
+      capcut_drafts: {
+        Row: {
+          created_at: string
+          duration: number
+          id: string
+          layers: Json
+          name: string
+          ratio: string
+          updated_at: string
+          user_id: string
+          version: number
+        }
+        Insert: {
+          created_at?: string
+          duration?: number
+          id?: string
+          layers?: Json
+          name: string
+          ratio: string
+          updated_at?: string
+          user_id: string
+          version: number
+        }
+        Update: {
+          created_at?: string
+          duration?: number
+          id?: string
+          layers?: Json
+          name?: string
+          ratio?: string
+          updated_at?: string
+          user_id?: string
+          version?: number
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          text: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: string
+          text: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          text?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      creations: {
+        Row: {
+          aspect: string
+          client_id: number
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          model: string
+          prompt: string
+          status: string
+          url: string | null
+          user_id: string
+        }
+        Insert: {
+          aspect?: string
+          client_id: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          model: string
+          prompt: string
+          status?: string
+          url?: string | null
+          user_id: string
+        }
+        Update: {
+          aspect?: string
+          client_id?: number
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          model?: string
+          prompt?: string
+          status?: string
+          url?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       credit_ledger: {
         Row: {
           amount: number
@@ -68,6 +170,66 @@ export type Database = {
           lifetime_purchased?: number
           lifetime_spent?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      director_drafts: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          input: string
+          model: string
+          output: string
+          user_id: string
+        }
+        Insert: {
+          action?: string
+          created_at?: string
+          id?: string
+          input: string
+          model: string
+          output: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          input?: string
+          model?: string
+          output?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      gallery_items: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          prompt: string | null
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          name: string
+          prompt?: string | null
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          prompt?: string | null
+          storage_path?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -264,6 +426,33 @@ export type Database = {
         }
         Relationships: []
       }
+      prompt_packs: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          name: string
+          prompt: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          name: string
+          prompt: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          name?: string
+          prompt?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       purchases: {
         Row: {
           amount_paid_minor: number | null
@@ -294,6 +483,87 @@ export type Database = {
           id?: string
           paystack_reference?: string | null
           raw_event?: Json | null
+        }
+        Relationships: []
+      }
+      storyboards: {
+        Row: {
+          concept: string
+          created_at: string
+          id: string
+          reference_urls: Json
+          shots: Json
+          title: string
+          user_id: string
+        }
+        Insert: {
+          concept: string
+          created_at?: string
+          id?: string
+          reference_urls?: Json
+          shots?: Json
+          title?: string
+          user_id: string
+        }
+        Update: {
+          concept?: string
+          created_at?: string
+          id?: string
+          reference_urls?: Json
+          shots?: Json
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      studio_projects: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          state: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          state?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          state?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      studio_sessions: {
+        Row: {
+          id: string
+          name: string
+          state: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          id: string
+          name: string
+          state?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          state?: Json
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

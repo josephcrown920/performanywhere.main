@@ -11,15 +11,30 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
+import { Route as AgentRouteImport } from './routes/agent'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AgentIndexRouteImport } from './routes/agent/index'
+import { Route as AgentBeatDirectorRouteImport } from './routes/agent/beat-director'
+import { Route as AgentEditorRouteImport } from './routes/agent/editor'
+import { Route as AgentPhotoLabRouteImport } from './routes/agent/photo-lab'
+import { Route as AgentStoryboardRouteImport } from './routes/agent/storyboard'
+import { Route as AgentStudioRouteImport } from './routes/agent/studio'
+import { Route as AgentTimelineRouteImport } from './routes/agent/timeline'
+import { Route as AgentWorkflowsRouteImport } from './routes/agent/workflows'
+import { Route as FlowCanvasRouteImport } from './routes/flow/canvas'
+import { Route as FlowDirectorRouteImport } from './routes/flow/director'
+import { Route as FlowStoryboardRouteImport } from './routes/flow/storyboard'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
 import { Route as ApiAgentVideoEditRouteImport } from './routes/api/agent/video-edit'
 import { Route as ApiDepthFrameRouteImport } from './routes/api/depth/frame'
+import { Route as ApiFlCanvasAgentRouteImport } from './routes/api/fl/canvas-agent'
+import { Route as ApiFlEditImageRouteImport } from './routes/api/fl/edit-image'
+import { Route as ApiFlGenerateImageRouteImport } from './routes/api/fl/generate-image'
 import { Route as ApiOrchestrateListRouteImport } from './routes/api/orchestrate/list'
 import { Route as ApiOrchestratePaystackRouteImport } from './routes/api/orchestrate/paystack'
 import { Route as ApiOrchestrateRunRouteImport } from './routes/api/orchestrate/run'
@@ -30,13 +45,29 @@ import { Route as ApiRenderPollRouteImport } from './routes/api/render/poll'
 import { Route as ApiRenderProvidersRouteImport } from './routes/api/render/providers'
 import { Route as ApiRenderRetryRouteImport } from './routes/api/render/retry'
 import { Route as ApiRenderStartRouteImport } from './routes/api/render/start'
+import { Route as ApiVaAgentRouteImport } from './routes/api/va/agent'
+import { Route as ApiVaAgentChatRouteImport } from './routes/api/va/agent-chat'
+import { Route as ApiVaArkRouteImport } from './routes/api/va/ark'
+import { Route as ApiVaAssistantRouteImport } from './routes/api/va/assistant'
+import { Route as ApiVaChatStreamRouteImport } from './routes/api/va/chat-stream'
+import { Route as ApiVaContentAgentRouteImport } from './routes/api/va/content-agent'
+import { Route as ApiVaCrewAgentRouteImport } from './routes/api/va/crew-agent'
+import { Route as ApiVaImageRouteImport } from './routes/api/va/image'
+import { Route as ApiVaModelarkRouteImport } from './routes/api/va/modelark'
+import { Route as ApiVaModelarkDirectorRouteImport } from './routes/api/va/modelark-director'
+import { Route as ApiVaReferenceUploadRouteImport } from './routes/api/va/reference-upload'
+import { Route as ApiVaSpeechRouteImport } from './routes/api/va/speech'
+import { Route as ApiVaVideoRouteImport } from './routes/api/va/video'
+import { Route as ApiVaZenmuxRouteImport } from './routes/api/va/zenmux'
 import { Route as ApiWorkflowsIndexRouteImport } from './routes/api/workflows/index'
 import { Route as ApiWorkflowsPlanRouteImport } from './routes/api/workflows/plan'
 import { Route as RClientIdProjectIdRouteImport } from './routes/r.$clientId.$projectId'
 import { Route as ApiRenderSignedUrlAssetRouteImport } from './routes/api/render/signed-url.asset'
 import { Route as ApiRenderSignedUrlRenderRouteImport } from './routes/api/render/signed-url.render'
+import { Route as ApiVaVideoIdRouteImport } from './routes/api/va/video.$id'
 import { Route as ApiWorkflowsGpusRaceRouteImport } from './routes/api/workflows/gpus.race'
 import { Route as ApiRenderPublicClientIdProjectIdRouteImport } from './routes/api/render/public.$clientId.$projectId'
+import { Route as ApiVaVideoIdContentRouteImport } from './routes/api/va/video.$id.content'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,6 +77,11 @@ const IndexRoute = IndexRouteImport.update({
 const AccountRoute = AccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentRoute = AgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MotionTestRoute = MotionTestRouteImport.update({
@@ -73,6 +109,61 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentIndexRoute = AgentIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentBeatDirectorRoute = AgentBeatDirectorRouteImport.update({
+  id: '/beat-director',
+  path: '/beat-director',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentEditorRoute = AgentEditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentPhotoLabRoute = AgentPhotoLabRouteImport.update({
+  id: '/photo-lab',
+  path: '/photo-lab',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentStoryboardRoute = AgentStoryboardRouteImport.update({
+  id: '/storyboard',
+  path: '/storyboard',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentStudioRoute = AgentStudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentTimelineRoute = AgentTimelineRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
+  getParentRoute: () => AgentRoute,
+} as any)
+const AgentWorkflowsRoute = AgentWorkflowsRouteImport.update({
+  id: '/workflows',
+  path: '/workflows',
+  getParentRoute: () => AgentRoute,
+} as any)
+const FlowCanvasRoute = FlowCanvasRouteImport.update({
+  id: '/flow/canvas',
+  path: '/flow/canvas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlowDirectorRoute = FlowDirectorRouteImport.update({
+  id: '/flow/director',
+  path: '/flow/director',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlowStoryboardRoute = FlowStoryboardRouteImport.update({
+  id: '/flow/storyboard',
+  path: '/flow/storyboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -91,6 +182,21 @@ const ApiAgentVideoEditRoute = ApiAgentVideoEditRouteImport.update({
 const ApiDepthFrameRoute = ApiDepthFrameRouteImport.update({
   id: '/api/depth/frame',
   path: '/api/depth/frame',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiFlCanvasAgentRoute = ApiFlCanvasAgentRouteImport.update({
+  id: '/api/fl/canvas-agent',
+  path: '/api/fl/canvas-agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiFlEditImageRoute = ApiFlEditImageRouteImport.update({
+  id: '/api/fl/edit-image',
+  path: '/api/fl/edit-image',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiFlGenerateImageRoute = ApiFlGenerateImageRouteImport.update({
+  id: '/api/fl/generate-image',
+  path: '/api/fl/generate-image',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiOrchestrateListRoute = ApiOrchestrateListRouteImport.update({
@@ -144,6 +250,76 @@ const ApiRenderStartRoute = ApiRenderStartRouteImport.update({
   path: '/api/render/start',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiVaAgentRoute = ApiVaAgentRouteImport.update({
+  id: '/api/va/agent',
+  path: '/api/va/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaAgentChatRoute = ApiVaAgentChatRouteImport.update({
+  id: '/api/va/agent-chat',
+  path: '/api/va/agent-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaArkRoute = ApiVaArkRouteImport.update({
+  id: '/api/va/ark',
+  path: '/api/va/ark',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaAssistantRoute = ApiVaAssistantRouteImport.update({
+  id: '/api/va/assistant',
+  path: '/api/va/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaChatStreamRoute = ApiVaChatStreamRouteImport.update({
+  id: '/api/va/chat-stream',
+  path: '/api/va/chat-stream',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaContentAgentRoute = ApiVaContentAgentRouteImport.update({
+  id: '/api/va/content-agent',
+  path: '/api/va/content-agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaCrewAgentRoute = ApiVaCrewAgentRouteImport.update({
+  id: '/api/va/crew-agent',
+  path: '/api/va/crew-agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaImageRoute = ApiVaImageRouteImport.update({
+  id: '/api/va/image',
+  path: '/api/va/image',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaModelarkRoute = ApiVaModelarkRouteImport.update({
+  id: '/api/va/modelark',
+  path: '/api/va/modelark',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaModelarkDirectorRoute = ApiVaModelarkDirectorRouteImport.update({
+  id: '/api/va/modelark-director',
+  path: '/api/va/modelark-director',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaReferenceUploadRoute = ApiVaReferenceUploadRouteImport.update({
+  id: '/api/va/reference-upload',
+  path: '/api/va/reference-upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaSpeechRoute = ApiVaSpeechRouteImport.update({
+  id: '/api/va/speech',
+  path: '/api/va/speech',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaVideoRoute = ApiVaVideoRouteImport.update({
+  id: '/api/va/video',
+  path: '/api/va/video',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiVaZenmuxRoute = ApiVaZenmuxRouteImport.update({
+  id: '/api/va/zenmux',
+  path: '/api/va/zenmux',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiWorkflowsIndexRoute = ApiWorkflowsIndexRouteImport.update({
   id: '/api/workflows/',
   path: '/api/workflows/',
@@ -170,6 +346,11 @@ const ApiRenderSignedUrlRenderRoute =
     path: '/api/render/signed-url/render',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiVaVideoIdRoute = ApiVaVideoIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiVaVideoRoute,
+} as any)
 const ApiWorkflowsGpusRaceRoute = ApiWorkflowsGpusRaceRouteImport.update({
   id: '/api/workflows/gpus/race',
   path: '/api/workflows/gpus/race',
@@ -181,19 +362,39 @@ const ApiRenderPublicClientIdProjectIdRoute =
     path: '/api/render/public/$clientId/$projectId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiVaVideoIdContentRoute = ApiVaVideoIdContentRouteImport.update({
+  id: '/content',
+  path: '/content',
+  getParentRoute: () => ApiVaVideoIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/agent': typeof AgentRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
+  '/agent/beat-director': typeof AgentBeatDirectorRoute
+  '/agent/editor': typeof AgentEditorRoute
+  '/agent/photo-lab': typeof AgentPhotoLabRoute
+  '/agent/storyboard': typeof AgentStoryboardRoute
+  '/agent/studio': typeof AgentStudioRoute
+  '/agent/timeline': typeof AgentTimelineRoute
+  '/agent/workflows': typeof AgentWorkflowsRoute
+  '/flow/canvas': typeof FlowCanvasRoute
+  '/flow/director': typeof FlowDirectorRoute
+  '/flow/storyboard': typeof FlowStoryboardRoute
   '/projects/$id': typeof ProjectsIdRoute
+  '/agent/': typeof AgentIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
+  '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
+  '/api/fl/edit-image': typeof ApiFlEditImageRoute
+  '/api/fl/generate-image': typeof ApiFlGenerateImageRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -204,13 +405,29 @@ export interface FileRoutesByFullPath {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/va/agent': typeof ApiVaAgentRoute
+  '/api/va/agent-chat': typeof ApiVaAgentChatRoute
+  '/api/va/ark': typeof ApiVaArkRoute
+  '/api/va/assistant': typeof ApiVaAssistantRoute
+  '/api/va/chat-stream': typeof ApiVaChatStreamRoute
+  '/api/va/content-agent': typeof ApiVaContentAgentRoute
+  '/api/va/crew-agent': typeof ApiVaCrewAgentRoute
+  '/api/va/image': typeof ApiVaImageRoute
+  '/api/va/modelark': typeof ApiVaModelarkRoute
+  '/api/va/modelark-director': typeof ApiVaModelarkDirectorRoute
+  '/api/va/reference-upload': typeof ApiVaReferenceUploadRoute
+  '/api/va/speech': typeof ApiVaSpeechRoute
+  '/api/va/video': typeof ApiVaVideoRouteWithChildren
+  '/api/va/zenmux': typeof ApiVaZenmuxRoute
   '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
   '/api/workflows/': typeof ApiWorkflowsIndexRoute
   '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
   '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/va/video/$id': typeof ApiVaVideoIdRouteWithChildren
   '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
   '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
+  '/api/va/video/$id/content': typeof ApiVaVideoIdContentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -220,10 +437,24 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
+  '/agent/beat-director': typeof AgentBeatDirectorRoute
+  '/agent/editor': typeof AgentEditorRoute
+  '/agent/photo-lab': typeof AgentPhotoLabRoute
+  '/agent/storyboard': typeof AgentStoryboardRoute
+  '/agent/studio': typeof AgentStudioRoute
+  '/agent/timeline': typeof AgentTimelineRoute
+  '/agent/workflows': typeof AgentWorkflowsRoute
+  '/flow/canvas': typeof FlowCanvasRoute
+  '/flow/director': typeof FlowDirectorRoute
+  '/flow/storyboard': typeof FlowStoryboardRoute
   '/projects/$id': typeof ProjectsIdRoute
+  '/agent': typeof AgentIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
+  '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
+  '/api/fl/edit-image': typeof ApiFlEditImageRoute
+  '/api/fl/generate-image': typeof ApiFlGenerateImageRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -234,27 +465,58 @@ export interface FileRoutesByTo {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/va/agent': typeof ApiVaAgentRoute
+  '/api/va/agent-chat': typeof ApiVaAgentChatRoute
+  '/api/va/ark': typeof ApiVaArkRoute
+  '/api/va/assistant': typeof ApiVaAssistantRoute
+  '/api/va/chat-stream': typeof ApiVaChatStreamRoute
+  '/api/va/content-agent': typeof ApiVaContentAgentRoute
+  '/api/va/crew-agent': typeof ApiVaCrewAgentRoute
+  '/api/va/image': typeof ApiVaImageRoute
+  '/api/va/modelark': typeof ApiVaModelarkRoute
+  '/api/va/modelark-director': typeof ApiVaModelarkDirectorRoute
+  '/api/va/reference-upload': typeof ApiVaReferenceUploadRoute
+  '/api/va/speech': typeof ApiVaSpeechRoute
+  '/api/va/video': typeof ApiVaVideoRouteWithChildren
+  '/api/va/zenmux': typeof ApiVaZenmuxRoute
   '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
   '/api/workflows': typeof ApiWorkflowsIndexRoute
   '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
   '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/va/video/$id': typeof ApiVaVideoIdRouteWithChildren
   '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
   '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
+  '/api/va/video/$id/content': typeof ApiVaVideoIdContentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/agent': typeof AgentRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
   '/studio': typeof StudioRoute
   '/terms': typeof TermsRoute
+  '/agent/beat-director': typeof AgentBeatDirectorRoute
+  '/agent/editor': typeof AgentEditorRoute
+  '/agent/photo-lab': typeof AgentPhotoLabRoute
+  '/agent/storyboard': typeof AgentStoryboardRoute
+  '/agent/studio': typeof AgentStudioRoute
+  '/agent/timeline': typeof AgentTimelineRoute
+  '/agent/workflows': typeof AgentWorkflowsRoute
+  '/flow/canvas': typeof FlowCanvasRoute
+  '/flow/director': typeof FlowDirectorRoute
+  '/flow/storyboard': typeof FlowStoryboardRoute
   '/projects/$id': typeof ProjectsIdRoute
+  '/agent/': typeof AgentIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/agent/video-edit': typeof ApiAgentVideoEditRoute
   '/api/depth/frame': typeof ApiDepthFrameRoute
+  '/api/fl/canvas-agent': typeof ApiFlCanvasAgentRoute
+  '/api/fl/edit-image': typeof ApiFlEditImageRoute
+  '/api/fl/generate-image': typeof ApiFlGenerateImageRoute
   '/api/orchestrate/list': typeof ApiOrchestrateListRoute
   '/api/orchestrate/paystack': typeof ApiOrchestratePaystackRoute
   '/api/orchestrate/run': typeof ApiOrchestrateRunRoute
@@ -265,28 +527,59 @@ export interface FileRoutesById {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/va/agent': typeof ApiVaAgentRoute
+  '/api/va/agent-chat': typeof ApiVaAgentChatRoute
+  '/api/va/ark': typeof ApiVaArkRoute
+  '/api/va/assistant': typeof ApiVaAssistantRoute
+  '/api/va/chat-stream': typeof ApiVaChatStreamRoute
+  '/api/va/content-agent': typeof ApiVaContentAgentRoute
+  '/api/va/crew-agent': typeof ApiVaCrewAgentRoute
+  '/api/va/image': typeof ApiVaImageRoute
+  '/api/va/modelark': typeof ApiVaModelarkRoute
+  '/api/va/modelark-director': typeof ApiVaModelarkDirectorRoute
+  '/api/va/reference-upload': typeof ApiVaReferenceUploadRoute
+  '/api/va/speech': typeof ApiVaSpeechRoute
+  '/api/va/video': typeof ApiVaVideoRouteWithChildren
+  '/api/va/zenmux': typeof ApiVaZenmuxRoute
   '/api/workflows/plan': typeof ApiWorkflowsPlanRoute
   '/r/$clientId/$projectId': typeof RClientIdProjectIdRoute
   '/api/workflows/': typeof ApiWorkflowsIndexRoute
   '/api/render/signed-url/asset': typeof ApiRenderSignedUrlAssetRoute
   '/api/render/signed-url/render': typeof ApiRenderSignedUrlRenderRoute
+  '/api/va/video/$id': typeof ApiVaVideoIdRouteWithChildren
   '/api/workflows/gpus/race': typeof ApiWorkflowsGpusRaceRoute
   '/api/render/public/$clientId/$projectId': typeof ApiRenderPublicClientIdProjectIdRoute
+  '/api/va/video/$id/content': typeof ApiVaVideoIdContentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/account'
+    | '/agent'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
     | '/studio'
     | '/terms'
+    | '/agent/beat-director'
+    | '/agent/editor'
+    | '/agent/photo-lab'
+    | '/agent/storyboard'
+    | '/agent/studio'
+    | '/agent/timeline'
+    | '/agent/workflows'
+    | '/flow/canvas'
+    | '/flow/director'
+    | '/flow/storyboard'
     | '/projects/$id'
+    | '/agent/'
     | '/projects/'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
+    | '/api/fl/canvas-agent'
+    | '/api/fl/edit-image'
+    | '/api/fl/generate-image'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -297,13 +590,29 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/va/agent'
+    | '/api/va/agent-chat'
+    | '/api/va/ark'
+    | '/api/va/assistant'
+    | '/api/va/chat-stream'
+    | '/api/va/content-agent'
+    | '/api/va/crew-agent'
+    | '/api/va/image'
+    | '/api/va/modelark'
+    | '/api/va/modelark-director'
+    | '/api/va/reference-upload'
+    | '/api/va/speech'
+    | '/api/va/video'
+    | '/api/va/zenmux'
     | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
     | '/api/workflows/'
     | '/api/render/signed-url/asset'
     | '/api/render/signed-url/render'
+    | '/api/va/video/$id'
     | '/api/workflows/gpus/race'
     | '/api/render/public/$clientId/$projectId'
+    | '/api/va/video/$id/content'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -313,10 +622,24 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/studio'
     | '/terms'
+    | '/agent/beat-director'
+    | '/agent/editor'
+    | '/agent/photo-lab'
+    | '/agent/storyboard'
+    | '/agent/studio'
+    | '/agent/timeline'
+    | '/agent/workflows'
+    | '/flow/canvas'
+    | '/flow/director'
+    | '/flow/storyboard'
     | '/projects/$id'
+    | '/agent'
     | '/projects'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
+    | '/api/fl/canvas-agent'
+    | '/api/fl/edit-image'
+    | '/api/fl/generate-image'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -327,26 +650,57 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/va/agent'
+    | '/api/va/agent-chat'
+    | '/api/va/ark'
+    | '/api/va/assistant'
+    | '/api/va/chat-stream'
+    | '/api/va/content-agent'
+    | '/api/va/crew-agent'
+    | '/api/va/image'
+    | '/api/va/modelark'
+    | '/api/va/modelark-director'
+    | '/api/va/reference-upload'
+    | '/api/va/speech'
+    | '/api/va/video'
+    | '/api/va/zenmux'
     | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
     | '/api/workflows'
     | '/api/render/signed-url/asset'
     | '/api/render/signed-url/render'
+    | '/api/va/video/$id'
     | '/api/workflows/gpus/race'
     | '/api/render/public/$clientId/$projectId'
+    | '/api/va/video/$id/content'
   id:
     | '__root__'
     | '/'
     | '/account'
+    | '/agent'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
     | '/studio'
     | '/terms'
+    | '/agent/beat-director'
+    | '/agent/editor'
+    | '/agent/photo-lab'
+    | '/agent/storyboard'
+    | '/agent/studio'
+    | '/agent/timeline'
+    | '/agent/workflows'
+    | '/flow/canvas'
+    | '/flow/director'
+    | '/flow/storyboard'
     | '/projects/$id'
+    | '/agent/'
     | '/projects/'
     | '/api/agent/video-edit'
     | '/api/depth/frame'
+    | '/api/fl/canvas-agent'
+    | '/api/fl/edit-image'
+    | '/api/fl/generate-image'
     | '/api/orchestrate/list'
     | '/api/orchestrate/paystack'
     | '/api/orchestrate/run'
@@ -357,27 +711,50 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/va/agent'
+    | '/api/va/agent-chat'
+    | '/api/va/ark'
+    | '/api/va/assistant'
+    | '/api/va/chat-stream'
+    | '/api/va/content-agent'
+    | '/api/va/crew-agent'
+    | '/api/va/image'
+    | '/api/va/modelark'
+    | '/api/va/modelark-director'
+    | '/api/va/reference-upload'
+    | '/api/va/speech'
+    | '/api/va/video'
+    | '/api/va/zenmux'
     | '/api/workflows/plan'
     | '/r/$clientId/$projectId'
     | '/api/workflows/'
     | '/api/render/signed-url/asset'
     | '/api/render/signed-url/render'
+    | '/api/va/video/$id'
     | '/api/workflows/gpus/race'
     | '/api/render/public/$clientId/$projectId'
+    | '/api/va/video/$id/content'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
+  AgentRoute: typeof AgentRouteWithChildren
   MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
   PrivacyRoute: typeof PrivacyRoute
   StudioRoute: typeof StudioRoute
   TermsRoute: typeof TermsRoute
+  FlowCanvasRoute: typeof FlowCanvasRoute
+  FlowDirectorRoute: typeof FlowDirectorRoute
+  FlowStoryboardRoute: typeof FlowStoryboardRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAgentVideoEditRoute: typeof ApiAgentVideoEditRoute
   ApiDepthFrameRoute: typeof ApiDepthFrameRoute
+  ApiFlCanvasAgentRoute: typeof ApiFlCanvasAgentRoute
+  ApiFlEditImageRoute: typeof ApiFlEditImageRoute
+  ApiFlGenerateImageRoute: typeof ApiFlGenerateImageRoute
   ApiOrchestrateListRoute: typeof ApiOrchestrateListRoute
   ApiOrchestratePaystackRoute: typeof ApiOrchestratePaystackRoute
   ApiOrchestrateRunRoute: typeof ApiOrchestrateRunRoute
@@ -388,6 +765,20 @@ export interface RootRouteChildren {
   ApiRenderProvidersRoute: typeof ApiRenderProvidersRoute
   ApiRenderRetryRoute: typeof ApiRenderRetryRoute
   ApiRenderStartRoute: typeof ApiRenderStartRoute
+  ApiVaAgentRoute: typeof ApiVaAgentRoute
+  ApiVaAgentChatRoute: typeof ApiVaAgentChatRoute
+  ApiVaArkRoute: typeof ApiVaArkRoute
+  ApiVaAssistantRoute: typeof ApiVaAssistantRoute
+  ApiVaChatStreamRoute: typeof ApiVaChatStreamRoute
+  ApiVaContentAgentRoute: typeof ApiVaContentAgentRoute
+  ApiVaCrewAgentRoute: typeof ApiVaCrewAgentRoute
+  ApiVaImageRoute: typeof ApiVaImageRoute
+  ApiVaModelarkRoute: typeof ApiVaModelarkRoute
+  ApiVaModelarkDirectorRoute: typeof ApiVaModelarkDirectorRoute
+  ApiVaReferenceUploadRoute: typeof ApiVaReferenceUploadRoute
+  ApiVaSpeechRoute: typeof ApiVaSpeechRoute
+  ApiVaVideoRoute: typeof ApiVaVideoRouteWithChildren
+  ApiVaZenmuxRoute: typeof ApiVaZenmuxRoute
   ApiWorkflowsPlanRoute: typeof ApiWorkflowsPlanRoute
   RClientIdProjectIdRoute: typeof RClientIdProjectIdRoute
   ApiWorkflowsIndexRoute: typeof ApiWorkflowsIndexRoute
@@ -411,6 +802,13 @@ declare module '@tanstack/react-router' {
       path: '/account'
       fullPath: '/account'
       preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent': {
+      id: '/agent'
+      path: '/agent'
+      fullPath: '/agent'
+      preLoaderRoute: typeof AgentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/motion-test': {
@@ -448,6 +846,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agent/': {
+      id: '/agent/'
+      path: '/'
+      fullPath: '/agent/'
+      preLoaderRoute: typeof AgentIndexRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/beat-director': {
+      id: '/agent/beat-director'
+      path: '/beat-director'
+      fullPath: '/agent/beat-director'
+      preLoaderRoute: typeof AgentBeatDirectorRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/editor': {
+      id: '/agent/editor'
+      path: '/editor'
+      fullPath: '/agent/editor'
+      preLoaderRoute: typeof AgentEditorRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/photo-lab': {
+      id: '/agent/photo-lab'
+      path: '/photo-lab'
+      fullPath: '/agent/photo-lab'
+      preLoaderRoute: typeof AgentPhotoLabRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/storyboard': {
+      id: '/agent/storyboard'
+      path: '/storyboard'
+      fullPath: '/agent/storyboard'
+      preLoaderRoute: typeof AgentStoryboardRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/studio': {
+      id: '/agent/studio'
+      path: '/studio'
+      fullPath: '/agent/studio'
+      preLoaderRoute: typeof AgentStudioRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/timeline': {
+      id: '/agent/timeline'
+      path: '/timeline'
+      fullPath: '/agent/timeline'
+      preLoaderRoute: typeof AgentTimelineRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/agent/workflows': {
+      id: '/agent/workflows'
+      path: '/workflows'
+      fullPath: '/agent/workflows'
+      preLoaderRoute: typeof AgentWorkflowsRouteImport
+      parentRoute: typeof AgentRoute
+    }
+    '/flow/canvas': {
+      id: '/flow/canvas'
+      path: '/flow/canvas'
+      fullPath: '/flow/canvas'
+      preLoaderRoute: typeof FlowCanvasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flow/director': {
+      id: '/flow/director'
+      path: '/flow/director'
+      fullPath: '/flow/director'
+      preLoaderRoute: typeof FlowDirectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flow/storyboard': {
+      id: '/flow/storyboard'
+      path: '/flow/storyboard'
+      fullPath: '/flow/storyboard'
+      preLoaderRoute: typeof FlowStoryboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/': {
       id: '/projects/'
       path: '/projects'
@@ -474,6 +949,27 @@ declare module '@tanstack/react-router' {
       path: '/api/depth/frame'
       fullPath: '/api/depth/frame'
       preLoaderRoute: typeof ApiDepthFrameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/fl/canvas-agent': {
+      id: '/api/fl/canvas-agent'
+      path: '/api/fl/canvas-agent'
+      fullPath: '/api/fl/canvas-agent'
+      preLoaderRoute: typeof ApiFlCanvasAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/fl/edit-image': {
+      id: '/api/fl/edit-image'
+      path: '/api/fl/edit-image'
+      fullPath: '/api/fl/edit-image'
+      preLoaderRoute: typeof ApiFlEditImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/fl/generate-image': {
+      id: '/api/fl/generate-image'
+      path: '/api/fl/generate-image'
+      fullPath: '/api/fl/generate-image'
+      preLoaderRoute: typeof ApiFlGenerateImageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/orchestrate/list': {
@@ -546,6 +1042,104 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRenderStartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/va/agent': {
+      id: '/api/va/agent'
+      path: '/api/va/agent'
+      fullPath: '/api/va/agent'
+      preLoaderRoute: typeof ApiVaAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/agent-chat': {
+      id: '/api/va/agent-chat'
+      path: '/api/va/agent-chat'
+      fullPath: '/api/va/agent-chat'
+      preLoaderRoute: typeof ApiVaAgentChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/ark': {
+      id: '/api/va/ark'
+      path: '/api/va/ark'
+      fullPath: '/api/va/ark'
+      preLoaderRoute: typeof ApiVaArkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/assistant': {
+      id: '/api/va/assistant'
+      path: '/api/va/assistant'
+      fullPath: '/api/va/assistant'
+      preLoaderRoute: typeof ApiVaAssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/chat-stream': {
+      id: '/api/va/chat-stream'
+      path: '/api/va/chat-stream'
+      fullPath: '/api/va/chat-stream'
+      preLoaderRoute: typeof ApiVaChatStreamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/content-agent': {
+      id: '/api/va/content-agent'
+      path: '/api/va/content-agent'
+      fullPath: '/api/va/content-agent'
+      preLoaderRoute: typeof ApiVaContentAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/crew-agent': {
+      id: '/api/va/crew-agent'
+      path: '/api/va/crew-agent'
+      fullPath: '/api/va/crew-agent'
+      preLoaderRoute: typeof ApiVaCrewAgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/image': {
+      id: '/api/va/image'
+      path: '/api/va/image'
+      fullPath: '/api/va/image'
+      preLoaderRoute: typeof ApiVaImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/modelark': {
+      id: '/api/va/modelark'
+      path: '/api/va/modelark'
+      fullPath: '/api/va/modelark'
+      preLoaderRoute: typeof ApiVaModelarkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/modelark-director': {
+      id: '/api/va/modelark-director'
+      path: '/api/va/modelark-director'
+      fullPath: '/api/va/modelark-director'
+      preLoaderRoute: typeof ApiVaModelarkDirectorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/reference-upload': {
+      id: '/api/va/reference-upload'
+      path: '/api/va/reference-upload'
+      fullPath: '/api/va/reference-upload'
+      preLoaderRoute: typeof ApiVaReferenceUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/speech': {
+      id: '/api/va/speech'
+      path: '/api/va/speech'
+      fullPath: '/api/va/speech'
+      preLoaderRoute: typeof ApiVaSpeechRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/video': {
+      id: '/api/va/video'
+      path: '/api/va/video'
+      fullPath: '/api/va/video'
+      preLoaderRoute: typeof ApiVaVideoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/va/zenmux': {
+      id: '/api/va/zenmux'
+      path: '/api/va/zenmux'
+      fullPath: '/api/va/zenmux'
+      preLoaderRoute: typeof ApiVaZenmuxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/workflows/': {
       id: '/api/workflows/'
       path: '/api/workflows'
@@ -581,6 +1175,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRenderSignedUrlRenderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/va/video/$id': {
+      id: '/api/va/video/$id'
+      path: '/$id'
+      fullPath: '/api/va/video/$id'
+      preLoaderRoute: typeof ApiVaVideoIdRouteImport
+      parentRoute: typeof ApiVaVideoRoute
+    }
     '/api/workflows/gpus/race': {
       id: '/api/workflows/gpus/race'
       path: '/api/workflows/gpus/race'
@@ -595,21 +1196,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRenderPublicClientIdProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/va/video/$id/content': {
+      id: '/api/va/video/$id/content'
+      path: '/content'
+      fullPath: '/api/va/video/$id/content'
+      preLoaderRoute: typeof ApiVaVideoIdContentRouteImport
+      parentRoute: typeof ApiVaVideoIdRoute
+    }
   }
 }
+
+interface AgentRouteChildren {
+  AgentBeatDirectorRoute: typeof AgentBeatDirectorRoute
+  AgentEditorRoute: typeof AgentEditorRoute
+  AgentPhotoLabRoute: typeof AgentPhotoLabRoute
+  AgentStoryboardRoute: typeof AgentStoryboardRoute
+  AgentStudioRoute: typeof AgentStudioRoute
+  AgentTimelineRoute: typeof AgentTimelineRoute
+  AgentWorkflowsRoute: typeof AgentWorkflowsRoute
+  AgentIndexRoute: typeof AgentIndexRoute
+}
+
+const AgentRouteChildren: AgentRouteChildren = {
+  AgentBeatDirectorRoute: AgentBeatDirectorRoute,
+  AgentEditorRoute: AgentEditorRoute,
+  AgentPhotoLabRoute: AgentPhotoLabRoute,
+  AgentStoryboardRoute: AgentStoryboardRoute,
+  AgentStudioRoute: AgentStudioRoute,
+  AgentTimelineRoute: AgentTimelineRoute,
+  AgentWorkflowsRoute: AgentWorkflowsRoute,
+  AgentIndexRoute: AgentIndexRoute,
+}
+
+const AgentRouteWithChildren = AgentRoute._addFileChildren(AgentRouteChildren)
+
+interface ApiVaVideoIdRouteChildren {
+  ApiVaVideoIdContentRoute: typeof ApiVaVideoIdContentRoute
+}
+
+const ApiVaVideoIdRouteChildren: ApiVaVideoIdRouteChildren = {
+  ApiVaVideoIdContentRoute: ApiVaVideoIdContentRoute,
+}
+
+const ApiVaVideoIdRouteWithChildren = ApiVaVideoIdRoute._addFileChildren(
+  ApiVaVideoIdRouteChildren,
+)
+
+interface ApiVaVideoRouteChildren {
+  ApiVaVideoIdRoute: typeof ApiVaVideoIdRouteWithChildren
+}
+
+const ApiVaVideoRouteChildren: ApiVaVideoRouteChildren = {
+  ApiVaVideoIdRoute: ApiVaVideoIdRouteWithChildren,
+}
+
+const ApiVaVideoRouteWithChildren = ApiVaVideoRoute._addFileChildren(
+  ApiVaVideoRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
+  AgentRoute: AgentRouteWithChildren,
   MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,
   PrivacyRoute: PrivacyRoute,
   StudioRoute: StudioRoute,
   TermsRoute: TermsRoute,
+  FlowCanvasRoute: FlowCanvasRoute,
+  FlowDirectorRoute: FlowDirectorRoute,
+  FlowStoryboardRoute: FlowStoryboardRoute,
   ProjectsIdRoute: ProjectsIdRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAgentVideoEditRoute: ApiAgentVideoEditRoute,
   ApiDepthFrameRoute: ApiDepthFrameRoute,
+  ApiFlCanvasAgentRoute: ApiFlCanvasAgentRoute,
+  ApiFlEditImageRoute: ApiFlEditImageRoute,
+  ApiFlGenerateImageRoute: ApiFlGenerateImageRoute,
   ApiOrchestrateListRoute: ApiOrchestrateListRoute,
   ApiOrchestratePaystackRoute: ApiOrchestratePaystackRoute,
   ApiOrchestrateRunRoute: ApiOrchestrateRunRoute,
@@ -620,6 +1283,20 @@ const rootRouteChildren: RootRouteChildren = {
   ApiRenderProvidersRoute: ApiRenderProvidersRoute,
   ApiRenderRetryRoute: ApiRenderRetryRoute,
   ApiRenderStartRoute: ApiRenderStartRoute,
+  ApiVaAgentRoute: ApiVaAgentRoute,
+  ApiVaAgentChatRoute: ApiVaAgentChatRoute,
+  ApiVaArkRoute: ApiVaArkRoute,
+  ApiVaAssistantRoute: ApiVaAssistantRoute,
+  ApiVaChatStreamRoute: ApiVaChatStreamRoute,
+  ApiVaContentAgentRoute: ApiVaContentAgentRoute,
+  ApiVaCrewAgentRoute: ApiVaCrewAgentRoute,
+  ApiVaImageRoute: ApiVaImageRoute,
+  ApiVaModelarkRoute: ApiVaModelarkRoute,
+  ApiVaModelarkDirectorRoute: ApiVaModelarkDirectorRoute,
+  ApiVaReferenceUploadRoute: ApiVaReferenceUploadRoute,
+  ApiVaSpeechRoute: ApiVaSpeechRoute,
+  ApiVaVideoRoute: ApiVaVideoRouteWithChildren,
+  ApiVaZenmuxRoute: ApiVaZenmuxRoute,
   ApiWorkflowsPlanRoute: ApiWorkflowsPlanRoute,
   RClientIdProjectIdRoute: RClientIdProjectIdRoute,
   ApiWorkflowsIndexRoute: ApiWorkflowsIndexRoute,

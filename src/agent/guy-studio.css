@@ -1,0 +1,986 @@
+/* Merged "Studio Video Guide" editor styles — scoped to .guy-studio so Aurora pages keep their look. */
+@theme inline {
+  --font-display: "Syne", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --shadow-glow: var(--glow);
+}
+.guy-studio { font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif; min-height: 100vh; }
+.guy-studio {
+  --radius: 0.625rem;
+  --background: oklch(0.105 0.012 278);
+  --foreground: oklch(0.94 0.008 278);
+  --card: oklch(0.155 0.012 278 / 94%);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.18 0.014 278 / 98%);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.72 0.16 298);
+  --primary-foreground: oklch(0.99 0.004 285);
+  --secondary: oklch(0.205 0.014 278 / 92%);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.19 0.012 278 / 88%);
+  --muted-foreground: oklch(0.7 0.015 278);
+  --accent: oklch(0.58 0.24 17);
+  --accent-foreground: oklch(0.98 0.01 17);
+  --destructive: oklch(0.63 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.95 0 0 / 13%);
+  --input: oklch(0.95 0 0 / 20%);
+  --ring: var(--primary);
+  --chart-1: oklch(0.48 0.17 295);
+  --chart-2: oklch(0.64 0.13 315);
+  --chart-3: oklch(0.58 0.2 25);
+  --chart-4: oklch(0.55 0.16 265);
+  --chart-5: oklch(0.78 0.13 82);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.99 0.004 285);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--primary);
+  --gradient-studio: linear-gradient(115deg, var(--primary), var(--destructive) 65%, var(--accent));
+  --glow: 0 18px 65px -28px color-mix(in oklab, var(--primary) 24%, transparent);
+}
+
+@layer base {
+  .guy-studio * {
+    border-color: var(--color-border);
+  }
+
+  .guy-studio {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    background-image: none;
+    background-attachment: fixed;
+    font-weight: 500;
+  }
+
+  .guy-studio button,
+  .guy-studio select,
+  .guy-studio input,
+  .guy-studio textarea {
+    font: inherit;
+  }
+
+  .guy-studio button,
+  .guy-studio select,
+  .guy-studio label[for],
+  .guy-studio input[type="range"] {
+    cursor: pointer;
+  }
+
+  .guy-studio :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--accent) 82%, white);
+    outline-offset: 3px;
+  }
+
+  .guy-studio ::selection {
+    background: color-mix(in oklab, var(--primary) 42%, transparent);
+  }
+}
+
+@utility glass-panel {
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent),
+    0 22px 55px -40px color-mix(in oklab, var(--primary) 28%, transparent);
+}
+
+@utility glass-control {
+  background: color-mix(in oklab, var(--secondary) 62%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent);
+}
+
+@utility gradient-control {
+  background: var(--gradient-studio);
+  color: var(--primary-foreground);
+}
+
+.creative-composer > div {
+  background: var(--card);
+  border-color: var(--input);
+  box-shadow: 0 1px 0 var(--primary);
+}
+
+.cover-intro {
+  min-height: min(620px, 58svh);
+  padding-top: 56px;
+  padding-bottom: 90px;
+}
+.cover-title {
+  font-size: 40px;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+.cover-word {
+  background: var(--gradient-studio);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rise 0.5s ease both;
+}
+@media (max-width: 640px) {
+  .cover-title {
+    font-size: 34px;
+  }
+  .cover-intro {
+    min-height: 430px;
+    padding-top: 44px;
+  }
+}
+
+.guy-studio header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--gradient-studio);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@utility studio-frame {
+  box-shadow:
+    0 32px 90px -38px oklch(0.2 0.02 285 / 22%),
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility animate-rise {
+  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes scan {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@utility animate-scan {
+  animation: scan 1.4s linear infinite;
+}
+
+/* Cinematic opening and transparent editing surface. */
+.guy-studio {
+  --cover-overlay:
+    linear-gradient(90deg, oklch(0 0 0 / 92%) 0%, oklch(0 0 0 / 76%) 32%, oklch(0 0 0 / 8%) 72%),
+    linear-gradient(0deg, var(--background), transparent 22%);
+  --image-overlay: linear-gradient(0deg, oklch(0 0 0 / 88%), transparent 60%);
+  --checker-light: oklch(0.28 0 0);
+  --checker-dark: oklch(0.2 0 0);
+}
+.cover-scene {
+  min-height: 500px;
+  height: min(570px, 66svh);
+}
+.cover-photo {
+  object-position: 75% 32%;
+}
+.cover-shade {
+  background: var(--cover-overlay);
+}
+.cover-copy {
+  padding-top: 70px;
+  padding-bottom: 48px;
+}
+.inspiration-shade {
+  background: var(--image-overlay);
+}
+.transparency-grid {
+  background-color: var(--checker-light);
+  background-image: conic-gradient(
+    var(--checker-dark) 25%,
+    transparent 0 50%,
+    var(--checker-dark) 0 75%,
+    transparent 0
+  );
+  background-size: 16px 16px;
+}
+@media (max-width: 640px) {
+  .cover-scene {
+    min-height: 430px;
+    height: 56svh;
+  }
+  .cover-copy {
+    padding-top: 48px;
+  }
+  .cover-copy h1 {
+    font-size: 42px;
+  }
+  .cover-photo {
+    object-position: 60% 30%;
+  }
+  .cover-shade {
+    background:
+      linear-gradient(90deg, oklch(0 0 0 / 88%), oklch(0 0 0 / 40%)),
+      linear-gradient(0deg, var(--background), transparent 35%);
+  }
+}
+
+/* Art-directed welcome screen: actual sample frames, with the edit workflow drawn over them. */
+.guy-studio {
+  background-image:
+    radial-gradient(ellipse at 12% -12%, oklch(0.31 0.07 296 / 18%), transparent 36rem),
+    linear-gradient(180deg, oklch(0.12 0.014 278), var(--background) 48rem);
+  background-attachment: fixed;
+}
+
+.studio-header {
+  min-width: 0;
+  border-bottom-color: color-mix(in oklab, var(--border) 72%, transparent);
+}
+
+.studio-header-tools {
+  max-width: 100%;
+}
+
+.studio-mode-nav {
+  gap: 1px;
+}
+
+.studio-mode-nav button {
+  min-width: 2rem;
+  justify-content: center;
+}
+
+.cover-scene {
+  min-height: 600px;
+  height: min(760px, 76svh);
+  background: oklch(0.1 0.01 278);
+}
+
+.cover-photo {
+  object-position: 54% 52%;
+  animation: cover-drift 28s ease-in-out infinite alternate;
+}
+
+.cover-shade {
+  background:
+    linear-gradient(
+      90deg,
+      oklch(0.055 0.012 278 / 94%) 0%,
+      oklch(0.055 0.012 278 / 82%) 38%,
+      oklch(0.055 0.012 278 / 24%) 72%,
+      oklch(0.055 0.012 278 / 10%) 100%
+    ),
+    linear-gradient(0deg, oklch(0.08 0.012 278 / 84%) 0%, transparent 34%);
+}
+
+.cover-copy {
+  padding-top: clamp(3.75rem, 9vh, 7rem);
+  padding-bottom: 1.5rem;
+}
+
+.cover-heading {
+  animation: rise 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.cover-title,
+.cover-copy h1 {
+  text-wrap: balance;
+}
+
+.cover-word {
+  background: linear-gradient(105deg, var(--accent), oklch(0.72 0.19 25) 54%, oklch(0.72 0.16 298));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cover-index {
+  border: 1px solid oklch(1 0 0 / 16%);
+  background: oklch(0.06 0.01 278 / 36%);
+  padding: 0.5rem 0.65rem;
+  backdrop-filter: blur(12px);
+}
+
+.cover-index span {
+  color: var(--accent);
+}
+
+.cover-filmstrip {
+  width: min(760px, 70%);
+  border: 1px solid oklch(1 0 0 / 18%);
+  border-radius: 0.8rem;
+  background: oklch(0.07 0.01 278 / 68%);
+  padding: 0.7rem 0.85rem;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px -36px oklch(0 0 0 / 90%);
+}
+
+.filmstrip-copy {
+  flex: 1 0 128px;
+}
+
+.filmstrip-frames {
+  flex: 0 0 auto;
+}
+
+.filmstrip-frame {
+  position: relative;
+  width: 54px;
+  aspect-ratio: 1.33;
+  overflow: hidden;
+  border: 1px solid oklch(1 0 0 / 18%);
+  border-radius: 0.3rem;
+  background: var(--muted);
+}
+
+.filmstrip-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.filmstrip-frame span {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  font:
+    8px/1 "JetBrains Mono",
+    monospace;
+  color: white;
+  text-shadow: 0 1px 4px black;
+}
+
+.filmstrip-timeline {
+  position: relative;
+  display: grid;
+  width: clamp(80px, 14vw, 150px);
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.filmstrip-track {
+  display: flex;
+  height: 7px;
+  gap: 3px;
+}
+
+.filmstrip-track i {
+  display: block;
+  flex: 1;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 70%, transparent);
+}
+
+.filmstrip-track i:nth-child(2) {
+  background: color-mix(in oklab, var(--accent) 72%, transparent);
+}
+
+.filmstrip-track--audio {
+  width: 72%;
+  height: 4px;
+}
+
+.filmstrip-track--audio i {
+  background: color-mix(in oklab, oklch(0.67 0.16 185) 70%, transparent);
+}
+
+.filmstrip-playhead {
+  position: absolute;
+  inset: 0 auto 0 58%;
+  width: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in oklab, var(--accent) 70%, transparent);
+  animation: filmstrip-scan 4s ease-in-out infinite alternate;
+}
+
+.workflow-showcase {
+  position: relative;
+}
+
+.workflow-heading {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.15rem;
+}
+
+.workflow-heading h2 {
+  text-wrap: balance;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.feature-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 0.8rem;
+  background: linear-gradient(
+    150deg,
+    color-mix(in oklab, var(--card) 96%, white 4%),
+    color-mix(in oklab, var(--background) 96%, var(--primary) 4%)
+  );
+  box-shadow:
+    0 14px 34px -30px oklch(0 0 0 / 80%),
+    inset 0 1px 0 oklch(1 0 0 / 3%);
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--primary) 52%, var(--border));
+  box-shadow: 0 24px 42px -34px color-mix(in oklab, var(--primary) 42%, transparent);
+}
+
+.feature-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.56;
+  background: var(--muted);
+}
+
+.feature-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 350ms ease;
+}
+
+.feature-card:hover .feature-media > img {
+  transform: scale(1.035);
+}
+
+.feature-card--portrait .feature-media > img {
+  object-position: 44% 42%;
+}
+
+.feature-card--flow .feature-media > img {
+  object-position: 50% 48%;
+}
+
+.feature-card--layers .feature-media > img {
+  object-position: 46% 48%;
+}
+
+.feature-media-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(0 0 0 / 24%),
+    transparent 28%,
+    transparent 48%,
+    oklch(0 0 0 / 54%)
+  );
+  pointer-events: none;
+}
+
+.feature-number {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.75rem;
+  font:
+    9px/1 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  color: white;
+}
+
+.feature-number span {
+  color: oklch(1 0 0 / 60%);
+}
+
+.feature-prompt,
+.flow-overlay,
+.layer-overlay {
+  position: absolute;
+  z-index: 1;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  border: 1px solid oklch(1 0 0 / 21%);
+  border-radius: 0.48rem;
+  background: oklch(0.08 0.012 278 / 78%);
+  color: oklch(0.96 0.008 278);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 28px -20px oklch(0 0 0 / 90%);
+}
+
+.feature-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.62rem 0.7rem;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.feature-prompt-mark {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--primary) 25%, transparent);
+  color: var(--accent);
+}
+
+.flow-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  padding: 0.65rem;
+}
+
+.flow-node {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  white-space: nowrap;
+  font:
+    9px/1 "JetBrains Mono",
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.flow-dot,
+.layer-chip i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 9px color-mix(in oklab, var(--primary) 75%, transparent);
+}
+
+.flow-dot--image {
+  background: var(--accent);
+  box-shadow: 0 0 9px color-mix(in oklab, var(--accent) 75%, transparent);
+}
+
+.flow-connector {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--primary) 60%, transparent),
+    color-mix(in oklab, var(--accent) 64%, transparent)
+  );
+}
+
+.layer-overlay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.55rem;
+}
+
+.layer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid oklch(1 0 0 / 15%);
+  border-radius: 999px;
+  background: oklch(1 0 0 / 5%);
+  padding: 0.35rem 0.5rem;
+  font:
+    8px/1 "JetBrains Mono",
+    monospace;
+  color: oklch(1 0 0 / 78%);
+}
+
+.layer-chip i {
+  width: 0.35rem;
+  height: 0.35rem;
+  background: oklch(0.69 0.12 190);
+  box-shadow: none;
+}
+
+.layer-chip--active {
+  border-color: color-mix(in oklab, var(--accent) 48%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+
+.layer-chip--active i {
+  background: var(--accent);
+}
+
+.feature-copy {
+  padding: 1rem 1rem 1.05rem;
+}
+
+.feature-eyebrow {
+  margin-bottom: 0.4rem;
+  font:
+    8px/1.2 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.15em;
+  color: var(--muted-foreground);
+}
+
+.feature-copy h3 {
+  font-family: "Syne", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.feature-description {
+  min-height: 2.6rem;
+  margin-top: 0.35rem;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.feature-action {
+  margin-top: 0.4rem;
+  height: 2rem;
+  padding-inline: 0;
+  color: var(--foreground);
+  font-size: 10px;
+}
+
+.feature-action svg {
+  color: var(--accent);
+  transition: transform 180ms ease;
+}
+
+.feature-action:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.director-panel {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1.6rem;
+}
+
+.inspiration-panel {
+  min-width: 0;
+  align-self: start;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+  padding: 1rem;
+}
+
+.inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.inspiration-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 0.93;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+  text-align: left;
+  background: var(--muted);
+}
+
+.inspiration-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.inspiration-card:hover img {
+  transform: scale(1.045);
+}
+
+.inspiration-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, oklch(0.06 0.01 278 / 92%), transparent 64%);
+}
+
+.inspiration-content {
+  position: absolute;
+  inset: auto 0.7rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.inspiration-content svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.feature-card,
+.inspiration-card,
+.filmstrip-frame,
+.studio-header-tools button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes cover-drift {
+  from {
+    transform: scale(1.015) translate3d(-0.25%, 0, 0);
+  }
+  to {
+    transform: scale(1.075) translate3d(0.3%, -0.3%, 0);
+  }
+}
+
+@keyframes filmstrip-scan {
+  from {
+    transform: translateX(-24px);
+  }
+  to {
+    transform: translateX(18px);
+  }
+}
+
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-card:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .feature-card:first-child .feature-media {
+    aspect-ratio: 2.1;
+  }
+}
+
+@media (max-width: 640px) {
+  .studio-header {
+    height: 3rem;
+    gap: 0.35rem;
+    padding-inline: 0.55rem;
+  }
+
+  .studio-header-tools {
+    grid-column: 1;
+    grid-row: 2;
+    justify-content: space-between;
+    gap: 0.3rem;
+  }
+
+  .studio-mode-nav {
+    gap: 0;
+  }
+
+  .studio-mode-nav button {
+    min-width: 2.5rem;
+    height: 2.25rem;
+    padding-inline: 0.55rem;
+  }
+
+  .studio-header-tools > button:first-child {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .studio-header-tools > button:nth-last-child(2),
+  .studio-header-tools > button:nth-last-child(3),
+  .studio-header-tools > button:last-child {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .studio-header > div:first-child button {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .cover-scene {
+    min-height: 620px;
+    height: min(680px, 84svh);
+  }
+
+  .cover-copy {
+    padding-top: 4.2rem;
+    padding-bottom: 2rem;
+  }
+
+  .cover-copy h1 {
+    max-width: 9ch;
+    font-size: clamp(2.7rem, 12vw, 4rem);
+    line-height: 0.98;
+  }
+
+  .cover-shade {
+    background:
+      linear-gradient(90deg, oklch(0.055 0.012 278 / 91%), oklch(0.055 0.012 278 / 48%) 88%),
+      linear-gradient(0deg, oklch(0.08 0.012 278 / 86%) 0%, transparent 54%);
+  }
+
+  .cover-filmstrip {
+    display: flex !important;
+    width: 100%;
+    align-self: stretch;
+    justify-content: space-between;
+    gap: 0.55rem;
+    margin-bottom: 0;
+    padding: 0.55rem;
+  }
+
+  .filmstrip-copy,
+  .filmstrip-time {
+    display: none;
+  }
+
+  .filmstrip-frame {
+    width: clamp(2.15rem, 13vw, 3.1rem);
+  }
+
+  .filmstrip-timeline {
+    width: clamp(3.2rem, 15vw, 4.8rem);
+  }
+
+  .cover-index {
+    top: 0.85rem;
+    right: 0.85rem;
+  }
+
+  .workflow-showcase {
+    padding-top: 2.7rem;
+    padding-bottom: 3rem;
+  }
+
+  .workflow-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .feature-card:first-child {
+    grid-column: auto;
+  }
+
+  .feature-card:first-child .feature-media,
+  .feature-media {
+    aspect-ratio: 1.48;
+  }
+
+  .feature-copy {
+    padding: 0.9rem;
+  }
+
+  .feature-description {
+    min-height: auto;
+    max-width: 42ch;
+  }
+
+  .director-desk {
+    gap: 2rem;
+  }
+
+  .inspiration-panel {
+    padding: 0.8rem;
+  }
+
+  .inspiration-card {
+    aspect-ratio: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-photo,
+  .filmstrip-playhead,
+  .cover-heading {
+    animation: none !important;
+  }
+
+  .feature-card,
+  .feature-media > img,
+  .inspiration-card img,
+  .feature-action svg {
+    transition: none !important;
+  }
+
+  .feature-card:hover {
+    transform: none;
+  }
+}
+
+
+/* Animated VFX overlays layered over the preview and effect thumbnails */
+.vfx-overlay { position: absolute; inset: 0; pointer-events: none; }
+.vfx-glitch { background: repeating-linear-gradient(0deg, oklch(0.7 0.25 330 / 18%) 0 2px, transparent 2px 5px); mix-blend-mode: screen; animation: vfx-glitch 0.9s steps(6) infinite; }
+@keyframes vfx-glitch { 0%,100% { transform: translate(0); clip-path: inset(0 0 0 0); } 20% { transform: translate(-4px,1px); clip-path: inset(20% 0 55% 0); } 40% { transform: translate(5px,-2px); clip-path: inset(60% 0 10% 0); } 60% { transform: translate(-2px,0); clip-path: inset(5% 0 80% 0); } 80% { transform: translate(3px,2px); clip-path: inset(40% 0 30% 0); } }
+.vfx-night-vision { background: radial-gradient(circle, transparent 45%, oklch(0 0 0 / 75%) 100%), repeating-linear-gradient(0deg, oklch(0.8 0.2 145 / 10%) 0 1px, transparent 1px 3px); animation: vfx-flicker 0.15s steps(2) infinite; }
+@keyframes vfx-flicker { 50% { opacity: 0.8; } }
+.vfx-cold { background: radial-gradient(circle, transparent 50%, oklch(0.85 0.08 230 / 45%) 100%); animation: vfx-breathe 3s ease-in-out infinite; }
+@keyframes vfx-breathe { 50% { opacity: 0.6; } }
+.vfx-bullet-time { background: radial-gradient(circle, transparent 35%, oklch(0 0 0 / 55%) 100%), repeating-conic-gradient(from 0deg, oklch(1 0 0 / 6%) 0 2deg, transparent 2deg 9deg); animation: vfx-spin 6s linear infinite; }
+@keyframes vfx-spin { to { transform: rotate(360deg) scale(1.4); } }
+.vfx-bleach { background: oklch(1 0 0 / 0%); animation: vfx-flash 2.4s ease-out infinite; }
+@keyframes vfx-flash { 0%,8% { background: oklch(1 0 0 / 35%); } 30%,100% { background: oklch(1 0 0 / 0%); } }
+.vfx-thumb-slow { animation: vfx-zoom 4s ease-in-out infinite alternate; }
+.vfx-thumb-bounce { animation: vfx-bounce 0.8s ease-in-out infinite alternate; }
+@keyframes vfx-zoom { to { transform: scale(1.15); } }
+@keyframes vfx-bounce { to { transform: scale(1.08) translateX(-4%); } }
+@media (prefers-reduced-motion: reduce) { .vfx-overlay, .vfx-thumb-slow, .vfx-thumb-bounce { animation: none; } }
+
+/* The editing cockpit keeps direction alongside the timeline. */
+.editor-cockpit { display: grid; min-width: 0; gap: 1rem; align-items: start; }
+@media (min-width: 1280px) { .editor-cockpit { grid-template-columns: minmax(0, 1fr) 320px; } }
+.editor-workspace .creative-composer { border-radius: 8px; }
+
+/* Studio themes (browser-local). Crimson is the :root default. */
+[data-theme="midnight"] .guy-studio, .guy-studio[data-theme="midnight"] {
+  --background: oklch(0.12 0.03 255); --card: oklch(0.17 0.03 255 / 94%); --popover: oklch(0.19 0.03 255 / 98%);
+  --primary: oklch(0.68 0.17 250); --accent: oklch(0.78 0.13 210); --accent-foreground: oklch(0.18 0.03 230);
+  --secondary: oklch(0.22 0.03 255 / 92%); --muted: oklch(0.2 0.03 255 / 88%);
+}
+[data-theme="emerald"] .guy-studio, .guy-studio[data-theme="emerald"] {
+  --background: oklch(0.12 0.02 165); --card: oklch(0.17 0.02 165 / 94%); --popover: oklch(0.19 0.02 165 / 98%);
+  --primary: oklch(0.72 0.16 160); --primary-foreground: oklch(0.16 0.03 160); --accent: oklch(0.82 0.15 125); --accent-foreground: oklch(0.2 0.04 125);
+  --secondary: oklch(0.22 0.02 165 / 92%); --muted: oklch(0.2 0.02 165 / 88%);
+}
+[data-theme="sunset"] .guy-studio, .guy-studio[data-theme="sunset"] {
+  --background: oklch(0.13 0.025 20); --card: oklch(0.18 0.03 20 / 94%); --popover: oklch(0.2 0.03 20 / 98%);
+  --primary: oklch(0.68 0.2 10); --accent: oklch(0.72 0.19 330); --accent-foreground: oklch(0.98 0.01 330);
+  --secondary: oklch(0.23 0.03 20 / 92%); --muted: oklch(0.21 0.03 20 / 88%);
+}
+[data-theme="mono"] .guy-studio, .guy-studio[data-theme="mono"] {
+  --background: oklch(0.1 0 0); --card: oklch(0.15 0 0 / 94%); --popover: oklch(0.18 0 0 / 98%);
+  --primary: oklch(0.95 0 0); --primary-foreground: oklch(0.12 0 0); --accent: oklch(0.62 0.22 25); --accent-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.2 0 0 / 92%); --muted: oklch(0.19 0 0 / 88%); --muted-foreground: oklch(0.68 0 0);
+}
+[data-theme="daylight"] .guy-studio, .guy-studio[data-theme="daylight"] {
+  --background: oklch(0.97 0.004 280); --foreground: oklch(0.18 0.01 280); --card: oklch(1 0 0 / 94%); --popover: oklch(1 0 0 / 98%);
+  --primary: oklch(0.55 0.22 25); --primary-foreground: oklch(0.99 0 0); --accent: oklch(0.5 0.2 290); --accent-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.93 0.006 280 / 92%); --muted: oklch(0.94 0.006 280 / 88%); --muted-foreground: oklch(0.45 0.01 280);
+  --border: oklch(0.2 0 0 / 12%); --input: oklch(0.2 0 0 / 18%);
+}
+
+@utility logo-tile {
+  background: oklch(0.97 0.003 280);
+  color: oklch(0.2 0 0);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
