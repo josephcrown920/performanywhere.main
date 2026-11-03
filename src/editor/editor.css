@@ -1,0 +1,893 @@
+/* GUI Video Editor styles, scoped to .gve (body + wrapper while on /editor). */
+.gve {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: "Bricolage Grotesque", ui-sans-serif, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --shadow-glow: var(--glow);
+}
+.gve {
+  --radius: 0.625rem;
+  --background: oklch(0.105 0.012 278);
+  --foreground: oklch(0.94 0.008 278);
+  --card: oklch(0.155 0.012 278 / 94%);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.18 0.014 278 / 98%);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.72 0.16 298);
+  --primary-foreground: oklch(0.99 0.004 285);
+  --secondary: oklch(0.205 0.014 278 / 92%);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.19 0.012 278 / 88%);
+  --muted-foreground: oklch(0.7 0.015 278);
+  --accent: oklch(0.58 0.24 17);
+  --accent-foreground: oklch(0.98 0.01 17);
+  --destructive: oklch(0.63 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.95 0 0 / 13%);
+  --input: oklch(0.95 0 0 / 20%);
+  --ring: var(--primary);
+  --chart-1: oklch(0.48 0.17 295);
+  --chart-2: oklch(0.64 0.13 315);
+  --chart-3: oklch(0.58 0.2 25);
+  --chart-4: oklch(0.55 0.16 265);
+  --chart-5: oklch(0.78 0.13 82);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.99 0.004 285);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--primary);
+  --gradient-studio: linear-gradient(115deg, var(--primary), var(--destructive) 65%, var(--accent));
+  --glow: 0 18px 65px -28px color-mix(in oklab, var(--primary) 24%, transparent);
+}
+@layer base {
+  .gve * {
+    border-color: var(--color-border);
+  }
+  .gve {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    background-image: none;
+    background-attachment: fixed;
+    font-weight: 500;
+  }
+  .gve button, .gve select, .gve input, .gve textarea {
+    font: inherit;
+  }
+  .gve button, .gve select, .gve label[for], .gve input[type="range"] {
+    cursor: pointer;
+  }
+  .gve :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--accent) 82%, white);
+    outline-offset: 3px;
+  }
+  .gve ::selection {
+    background: color-mix(in oklab, var(--primary) 42%, transparent);
+  }
+}
+@utility glass-panel {
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(24px) saturate(125%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent),
+    0 22px 55px -40px color-mix(in oklab, var(--primary) 28%, transparent);
+}
+@utility glass-control {
+  background: color-mix(in oklab, var(--secondary) 62%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 4%, transparent);
+}
+@utility gradient-control {
+  background: var(--gradient-studio);
+  color: var(--primary-foreground);
+}
+.gve .creative-composer > div {
+  background: var(--card);
+  border-color: var(--input);
+  box-shadow: 0 1px 0 var(--primary);
+}
+.gve .cover-intro {
+  min-height: min(620px, 58svh);
+  padding-top: 56px;
+  padding-bottom: 90px;
+}
+.gve .cover-title {
+  font-size: 40px;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+.gve .cover-word {
+  background: var(--gradient-studio);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rise 0.5s ease both;
+}
+@media (max-width: 640px) {
+  .gve .cover-title {
+    font-size: 34px;
+  }
+  .gve .cover-intro {
+    min-height: 430px;
+    padding-top: 44px;
+  }
+}
+.gve header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--gradient-studio);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gve *, .gve *::before, .gve *::after {
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@utility studio-frame {
+  box-shadow:
+    0 32px 90px -38px oklch(0.2 0.02 285 / 22%),
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 5%, transparent);
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@utility animate-rise {
+  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes scan {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@utility animate-scan {
+  animation: scan 1.4s linear infinite;
+}
+.gve {
+  --cover-overlay:
+    linear-gradient(90deg, oklch(0 0 0 / 92%) 0%, oklch(0 0 0 / 76%) 32%, oklch(0 0 0 / 8%) 72%),
+    linear-gradient(0deg, var(--background), transparent 22%);
+  --image-overlay: linear-gradient(0deg, oklch(0 0 0 / 88%), transparent 60%);
+  --checker-light: oklch(0.28 0 0);
+  --checker-dark: oklch(0.2 0 0);
+}
+.gve .cover-scene {
+  min-height: 500px;
+  height: min(570px, 66svh);
+}
+.gve .cover-photo {
+  object-position: 75% 32%;
+}
+.gve .cover-shade {
+  background: var(--cover-overlay);
+}
+.gve .cover-copy {
+  padding-top: 70px;
+  padding-bottom: 48px;
+}
+.gve .inspiration-shade {
+  background: var(--image-overlay);
+}
+.gve .transparency-grid {
+  background-color: var(--checker-light);
+  background-image: conic-gradient(
+    var(--checker-dark) 25%,
+    transparent 0 50%,
+    var(--checker-dark) 0 75%,
+    transparent 0
+  );
+  background-size: 16px 16px;
+}
+@media (max-width: 640px) {
+  .gve .cover-scene {
+    min-height: 430px;
+    height: 56svh;
+  }
+  .gve .cover-copy {
+    padding-top: 48px;
+  }
+  .gve .cover-copy h1 {
+    font-size: 42px;
+  }
+  .gve .cover-photo {
+    object-position: 60% 30%;
+  }
+  .gve .cover-shade {
+    background:
+      linear-gradient(90deg, oklch(0 0 0 / 88%), oklch(0 0 0 / 40%)),
+      linear-gradient(0deg, var(--background), transparent 35%);
+  }
+}
+.gve {
+  background-image:
+    radial-gradient(ellipse at 12% -12%, oklch(0.31 0.07 296 / 18%), transparent 36rem),
+    linear-gradient(180deg, oklch(0.12 0.014 278), var(--background) 48rem);
+  background-attachment: fixed;
+}
+.gve .studio-header {
+  min-width: 0;
+  border-bottom-color: color-mix(in oklab, var(--border) 72%, transparent);
+}
+.gve .studio-header-tools {
+  max-width: 100%;
+}
+.gve .studio-dock {
+  gap: 2px;
+}
+.gve .studio-dock button {
+  min-width: 2rem;
+  justify-content: center;
+}
+.gve .cover-scene {
+  min-height: 600px;
+  height: min(760px, 76svh);
+  background: oklch(0.1 0.01 278);
+}
+.gve .cover-photo {
+  object-position: 54% 52%;
+  animation: cover-drift 28s ease-in-out infinite alternate;
+}
+.gve .cover-shade {
+  background:
+    linear-gradient(
+      90deg,
+      oklch(0.055 0.012 278 / 94%) 0%,
+      oklch(0.055 0.012 278 / 82%) 38%,
+      oklch(0.055 0.012 278 / 24%) 72%,
+      oklch(0.055 0.012 278 / 10%) 100%
+    ),
+    linear-gradient(0deg, oklch(0.08 0.012 278 / 84%) 0%, transparent 34%);
+}
+.gve .cover-copy {
+  padding-top: clamp(3.75rem, 9vh, 7rem);
+  padding-bottom: 1.5rem;
+}
+.gve .cover-heading {
+  animation: rise 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.gve .cover-title, .gve .cover-copy h1 {
+  text-wrap: balance;
+}
+.gve .cover-word {
+  background: linear-gradient(105deg, var(--accent), oklch(0.72 0.19 25) 54%, oklch(0.72 0.16 298));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gve .cover-index {
+  border: 1px solid oklch(1 0 0 / 16%);
+  background: oklch(0.06 0.01 278 / 36%);
+  padding: 0.5rem 0.65rem;
+  backdrop-filter: blur(12px);
+}
+.gve .cover-index span {
+  color: var(--accent);
+}
+.gve .cover-filmstrip {
+  width: min(760px, 70%);
+  border: 1px solid oklch(1 0 0 / 18%);
+  border-radius: 0.8rem;
+  background: oklch(0.07 0.01 278 / 68%);
+  padding: 0.7rem 0.85rem;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 22px 60px -36px oklch(0 0 0 / 90%);
+}
+.gve .filmstrip-copy {
+  flex: 1 0 128px;
+}
+.gve .filmstrip-frames {
+  flex: 0 0 auto;
+}
+.gve .filmstrip-frame {
+  position: relative;
+  width: 54px;
+  aspect-ratio: 1.33;
+  overflow: hidden;
+  border: 1px solid oklch(1 0 0 / 18%);
+  border-radius: 0.3rem;
+  background: var(--muted);
+}
+.gve .filmstrip-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gve .filmstrip-frame span {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  font:
+    8px/1 "JetBrains Mono",
+    monospace;
+  color: white;
+  text-shadow: 0 1px 4px black;
+}
+.gve .filmstrip-timeline {
+  position: relative;
+  display: grid;
+  width: clamp(80px, 14vw, 150px);
+  gap: 4px;
+  padding: 4px 0;
+}
+.gve .filmstrip-track {
+  display: flex;
+  height: 7px;
+  gap: 3px;
+}
+.gve .filmstrip-track i {
+  display: block;
+  flex: 1;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--primary) 70%, transparent);
+}
+.gve .filmstrip-track i:nth-child(2) {
+  background: color-mix(in oklab, var(--accent) 72%, transparent);
+}
+.gve .filmstrip-track--audio {
+  width: 72%;
+  height: 4px;
+}
+.gve .filmstrip-track--audio i {
+  background: color-mix(in oklab, oklch(0.67 0.16 185) 70%, transparent);
+}
+.gve .filmstrip-playhead {
+  position: absolute;
+  inset: 0 auto 0 58%;
+  width: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in oklab, var(--accent) 70%, transparent);
+  animation: filmstrip-scan 4s ease-in-out infinite alternate;
+}
+.gve .workflow-showcase {
+  position: relative;
+}
+.gve .workflow-heading {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.15rem;
+}
+.gve .workflow-heading h2 {
+  text-wrap: balance;
+}
+.gve .feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.gve .feature-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 0.8rem;
+  background: linear-gradient(
+    150deg,
+    color-mix(in oklab, var(--card) 96%, white 4%),
+    color-mix(in oklab, var(--background) 96%, var(--primary) 4%)
+  );
+  box-shadow:
+    0 14px 34px -30px oklch(0 0 0 / 80%),
+    inset 0 1px 0 oklch(1 0 0 / 3%);
+  transition:
+    border-color 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+.gve .feature-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--primary) 52%, var(--border));
+  box-shadow: 0 24px 42px -34px color-mix(in oklab, var(--primary) 42%, transparent);
+}
+.gve .feature-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1.56;
+  background: var(--muted);
+}
+.gve .feature-media > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 350ms ease;
+}
+.gve .feature-card:hover .feature-media > img {
+  transform: scale(1.035);
+}
+.gve .feature-card--portrait .feature-media > img {
+  object-position: 44% 42%;
+}
+.gve .feature-card--flow .feature-media > img {
+  object-position: 50% 48%;
+}
+.gve .feature-card--layers .feature-media > img {
+  object-position: 46% 48%;
+}
+.gve .feature-media-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    oklch(0 0 0 / 24%),
+    transparent 28%,
+    transparent 48%,
+    oklch(0 0 0 / 54%)
+  );
+  pointer-events: none;
+}
+.gve .feature-number {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.75rem;
+  font:
+    9px/1 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  color: white;
+}
+.gve .feature-number span {
+  color: oklch(1 0 0 / 60%);
+}
+.gve .feature-prompt, .gve .flow-overlay, .gve .layer-overlay {
+  position: absolute;
+  z-index: 1;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  border: 1px solid oklch(1 0 0 / 21%);
+  border-radius: 0.48rem;
+  background: oklch(0.08 0.012 278 / 78%);
+  color: oklch(0.96 0.008 278);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 28px -20px oklch(0 0 0 / 90%);
+}
+.gve .feature-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.62rem 0.7rem;
+  font-size: 10px;
+  line-height: 1.4;
+}
+.gve .feature-prompt-mark {
+  display: grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--primary) 25%, transparent);
+  color: var(--accent);
+}
+.gve .flow-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.3rem;
+  padding: 0.65rem;
+}
+.gve .flow-node {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  white-space: nowrap;
+  font:
+    9px/1 "JetBrains Mono",
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.gve .flow-dot, .gve .layer-chip i {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 9px color-mix(in oklab, var(--primary) 75%, transparent);
+}
+.gve .flow-dot--image {
+  background: var(--accent);
+  box-shadow: 0 0 9px color-mix(in oklab, var(--accent) 75%, transparent);
+}
+.gve .flow-connector {
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--primary) 60%, transparent),
+    color-mix(in oklab, var(--accent) 64%, transparent)
+  );
+}
+.gve .layer-overlay {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.55rem;
+}
+.gve .layer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid oklch(1 0 0 / 15%);
+  border-radius: 999px;
+  background: oklch(1 0 0 / 5%);
+  padding: 0.35rem 0.5rem;
+  font:
+    8px/1 "JetBrains Mono",
+    monospace;
+  color: oklch(1 0 0 / 78%);
+}
+.gve .layer-chip i {
+  width: 0.35rem;
+  height: 0.35rem;
+  background: oklch(0.69 0.12 190);
+  box-shadow: none;
+}
+.gve .layer-chip--active {
+  border-color: color-mix(in oklab, var(--accent) 48%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+.gve .layer-chip--active i {
+  background: var(--accent);
+}
+.gve .feature-copy {
+  padding: 1rem 1rem 1.05rem;
+}
+.gve .feature-eyebrow {
+  margin-bottom: 0.4rem;
+  font:
+    8px/1.2 "JetBrains Mono",
+    monospace;
+  letter-spacing: 0.15em;
+  color: var(--muted-foreground);
+}
+.gve .feature-copy h3 {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.gve .feature-description {
+  min-height: 2.6rem;
+  margin-top: 0.35rem;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  line-height: 1.55;
+}
+.gve .feature-action {
+  margin-top: 0.4rem;
+  height: 2rem;
+  padding-inline: 0;
+  color: var(--foreground);
+  font-size: 10px;
+}
+.gve .feature-action svg {
+  color: var(--accent);
+  transition: transform 180ms ease;
+}
+.gve .feature-action:hover svg {
+  transform: translate(2px, -2px);
+}
+.gve .director-panel {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1.6rem;
+}
+.gve .inspiration-panel {
+  min-width: 0;
+  align-self: start;
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  background: color-mix(in oklab, var(--card) 82%, transparent);
+  padding: 1rem;
+}
+.gve .inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+.gve .inspiration-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 0.93;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+  text-align: left;
+  background: var(--muted);
+}
+.gve .inspiration-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+.gve .inspiration-card:hover img {
+  transform: scale(1.045);
+}
+.gve .inspiration-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, oklch(0.06 0.01 278 / 92%), transparent 64%);
+}
+.gve .inspiration-content {
+  position: absolute;
+  inset: auto 0.7rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+}
+.gve .inspiration-content svg {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+.gve .feature-card, .gve .inspiration-card, .gve .filmstrip-frame, .gve .studio-header-tools button {
+  -webkit-tap-highlight-color: transparent;
+}
+@keyframes cover-drift {
+  from {
+    transform: scale(1.015) translate3d(-0.25%, 0, 0);
+  }
+  to {
+    transform: scale(1.075) translate3d(0.3%, -0.3%, 0);
+  }
+}
+@keyframes filmstrip-scan {
+  from {
+    transform: translateX(-24px);
+  }
+  to {
+    transform: translateX(18px);
+  }
+}
+@media (max-width: 900px) {
+  .gve .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .gve .feature-card:first-child {
+    grid-column: 1 / -1;
+  }
+  .gve .feature-card:first-child .feature-media {
+    aspect-ratio: 2.1;
+  }
+}
+@media (max-width: 640px) {
+  .gve .studio-header {
+    gap: 0.4rem;
+    padding-inline: 0.55rem;
+  }
+  .gve .studio-header-tools {
+    justify-content: flex-end;
+    gap: 0.3rem;
+  }
+  .gve .studio-dock {
+    gap: 0;
+  }
+  .gve .studio-header-tools > button:first-child {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+  .gve .studio-header-tools > button:nth-last-child(2), .gve .studio-header-tools > button:nth-last-child(3), .gve .studio-header-tools > button:last-child {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+  .gve .studio-header > div:first-child button {
+    min-width: 2.25rem;
+    height: 2.25rem;
+  }
+  .gve .cover-scene {
+    min-height: 620px;
+    height: min(680px, 84svh);
+  }
+  .gve .cover-copy {
+    padding-top: 4.2rem;
+    padding-bottom: 2rem;
+  }
+  .gve .cover-copy h1 {
+    max-width: 9ch;
+    font-size: clamp(2.7rem, 12vw, 4rem);
+    line-height: 0.98;
+  }
+  .gve .cover-shade {
+    background:
+      linear-gradient(90deg, oklch(0.055 0.012 278 / 91%), oklch(0.055 0.012 278 / 48%) 88%),
+      linear-gradient(0deg, oklch(0.08 0.012 278 / 86%) 0%, transparent 54%);
+  }
+  .gve .cover-filmstrip {
+    display: flex !important;
+    width: 100%;
+    align-self: stretch;
+    justify-content: space-between;
+    gap: 0.55rem;
+    margin-bottom: 0;
+    padding: 0.55rem;
+  }
+  .gve .filmstrip-copy, .gve .filmstrip-time {
+    display: none;
+  }
+  .gve .filmstrip-frame {
+    width: clamp(2.15rem, 13vw, 3.1rem);
+  }
+  .gve .filmstrip-timeline {
+    width: clamp(3.2rem, 15vw, 4.8rem);
+  }
+  .gve .cover-index {
+    top: 0.85rem;
+    right: 0.85rem;
+  }
+  .gve .workflow-showcase {
+    padding-top: 2.7rem;
+    padding-bottom: 3rem;
+  }
+  .gve .workflow-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .gve .feature-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .gve .feature-card:first-child {
+    grid-column: auto;
+  }
+  .gve .feature-card:first-child .feature-media, .gve .feature-media {
+    aspect-ratio: 1.48;
+  }
+  .gve .feature-copy {
+    padding: 0.9rem;
+  }
+  .gve .feature-description {
+    min-height: auto;
+    max-width: 42ch;
+  }
+  .gve .director-desk {
+    gap: 2rem;
+  }
+  .gve .inspiration-panel {
+    padding: 0.8rem;
+  }
+  .gve .inspiration-card {
+    aspect-ratio: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gve .cover-photo, .gve .filmstrip-playhead, .gve .cover-heading {
+    animation: none !important;
+  }
+  .gve .feature-card, .gve .feature-media > img, .gve .inspiration-card img, .gve .feature-action svg {
+    transition: none !important;
+  }
+  .gve .feature-card:hover {
+    transform: none;
+  }
+}
+.gve { font-size: 14px; }
+.gve .vfx-overlay { position: absolute; inset: 0; pointer-events: none; }
+.gve .vfx-glitch { background: repeating-linear-gradient(0deg, oklch(0.7 0.25 330 / 18%) 0 2px, transparent 2px 5px); mix-blend-mode: screen; animation: vfx-glitch 0.9s steps(6) infinite; }
+@keyframes vfx-glitch { 0%,100% { transform: translate(0); clip-path: inset(0 0 0 0); } 20% { transform: translate(-4px,1px); clip-path: inset(20% 0 55% 0); } 40% { transform: translate(5px,-2px); clip-path: inset(60% 0 10% 0); } 60% { transform: translate(-2px,0); clip-path: inset(5% 0 80% 0); } 80% { transform: translate(3px,2px); clip-path: inset(40% 0 30% 0); } }
+.gve .vfx-night-vision { background: radial-gradient(circle, transparent 45%, oklch(0 0 0 / 75%) 100%), repeating-linear-gradient(0deg, oklch(0.8 0.2 145 / 10%) 0 1px, transparent 1px 3px); animation: vfx-flicker 0.15s steps(2) infinite; }
+@keyframes vfx-flicker { 50% { opacity: 0.8; } }
+.gve .vfx-cold { background: radial-gradient(circle, transparent 50%, oklch(0.85 0.08 230 / 45%) 100%); animation: vfx-breathe 3s ease-in-out infinite; }
+@keyframes vfx-breathe { 50% { opacity: 0.6; } }
+.gve .vfx-bullet-time { background: radial-gradient(circle, transparent 35%, oklch(0 0 0 / 55%) 100%), repeating-conic-gradient(from 0deg, oklch(1 0 0 / 6%) 0 2deg, transparent 2deg 9deg); animation: vfx-spin 6s linear infinite; }
+@keyframes vfx-spin { to { transform: rotate(360deg) scale(1.4); } }
+.gve .vfx-bleach { background: oklch(1 0 0 / 0%); animation: vfx-flash 2.4s ease-out infinite; }
+@keyframes vfx-flash { 0%,8% { background: oklch(1 0 0 / 35%); } 30%,100% { background: oklch(1 0 0 / 0%); } }
+.gve .vfx-film-burn { background: radial-gradient(ellipse at 0% 50%, oklch(0.75 0.2 50 / 55%), transparent 60%); mix-blend-mode: screen; animation: vfx-sweep 3s ease-in-out infinite alternate; }
+@keyframes vfx-sweep { from { transform: translateX(-30%); opacity: .4; } to { transform: translateX(60%); opacity: 1; } }
+.gve .vfx-light-leak { background: linear-gradient(110deg, transparent 30%, oklch(0.85 0.15 60 / 40%), oklch(0.7 0.2 20 / 30%), transparent 75%); mix-blend-mode: screen; animation: vfx-sweep 5s ease-in-out infinite alternate; }
+.gve .vfx-lens-flare { background: radial-gradient(ellipse 60% 3% at 50% 35%, oklch(0.95 0.08 230 / 80%), transparent), radial-gradient(circle at 70% 35%, oklch(1 0 0 / 35%), transparent 12%); mix-blend-mode: screen; animation: vfx-breathe 2.5s ease-in-out infinite; }
+.gve .vfx-rgb-split { box-shadow: inset 4px 0 0 oklch(0.65 0.25 25 / 35%), inset -4px 0 0 oklch(0.7 0.15 230 / 35%); mix-blend-mode: screen; animation: vfx-glitch 1.4s steps(4) infinite; }
+.gve .vfx-film-grain { background-image: repeating-radial-gradient(circle at 17% 32%, oklch(1 0 0 / 7%) 0 1px, transparent 1px 3px); animation: vfx-grain .3s steps(3) infinite; }
+@keyframes vfx-grain { 33% { transform: translate(-2%, 1%); } 66% { transform: translate(1%, -2%); } }
+.gve .vfx-rain { background: repeating-linear-gradient(100deg, oklch(0.9 0.02 230 / 25%) 0 1px, transparent 1px 14px); background-size: 100% 200%; animation: vfx-fall .5s linear infinite; }
+@keyframes vfx-fall { to { background-position: 0 100%; } }
+.gve .vfx-embers { background: radial-gradient(circle at 20% 80%, oklch(0.8 0.2 50 / 90%) 0 2px, transparent 3px), radial-gradient(circle at 60% 90%, oklch(0.75 0.2 40 / 90%) 0 2px, transparent 3px), radial-gradient(circle at 80% 70%, oklch(0.85 0.18 70 / 90%) 0 1.5px, transparent 2.5px), linear-gradient(to top, oklch(0.6 0.2 35 / 25%), transparent 45%); background-size: 100% 60%, 100% 50%, 100% 70%, 100% 100%; animation: vfx-rise 2.5s linear infinite; }
+@keyframes vfx-rise { to { background-position: 0 -200px, 0 -150px, 0 -250px, 0 0; } }
+.gve .vfx-smoke { background: radial-gradient(ellipse at 30% 70%, oklch(0.8 0 0 / 22%), transparent 55%), radial-gradient(ellipse at 75% 40%, oklch(0.7 0 0 / 18%), transparent 50%); animation: vfx-sweep 8s ease-in-out infinite alternate; }
+.gve .vfx-strobe { animation: vfx-strobe .5s steps(1) infinite; }
+@keyframes vfx-strobe { 50% { background: oklch(1 0 0 / 45%); } }
+.gve .vfx-scanlines { background: repeating-linear-gradient(0deg, oklch(0 0 0 / 30%) 0 1px, transparent 1px 3px); }
+.gve .vfx-shake { box-shadow: inset 0 0 40px oklch(0 0 0 / 40%); animation: vfx-shake .25s steps(3) infinite; }
+@keyframes vfx-shake { 33% { transform: translate(3px, -2px); } 66% { transform: translate(-3px, 2px); } }
+.gve .vfx-relight-rim-red { background: radial-gradient(ellipse at 50% 40%, transparent 35%, oklch(0.6 0.25 25 / 55%) 85%); mix-blend-mode: screen; }
+.gve .vfx-relight-golden-key { background: linear-gradient(90deg, oklch(0.85 0.15 70 / 45%), transparent 60%), linear-gradient(270deg, oklch(0 0 0 / 35%), transparent 50%); mix-blend-mode: soft-light; }
+.gve .vfx-relight-cool-moon { background: linear-gradient(200deg, oklch(0.75 0.1 240 / 45%), transparent 60%), oklch(0.3 0.08 255 / 20%); mix-blend-mode: soft-light; }
+.gve .vfx-relight-neon-split { background: linear-gradient(90deg, oklch(0.7 0.25 350 / 50%), transparent 45%, transparent 55%, oklch(0.8 0.15 210 / 50%)); mix-blend-mode: overlay; }
+.gve .vfx-relight-fire-glow { background: linear-gradient(to top, oklch(0.7 0.2 45 / 55%), transparent 65%); mix-blend-mode: screen; animation: vfx-flicker .2s steps(2) infinite; }
+.gve .vfx-relight-police-lights { animation: vfx-siren 1s steps(1) infinite; mix-blend-mode: screen; }
+@keyframes vfx-siren { 0% { background: linear-gradient(90deg, oklch(0.6 0.25 25 / 50%), transparent 55%); } 50% { background: linear-gradient(270deg, oklch(0.6 0.2 260 / 50%), transparent 55%); } }
+.gve .vfx-relight-top-spot { background: radial-gradient(ellipse 45% 70% at 50% 0%, oklch(1 0 0 / 30%), oklch(0 0 0 / 55%) 75%); mix-blend-mode: soft-light; }
+.gve .vfx-relight-softbox { background: radial-gradient(ellipse at 35% 30%, oklch(1 0 0 / 30%), transparent 70%); mix-blend-mode: soft-light; }
+.gve .vfx-thumb-slow { animation: vfx-zoom 4s ease-in-out infinite alternate; }
+.gve .vfx-thumb-bounce { animation: vfx-bounce 0.8s ease-in-out infinite alternate; }
+@keyframes vfx-zoom { to { transform: scale(1.15); } }
+@keyframes vfx-bounce { to { transform: scale(1.08) translateX(-4%); } }
+@media (prefers-reduced-motion: reduce) {
+  .gve .vfx-overlay, .gve .vfx-overlay *, .gve .vfx-thumb-slow, .gve .vfx-thumb-bounce { animation: none; }
+}
+.gve .editor-cockpit { display: grid; min-width: 0; gap: 1rem; align-items: start; }
+@media (min-width: 1280px) {
+  .gve .editor-cockpit { grid-template-columns: minmax(0, 1fr) 320px; }
+}
+.gve .editor-workspace .creative-composer { border-radius: 8px; }
+[data-theme="midnight"] .gve, .gve[data-theme="midnight"] {
+  --background: oklch(0.12 0.03 255); --card: oklch(0.17 0.03 255 / 94%); --popover: oklch(0.19 0.03 255 / 98%);
+  --primary: oklch(0.68 0.17 250); --accent: oklch(0.78 0.13 210); --accent-foreground: oklch(0.18 0.03 230);
+  --secondary: oklch(0.22 0.03 255 / 92%); --muted: oklch(0.2 0.03 255 / 88%);
+}
+[data-theme="emerald"] .gve, .gve[data-theme="emerald"] {
+  --background: oklch(0.12 0.02 165); --card: oklch(0.17 0.02 165 / 94%); --popover: oklch(0.19 0.02 165 / 98%);
+  --primary: oklch(0.72 0.16 160); --primary-foreground: oklch(0.16 0.03 160); --accent: oklch(0.82 0.15 125); --accent-foreground: oklch(0.2 0.04 125);
+  --secondary: oklch(0.22 0.02 165 / 92%); --muted: oklch(0.2 0.02 165 / 88%);
+}
+[data-theme="sunset"] .gve, .gve[data-theme="sunset"] {
+  --background: oklch(0.13 0.025 20); --card: oklch(0.18 0.03 20 / 94%); --popover: oklch(0.2 0.03 20 / 98%);
+  --primary: oklch(0.68 0.2 10); --accent: oklch(0.72 0.19 330); --accent-foreground: oklch(0.98 0.01 330);
+  --secondary: oklch(0.23 0.03 20 / 92%); --muted: oklch(0.21 0.03 20 / 88%);
+}
+[data-theme="mono"] .gve, .gve[data-theme="mono"] {
+  --background: oklch(0.1 0 0); --card: oklch(0.15 0 0 / 94%); --popover: oklch(0.18 0 0 / 98%);
+  --primary: oklch(0.95 0 0); --primary-foreground: oklch(0.12 0 0); --accent: oklch(0.62 0.22 25); --accent-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.2 0 0 / 92%); --muted: oklch(0.19 0 0 / 88%); --muted-foreground: oklch(0.68 0 0);
+}
+[data-theme="daylight"] .gve, .gve[data-theme="daylight"] {
+  --background: oklch(0.97 0.004 280); --foreground: oklch(0.18 0.01 280); --card: oklch(1 0 0 / 94%); --popover: oklch(1 0 0 / 98%);
+  --primary: oklch(0.55 0.22 25); --primary-foreground: oklch(0.99 0 0); --accent: oklch(0.5 0.2 290); --accent-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.93 0.006 280 / 92%); --muted: oklch(0.94 0.006 280 / 88%); --muted-foreground: oklch(0.45 0.01 280);
+  --border: oklch(0.2 0 0 / 12%); --input: oklch(0.2 0 0 / 18%);
+}
+@utility logo-tile {
+  background: oklch(0.97 0.003 280);
+  color: oklch(0.2 0 0);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
