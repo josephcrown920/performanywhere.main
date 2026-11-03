@@ -10,6 +10,7 @@ async function claimLegacy(s: Session) {
   if (!legacyId || legacyId === s.user.id) return;
   try {
     const r = await fetch("/api/account/claim-legacy", { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${s.access_token}` }, body: JSON.stringify({ legacyId }) });
+    if (r.status === 403) clearLegacyClientId();
     if (!r.ok) return;
     clearLegacyClientId();
     const { moved } = (await r.json()) as { moved?: number };
