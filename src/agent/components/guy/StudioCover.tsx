@@ -51,7 +51,7 @@ export function StudioCover({
       <img src={site.heroImage || scene1} alt="" aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] w-full object-cover opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
       <div className="mx-auto flex w-full max-w-3xl flex-col px-4 pb-16 pt-12 sm:pt-20">
         <p className="mb-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          <img src="/aurora-logo.png" width={36} height={36} alt="" className="h-9 w-9 object-contain" />
+          <img src="/pa-mark.svg" width={36} height={36} alt="" className="h-9 w-9 object-contain" />
           <span className="text-foreground">Perform Anywhere</span>
           <span>Studio</span>
         </p>
