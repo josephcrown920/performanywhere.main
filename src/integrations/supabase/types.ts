@@ -389,6 +389,7 @@ export type Database = {
           provider: string | null
           scene_prompt: string | null
           selected_model: string | null
+          soul_id: string | null
           status: string
           style_prompt: string | null
           title: string | null
@@ -404,6 +405,7 @@ export type Database = {
           provider?: string | null
           scene_prompt?: string | null
           selected_model?: string | null
+          soul_id?: string | null
           status?: string
           style_prompt?: string | null
           title?: string | null
@@ -419,6 +421,7 @@ export type Database = {
           provider?: string | null
           scene_prompt?: string | null
           selected_model?: string | null
+          soul_id?: string | null
           status?: string
           style_prompt?: string | null
           title?: string | null
@@ -483,6 +486,45 @@ export type Database = {
           id?: string
           paystack_reference?: string | null
           raw_event?: Json | null
+        }
+        Relationships: []
+      }
+      souls: {
+        Row: {
+          cover_path: string | null
+          created_at: string
+          id: string
+          identity_mode: string
+          name: string
+          reference_image_paths: string[]
+          reference_profile: Json
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cover_path?: string | null
+          created_at?: string
+          id?: string
+          identity_mode?: string
+          name: string
+          reference_image_paths?: string[]
+          reference_profile?: Json
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cover_path?: string | null
+          created_at?: string
+          id?: string
+          identity_mode?: string
+          name?: string
+          reference_image_paths?: string[]
+          reference_profile?: Json
+          status?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
