@@ -67,7 +67,8 @@ export const Route = createFileRoute("/api/render/start")({
               const { soul, refs } = await loadSoul(db, soulId);
               const frame = await soulKeyframe(soul, refs, prompt, imageDataUrl, body.options?.aspectRatio);
               imageDataUrl = frame.image;
-              videoPrompt = `${identityPrompt(soul, 0).replace(/^The first 0 image\(s\) are identity references of /, "Same person throughout: ")} ${prompt}`;
+              const notes = soul.reference_profile?.description;
+              videoPrompt = `Keep the person from the first frame identical in every shot — same face, hair and build${notes ? ` (${notes})` : ""}. ${prompt}`;
             } catch (soulErr) {
               const msg = soulErr instanceof Error ? soulErr.message : String(soulErr);
               await db.from("project_renders").update({ status: "failed", error_message: `Character lock: ${msg}` }).eq("id", render.id);
