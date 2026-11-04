@@ -14,7 +14,7 @@ export const Route = createFileRoute("/api/soul/profile")({
           const db = serverSupabase(request);
           const { refs } = await loadSoul(db, soulId, 4);
           let description = "";
-          for (const model of ["google/gemini-3.6-flash", "google/gemini-3.1-flash-lite"]) {
+          for (const model of ["google/gemini-3.8-flash", "google/gemini-3.1-flash-lite"]) {
             const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
               method: "POST",
               headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.LOVABLE_API_KEY}` },

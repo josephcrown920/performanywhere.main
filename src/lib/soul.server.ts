@@ -5,7 +5,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 const GW = "https://ai.gateway.lovable.dev";
 const KEY = () => process.env.LOVABLE_API_KEY!;
-export const SOUL_IMAGE_MODELS = ["google/gemini-3.1-flash-image", "openai/gpt-image-2"];
+export const SOUL_IMAGE_MODELS = ["google/gemini-3-pro-image", "google/gemini-3.1-flash-lite-image", "openai/gpt-image-2"];
 
 export type SoulRow = { id: string; user_id: string; name: string; reference_image_paths: string[]; reference_profile: { description?: string } | null };
 
