@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoStart } from "@/lib/ai/gateway";
+import { loadSoul, soulKeyframe, identityPrompt } from "@/lib/soul.server";
 
 export const Route = createFileRoute("/api/render/start")({
   server: {
@@ -57,9 +58,27 @@ export const Route = createFileRoute("/api/render/start")({
             }
           }
 
+          // Character lock: when a Soul is attached, render a first frame of that
+          // exact person inside the scene and start the video from it.
+          let videoPrompt = prompt;
+          const soulId = project.soul_id as string | null;
+          if (soulId) {
+            try {
+              const { soul, refs } = await loadSoul(db, soulId);
+              const frame = await soulKeyframe(soul, refs, prompt, imageDataUrl, body.options?.aspectRatio);
+              imageDataUrl = frame.image;
+              videoPrompt = `${identityPrompt(soul, 0).replace(/^The first 0 image\(s\) are identity references of /, "Same person throughout: ")} ${prompt}`;
+            } catch (soulErr) {
+              const msg = soulErr instanceof Error ? soulErr.message : String(soulErr);
+              await db.from("project_renders").update({ status: "failed", error_message: `Character lock: ${msg}` }).eq("id", render.id);
+              await db.from("projects").update({ status: "failed", error_message: `Character lock: ${msg}` }).eq("id", projectId);
+              return json({ error: `Character lock failed: ${msg}` }, 502);
+            }
+          }
+
           try {
             const job = await gatewayVideoStart({
-              prompt,
+              prompt: videoPrompt,
               model: body.model?.startsWith("lovable/") ? body.model.slice("lovable/".length) : undefined,
               durationSeconds: body.options?.duration,
               aspectRatio: body.options?.aspectRatio,
