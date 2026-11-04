@@ -29,6 +29,13 @@
       "when": 1793665064455,
       "tag": "0003_video_agent_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793795353198,
+      "tag": "0004_soul_identities",
+      "breakpoints": true
     }
   ]
 }
