@@ -60,8 +60,8 @@ export default function Souls() {
   }
 
   async function create() {
-    if (!name.trim()) return toast.error("Give your character a name");
-    if (photos.length < 3) return toast.error("Add at least 3 clear photos of the same person");
+    if (!name.trim()) { toast.error("Give your character a name"); return; }
+    if (photos.length < 3) { toast.error("Add at least 3 clear photos of the same person"); return; }
     setBusy(true);
     const uid = getClientId();
     const paths: string[] = [];
