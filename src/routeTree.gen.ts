@@ -54,6 +54,8 @@ import { Route as ApiRenderPollRouteImport } from './routes/api/render/poll'
 import { Route as ApiRenderProvidersRouteImport } from './routes/api/render/providers'
 import { Route as ApiRenderRetryRouteImport } from './routes/api/render/retry'
 import { Route as ApiRenderStartRouteImport } from './routes/api/render/start'
+import { Route as ApiSoulGenerateRouteImport } from './routes/api/soul/generate'
+import { Route as ApiSoulProfileRouteImport } from './routes/api/soul/profile'
 import { Route as ApiVaAgentRouteImport } from './routes/api/va/agent'
 import { Route as ApiVaAgentChatRouteImport } from './routes/api/va/agent-chat'
 import { Route as ApiVaArkRouteImport } from './routes/api/va/ark'
@@ -306,6 +308,16 @@ const ApiRenderStartRoute = ApiRenderStartRouteImport.update({
   path: '/api/render/start',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSoulGenerateRoute = ApiSoulGenerateRouteImport.update({
+  id: '/api/soul/generate',
+  path: '/api/soul/generate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSoulProfileRoute = ApiSoulProfileRouteImport.update({
+  id: '/api/soul/profile',
+  path: '/api/soul/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiVaAgentRoute = ApiVaAgentRouteImport.update({
   id: '/api/va/agent',
   path: '/api/va/agent',
@@ -480,6 +492,8 @@ export interface FileRoutesByFullPath {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/soul/generate': typeof ApiSoulGenerateRoute
+  '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
   '/api/va/agent-chat': typeof ApiVaAgentChatRoute
   '/api/va/ark': typeof ApiVaArkRoute
@@ -550,6 +564,8 @@ export interface FileRoutesByTo {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/soul/generate': typeof ApiSoulGenerateRoute
+  '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
   '/api/va/agent-chat': typeof ApiVaAgentChatRoute
   '/api/va/ark': typeof ApiVaArkRoute
@@ -623,6 +639,8 @@ export interface FileRoutesById {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/soul/generate': typeof ApiSoulGenerateRoute
+  '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
   '/api/va/agent-chat': typeof ApiVaAgentChatRoute
   '/api/va/ark': typeof ApiVaArkRoute
@@ -697,6 +715,8 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/soul/generate'
+    | '/api/soul/profile'
     | '/api/va/agent'
     | '/api/va/agent-chat'
     | '/api/va/ark'
@@ -767,6 +787,8 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/soul/generate'
+    | '/api/soul/profile'
     | '/api/va/agent'
     | '/api/va/agent-chat'
     | '/api/va/ark'
@@ -839,6 +861,8 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/soul/generate'
+    | '/api/soul/profile'
     | '/api/va/agent'
     | '/api/va/agent-chat'
     | '/api/va/ark'
@@ -901,6 +925,8 @@ export interface RootRouteChildren {
   ApiRenderProvidersRoute: typeof ApiRenderProvidersRoute
   ApiRenderRetryRoute: typeof ApiRenderRetryRoute
   ApiRenderStartRoute: typeof ApiRenderStartRoute
+  ApiSoulGenerateRoute: typeof ApiSoulGenerateRoute
+  ApiSoulProfileRoute: typeof ApiSoulProfileRoute
   ApiVaAgentRoute: typeof ApiVaAgentRoute
   ApiVaAgentChatRoute: typeof ApiVaAgentChatRoute
   ApiVaArkRoute: typeof ApiVaArkRoute
@@ -1241,6 +1267,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRenderStartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/soul/generate': {
+      id: '/api/soul/generate'
+      path: '/api/soul/generate'
+      fullPath: '/api/soul/generate'
+      preLoaderRoute: typeof ApiSoulGenerateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/soul/profile': {
+      id: '/api/soul/profile'
+      path: '/api/soul/profile'
+      fullPath: '/api/soul/profile'
+      preLoaderRoute: typeof ApiSoulProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/va/agent': {
       id: '/api/va/agent'
       path: '/api/va/agent'
@@ -1541,6 +1581,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiRenderProvidersRoute: ApiRenderProvidersRoute,
   ApiRenderRetryRoute: ApiRenderRetryRoute,
   ApiRenderStartRoute: ApiRenderStartRoute,
+  ApiSoulGenerateRoute: ApiSoulGenerateRoute,
+  ApiSoulProfileRoute: ApiSoulProfileRoute,
   ApiVaAgentRoute: ApiVaAgentRoute,
   ApiVaAgentChatRoute: ApiVaAgentChatRoute,
   ApiVaArkRoute: ApiVaArkRoute,
