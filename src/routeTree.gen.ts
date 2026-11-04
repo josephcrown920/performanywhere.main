@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as AgentRouteImport } from './routes/agent'
+import { Route as CharactersRouteImport } from './routes/characters'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
 import { Route as OrchestrateRouteImport } from './routes/orchestrate'
@@ -95,6 +96,11 @@ const AccountRoute = AccountRouteImport.update({
 const AgentRoute = AgentRouteImport.update({
   id: '/agent',
   path: '/agent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CharactersRoute = CharactersRouteImport.update({
+  id: '/characters',
+  path: '/characters',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorRoute = EditorRouteImport.update({
@@ -450,6 +456,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
+  '/characters': typeof CharactersRoute
   '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
@@ -523,6 +530,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
+  '/characters': typeof CharactersRoute
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
   '/privacy': typeof PrivacyRoute
@@ -597,6 +605,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
+  '/characters': typeof CharactersRoute
   '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
@@ -673,6 +682,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
+    | '/characters'
     | '/editor'
     | '/motion-test'
     | '/orchestrate'
@@ -746,6 +756,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/account'
+    | '/characters'
     | '/motion-test'
     | '/orchestrate'
     | '/privacy'
@@ -819,6 +830,7 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
+    | '/characters'
     | '/editor'
     | '/motion-test'
     | '/orchestrate'
@@ -894,6 +906,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
   AgentRoute: typeof AgentRouteWithChildren
+  CharactersRoute: typeof CharactersRoute
   EditorRoute: typeof EditorRouteWithChildren
   MotionTestRoute: typeof MotionTestRoute
   OrchestrateRoute: typeof OrchestrateRoute
@@ -971,6 +984,13 @@ declare module '@tanstack/react-router' {
       path: '/agent'
       fullPath: '/agent'
       preLoaderRoute: typeof AgentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/characters': {
+      id: '/characters'
+      path: '/characters'
+      fullPath: '/characters'
+      preLoaderRoute: typeof CharactersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor': {
@@ -1550,6 +1570,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
   AgentRoute: AgentRouteWithChildren,
+  CharactersRoute: CharactersRoute,
   EditorRoute: EditorRouteWithChildren,
   MotionTestRoute: MotionTestRoute,
   OrchestrateRoute: OrchestrateRoute,

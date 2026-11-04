@@ -2,11 +2,12 @@ import { Link, useLocation } from "@/lib/nav";
 import type { ReactNode } from "react";
 import AuthGate from "@/components/AuthGate";
 import BrandMark from "@/components/BrandMark";
-import { Film, PlusSquare, Layers, Settings, Activity, Bot, Clapperboard, Scissors } from "lucide-react";
+import { Film, PlusSquare, Layers, Settings, Activity, Bot, Clapperboard, Scissors, Fingerprint } from "lucide-react";
 
 const NAV = [
   { to: "/projects", label: "Library", Icon: Film },
   { to: "/studio", label: "New shoot", Icon: PlusSquare },
+  { to: "/characters", label: "Characters", Icon: Fingerprint },
   { to: "/editor", label: "Editor", Icon: Scissors },
   { to: "/agent", label: "Video Agent", Icon: Bot },
   { to: "/flow/director", label: "Director", Icon: Clapperboard },
