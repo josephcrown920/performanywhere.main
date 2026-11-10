@@ -23,7 +23,7 @@ export const Route = createFileRoute("/api/orchestrate/run")({
           if (!prompt.trim()) throw new Error("prompt_required");
 
           const db = serverSupabase(request);
-          const cost = isFreeModelId(modelId) ? 0 : estimateCredits(modality, body.options ?? {});
+          const cost = isFreeModelId(modelId) ? 0 : estimateCredits(modality, { ...(body.options ?? {}), model: modelId });
           const { data: gen, error: genErr } = await db
             .from("generations")
             .insert({ client_id: clientId, modality, model: modelId, provider: modelId.split("/")[0], prompt, status: "running", credits_used: cost })
