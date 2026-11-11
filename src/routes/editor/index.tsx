@@ -1349,6 +1349,11 @@ function Editor() {
               </div>
             </div>
             <aside aria-label="Editing chat" className="flex min-w-0 flex-col gap-3 border-t border-border pt-3 xl:border-t-0 xl:border-l xl:pl-3 xl:pt-0">
+              <div className="rounded-lg border border-border bg-card/60 p-3">
+                <div className="mb-2 flex items-center gap-2 text-xs font-semibold"><Bot className="size-4 text-primary" /> Codex timeline chat agent</div>
+                <p className="mb-3 text-[11px] text-muted-foreground">Chat alongside your timeline. Ask the agent to plan cuts, scenes, motion, and edits while your tracks stay visible.</p>
+                <CreativeChat messages={msgs} brief={brief} setBrief={setBrief} busy={busy} send={(task) => send(task, "orchestrator")} onAttach={(file) => void ingest(file)} references={assets.map((asset) => asset.name)} />
+              </div>
               <EditPilot busy={busy} onAsk={(task) => void send(task, "orchestrator")} brief={brief} onOptimize={setBrief} />
               <CreativeContext />
               <ProjectNotebook />
