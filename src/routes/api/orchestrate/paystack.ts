@@ -24,6 +24,7 @@ export const Route = createFileRoute("/api/orchestrate/paystack")({
               amount: plan.amountMinor,
               currency: plan.currency,
               metadata: { clientId, region, credits: CREDIT_PACK },
+              callback_url: new URL("/account?payment=success", request.url).toString(),
             }),
           });
           const j = (await res.json()) as { status?: boolean; data?: { authorization_url?: string; reference?: string }; message?: string };
