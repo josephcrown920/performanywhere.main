@@ -1,0 +1,21 @@
+name: Aurora integration checks
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [integration/aurora-perform-anywhere]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-package-lock --ignore-scripts
+      - name: Build
+        run: npm run build
+      - name: Tests
+        run: npm test -- --passWithNoTests
