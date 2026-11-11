@@ -5,11 +5,17 @@ import { Loader2 } from "lucide-react";
 import { api } from "@/lib/api";
 import { getClientId } from "@/lib/client-id";
 import { PLANS, CREDIT_PACK, detectRegion, type Region } from "@/lib/pricing";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function BuyCredits({ compact = false }: { compact?: boolean }) {
   const [region, setRegion] = useState<Region>("international");
   const [email, setEmail] = useState("");
-  useEffect(() => setRegion(detectRegion()), []);
+  useEffect(() => {
+    setRegion(detectRegion());
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user?.email) setEmail(data.user.email);
+    });
+  }, []);
 
   const buy = useMutation({
     mutationFn: () => {
@@ -42,8 +48,9 @@ export default function BuyCredits({ compact = false }: { compact?: boolean }) {
       <button onClick={() => buy.mutate()} disabled={buy.isPending}
         className="w-full inline-flex items-center justify-center gap-2 rounded bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-50">
         {buy.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-        Buy {CREDIT_PACK.toLocaleString()} credits · ${plan.usd}
+        Buy {CREDIT_PACK.toLocaleString()} credits · {plan.display}
       </button>
+      {!compact && <p className="text-[11px] text-muted-foreground">Secure checkout by Paystack. Credits are added automatically after payment confirmation.</p>}
     </div>
   );
 }
