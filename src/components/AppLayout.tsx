@@ -25,7 +25,8 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   const requiresAccount =
     location === "/account" ||
     location.startsWith("/projects") ||
-    location.startsWith("/characters");
+    location.startsWith("/characters") ||
+    location === "/orchestrate";
 
   return (
     <div className="pa-shell min-h-screen bg-background text-foreground">
