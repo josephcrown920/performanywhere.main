@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, adminSupabase, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoStart } from "@/lib/ai/gateway";
 import { loadSoul, soulKeyframe, identityPrompt } from "@/lib/soul.server";
+import { estimateCredits } from "@/lib/ai/catalog";
 
 export const Route = createFileRoute("/api/render/start")({
   server: {
@@ -38,12 +39,71 @@ export const Route = createFileRoute("/api/render/start")({
             [scene, style].filter(Boolean).join(" — ") ||
             `${(project.title as string) || "A performance"} restaged cinematically: the same performer, same choreography, new world.`;
 
+          const model = body.model ?? (project.selected_model as string | null) ?? "lovable/google/veo-3.1-lite";
+          const duration = body.options?.duration ?? 5;
+          const cost = estimateCredits("video", { model, duration });
+          const generationOptions = {
+            projectId,
+            duration,
+            aspectRatio: body.options?.aspectRatio ?? "9:16",
+            motionStrength: body.options?.motionStrength ?? 5,
+            lipSync,
+          };
+          const { data: generation, error: gErr } = await db
+            .from("generations")
+            .insert({
+              client_id: clientId,
+              modality: "video",
+              provider: "lovable",
+              model,
+              prompt,
+              status: "queued",
+              credits_used: cost,
+              options: generationOptions,
+            })
+            .select("id")
+            .single();
+          if (gErr || !generation) throw new Error(gErr?.message || "generation_create_failed");
+
+          let charged = false;
+          const refund = async (description: string) => {
+            if (!charged || cost <= 0) return;
+            charged = false;
+            await (await adminSupabase()).rpc("grant_credits", {
+              _client_id: clientId,
+              _amount: cost,
+              _reason: "refund",
+              _description: description,
+              _purchase_id: null as unknown as string,
+            });
+          };
+
+          if (cost > 0) {
+            const { error: spendErr } = await (await adminSupabase()).rpc("spend_credits", {
+              _client_id: clientId,
+              _amount: cost,
+              _reason: "generation",
+              _description: `video · ${model}`,
+              _generation_id: generation.id,
+            });
+            if (spendErr) {
+              await db.from("generations").delete().eq("id", generation.id);
+              throw new Error(spendErr.message.includes("insufficient") ? "insufficient_credits" : spendErr.message);
+            }
+            charged = true;
+          }
+
           const { data: render, error: rErr } = await db
             .from("project_renders")
             .insert({ project_id: projectId, client_id: clientId, provider: "lovable", status: "queued", prompt, is_lip_sync: lipSync })
             .select("id")
             .single();
-          if (rErr) throw new Error(rErr.message);
+          if (rErr || !render) {
+            await refund(`Refund for render setup failure ${generation.id}`);
+            await db.from("generations").update({ status: "failed", error_message: rErr?.message || "render_create_failed" }).eq("id", generation.id);
+            throw new Error(rErr?.message || "render_create_failed");
+          }
+          await db.from("generations").update({ options: { ...generationOptions, renderId: render.id } }).eq("id", generation.id);
 
           // Send the scene photo (uploaded or picked preset) as the visual reference.
           let imageDataUrl: string | undefined;
@@ -80,8 +140,8 @@ export const Route = createFileRoute("/api/render/start")({
           try {
             const job = await gatewayVideoStart({
               prompt: videoPrompt,
-              model: body.model?.startsWith("lovable/") ? body.model.slice("lovable/".length) : undefined,
-              durationSeconds: body.options?.duration,
+              model: model.startsWith("lovable/") ? model.slice("lovable/".length) : model,
+              durationSeconds: duration,
               aspectRatio: body.options?.aspectRatio,
               imageDataUrl,
             });
@@ -90,11 +150,14 @@ export const Route = createFileRoute("/api/render/start")({
               .update({ status: "running", provider_task_id: job.id })
               .eq("id", render.id);
             await db.from("projects").update({ status: "running", provider: "lovable", error_message: null }).eq("id", projectId);
-            return json({ ok: true, provider: "lovable", jobId: render.id });
+            await db.from("generations").update({ status: "running" }).eq("id", generation.id);
+            return json({ ok: true, provider: "lovable", jobId: render.id, creditsUsed: cost });
           } catch (jobErr) {
             const msg = jobErr instanceof Error ? jobErr.message : String(jobErr);
             await db.from("project_renders").update({ status: "failed", error_message: msg }).eq("id", render.id);
             await db.from("projects").update({ status: "failed", error_message: msg }).eq("id", projectId);
+            await db.from("generations").update({ status: "failed", error_message: msg }).eq("id", generation.id);
+            await refund(`Refund for failed render ${generation.id}`);
             return json({ error: msg }, 502);
           }
         } catch (e) {
