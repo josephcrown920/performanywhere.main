@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { serverSupabase, assertClientId, authClientId, json, errJson } from "@/lib/server-supabase";
+import { serverSupabase, assertClientId, authClientId, adminSupabase, json, errJson } from "@/lib/server-supabase";
 import { gatewayVideoPoll } from "@/lib/ai/gateway";
 
 export const Route = createFileRoute("/api/render/poll")({
@@ -22,8 +22,32 @@ export const Route = createFileRoute("/api/render/poll")({
             .maybeSingle();
           if (!render) throw new Error("render_not_found");
           const syncProject = (patch: Record<string, unknown>) => db.from("projects").update(patch).eq("id", projectId);
+          const syncGeneration = async (status: "succeeded" | "failed", outputPath?: string | null, error?: string | null) => {
+            const { data: generation } = await db
+              .from("generations")
+              .select("*")
+              .eq("client_id", clientId)
+              .contains("options", { renderId: render.id })
+              .maybeSingle();
+            if (!generation) return;
+            if (status === "failed" && generation.status !== "failed" && generation.status !== "succeeded" && generation.credits_used > 0) {
+              await (await adminSupabase()).rpc("grant_credits", {
+                _client_id: clientId,
+                _amount: generation.credits_used,
+                _reason: "refund",
+                _description: `Refund for failed render ${generation.id}`,
+                _purchase_id: null as unknown as string,
+              });
+            }
+            await db.from("generations").update({
+              status,
+              output_url: outputPath ?? null,
+              error_message: error ?? null,
+            }).eq("id", generation.id);
+          };
           if (render.status === "succeeded" || render.status === "failed") {
             await syncProject(render.status === "succeeded" ? { status: "succeeded", output_path: render.output_path } : { status: "failed", error_message: render.error_message });
+            await syncGeneration(render.status, render.output_path, render.error_message);
             return json({ status: render.status, outputPath: render.output_path ?? undefined, error: render.error_message ?? undefined, provider: render.provider ?? undefined });
           }
           if (!render.provider_task_id) return json({ status: "queued", provider: render.provider ?? undefined });
@@ -39,11 +63,13 @@ export const Route = createFileRoute("/api/render/poll")({
             if (up.error) throw new Error(up.error.message);
             await db.from("project_renders").update({ status: "succeeded", output_path: path }).eq("id", render.id);
             await syncProject({ status: "succeeded", output_path: path, error_message: null });
+            await syncGeneration("succeeded", path, null);
             return json({ status: "succeeded", outputPath: path, provider: render.provider ?? undefined });
           }
           if (job.status === "failed") {
             await db.from("project_renders").update({ status: "failed", error_message: job.error ?? "video job failed" }).eq("id", render.id);
             await syncProject({ status: "failed", error_message: job.error ?? "video job failed" });
+            await syncGeneration("failed", null, job.error ?? "video job failed");
             return json({ status: "failed", error: job.error ?? "video job failed", provider: render.provider ?? undefined });
           }
           if (render.status !== job.status) {
