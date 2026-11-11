@@ -19,6 +19,13 @@ const NAV = [
 export default function AppLayout({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   const isActive = (p: string) => location === p || location.startsWith(p + "/");
+  // Let visitors explore and prepare a shoot without creating an account.
+  // Only account-owned cloud data stays behind authentication; paid generation
+  // endpoints still verify the signed-in user server-side.
+  const requiresAccount =
+    location === "/account" ||
+    location.startsWith("/projects") ||
+    location.startsWith("/characters");
 
   return (
     <div className="pa-shell min-h-screen bg-background text-foreground">
@@ -42,7 +49,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           </nav>
         </div>
       </header>
-      <AuthGate>{children}</AuthGate>
+      {requiresAccount ? <AuthGate>{children}</AuthGate> : children}
     </div>
   );
 }
