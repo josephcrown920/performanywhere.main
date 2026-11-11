@@ -11,6 +11,7 @@ export default function Account() {
   const [providers, setProviders] = useState<ProviderStatus[] | null>(null);
   const [clientId, setCid] = useState<string>("");
   const [email, setEmail] = useState("");
+  const [balance, setBalance] = useState<number | null>(null);
 
   async function signOut() {
     await supabase.auth.signOut();
@@ -18,11 +19,17 @@ export default function Account() {
   }
 
   useEffect(() => {
-    setCid(getClientId());
+    const id = getClientId();
+    setCid(id);
     supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? ""));
+    api.wallet(id).then((wallet) => setBalance(wallet.balance)).catch(() => setBalance(0));
     api.providerStatus()
       .then(setProviders)
       .catch(() => setProviders([]));
+    if (new URLSearchParams(window.location.search).get("payment") === "success") {
+      toast.success("Payment received. Your credits will appear after Paystack confirms the transaction.");
+      window.history.replaceState({}, "", "/account");
+    }
   }, []);
 
   const configured = providers?.filter((p) => p.configured) ?? [];
@@ -92,6 +99,7 @@ export default function Account() {
           <div className="flex items-center gap-3 border-b border-border/30 px-6 py-4">
             <CreditCard className="h-4 w-4 text-primary" strokeWidth={1.5} />
             <h2 className="font-semibold">Buy credits</h2>
+            <span className="ml-auto text-sm font-semibold text-primary">{balance === null ? "…" : `${balance.toLocaleString()} credits`}</span>
           </div>
           <div className="px-6 py-5"><BuyCredits /></div>
         </section>
