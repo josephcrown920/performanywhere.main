@@ -11,3 +11,4 @@
 - [ ] Sessions: recoverable session key (copy / restore on another device)
 - [ ] Editor: multi-track timeline + depth map view + prompt video agent (Gemini / Dola-Seed / GLM)
 - [ ] Real motion transfer (Kling / OmniHuman / Seedance 2.5) — needs FAL_KEY
+- [ ] Rebuild Perform Anywhere from the new demo site (aurora-perform-anywhere-demo) and remove the old version
