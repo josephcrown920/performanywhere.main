@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as AgentRouteImport } from './routes/agent'
-import { Route as AuroraPerformRouteImport } from './routes/aurora-perform'
 import { Route as CharactersRouteImport } from './routes/characters'
 import { Route as EditorRouteImport } from './routes/editor'
 import { Route as MotionTestRouteImport } from './routes/motion-test'
@@ -97,11 +96,6 @@ const AccountRoute = AccountRouteImport.update({
 const AgentRoute = AgentRouteImport.update({
   id: '/agent',
   path: '/agent',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuroraPerformRoute = AuroraPerformRouteImport.update({
-  id: '/aurora-perform',
-  path: '/aurora-perform',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CharactersRoute = CharactersRouteImport.update({
@@ -462,7 +456,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
-  '/aurora-perform': typeof AuroraPerformRoute
   '/characters': typeof CharactersRoute
   '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
@@ -537,7 +530,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/aurora-perform': typeof AuroraPerformRoute
   '/characters': typeof CharactersRoute
   '/motion-test': typeof MotionTestRoute
   '/orchestrate': typeof OrchestrateRoute
@@ -613,7 +605,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
   '/agent': typeof AgentRouteWithChildren
-  '/aurora-perform': typeof AuroraPerformRoute
   '/characters': typeof CharactersRoute
   '/editor': typeof EditorRouteWithChildren
   '/motion-test': typeof MotionTestRoute
@@ -691,7 +682,6 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
-    | '/aurora-perform'
     | '/characters'
     | '/editor'
     | '/motion-test'
@@ -766,7 +756,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/account'
-    | '/aurora-perform'
     | '/characters'
     | '/motion-test'
     | '/orchestrate'
@@ -841,7 +830,6 @@ export interface FileRouteTypes {
     | '/'
     | '/account'
     | '/agent'
-    | '/aurora-perform'
     | '/characters'
     | '/editor'
     | '/motion-test'
@@ -918,7 +906,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
   AgentRoute: typeof AgentRouteWithChildren
-  AuroraPerformRoute: typeof AuroraPerformRoute
   CharactersRoute: typeof CharactersRoute
   EditorRoute: typeof EditorRouteWithChildren
   MotionTestRoute: typeof MotionTestRoute
@@ -997,13 +984,6 @@ declare module '@tanstack/react-router' {
       path: '/agent'
       fullPath: '/agent'
       preLoaderRoute: typeof AgentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/aurora-perform': {
-      id: '/aurora-perform'
-      path: '/aurora-perform'
-      fullPath: '/aurora-perform'
-      preLoaderRoute: typeof AuroraPerformRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/characters': {
@@ -1590,7 +1570,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
   AgentRoute: AgentRouteWithChildren,
-  AuroraPerformRoute: AuroraPerformRoute,
   CharactersRoute: CharactersRoute,
   EditorRoute: EditorRouteWithChildren,
   MotionTestRoute: MotionTestRoute,
