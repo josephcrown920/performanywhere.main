@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Bebas Neue", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
 
   --color-aurora-pink: hsl(var(--aurora-pink));
@@ -35,32 +35,46 @@
   --radius-xl: calc(var(--radius) + 4px);
   --color-aurora-purple: hsl(var(--aurora-purple));
   --color-aurora-cyan: hsl(var(--aurora-cyan));
+  --color-highlight: hsl(var(--highlight));
+  --color-cta-from: hsl(var(--cta-from));
+  --color-cta-to: hsl(var(--cta-to));
+  --color-glow: hsl(var(--glow));
+  --color-surface-2: hsl(var(--surface-2));
+  --color-line-strong: hsl(var(--line-strong));
 }
 
 :root, .dark {
-  --background: 24 18% 4%;
-  --foreground: 36 30% 94%;
-  --card: 24 14% 7%;
-  --card-foreground: 36 30% 94%;
-  --popover: 24 14% 7%;
-  --popover-foreground: 36 30% 94%;
-  --primary: 32 100% 58%;
-  --primary-foreground: 24 30% 6%;
-  --secondary: 14 100% 56%;
+  --background: 258 38% 5%;
+  --foreground: 270 40% 96%;
+  --card: 266 26% 10%;
+  --card-foreground: 270 40% 96%;
+  --popover: 266 26% 10%;
+  --popover-foreground: 270 40% 96%;
+  --primary: 273 100% 74%;
+  --primary-foreground: 258 38% 6%;
+  --secondary: 292 76% 61%;
   --secondary-foreground: 0 0% 100%;
-  --muted: 24 10% 12%;
-  --muted-foreground: 30 10% 62%;
-  --accent: 24 12% 13%;
-  --accent-foreground: 36 30% 94%;
+  --muted: 267 27% 14%;
+  --muted-foreground: 265 21% 74%;
+  --accent: 267 27% 14%;
+  --accent-foreground: 270 40% 96%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --border: 24 10% 16%;
-  --input: 24 10% 13%;
-  --ring: 32 100% 58%;
+  --border: 277 27% 21%;
+  --input: 267 27% 14%;
+  --ring: 273 100% 74%;
 
-  --aurora-pink: 14 100% 56%;
-  --aurora-purple: 32 100% 58%;
-  --aurora-cyan: 44 100% 70%;
+  --aurora-pink: 292 76% 61%;
+  --aurora-purple: 269 100% 57%;
+  --aurora-cyan: 274 100% 81%;
+
+  --highlight: 274 100% 81%;
+  --cta-from: 269 100% 57%;
+  --cta-to: 292 76% 61%;
+  --glow: 280 53% 18%;
+  --surface-2: 267 27% 14%;
+  --line-strong: 276 31% 41%;
+  --cta-foreground: 0 0% 100%;
 
   --radius: 1rem;
 }
@@ -77,6 +91,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
+  h1, h2, h3, .font-display { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.02em; }
 }
 
 @layer utilities {
@@ -143,7 +158,6 @@
   --color-holo-magenta: var(--holo-magenta);
   --color-holo-amber: var(--holo-amber);
   --color-surface: var(--surface);
-  --font-display: "Bebas Neue", sans-serif;
   --font-head: "Archivo", sans-serif;
   --font-flow: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
@@ -297,9 +311,58 @@
 
 .pa-shell {
   background-image:
-    radial-gradient(60rem 30rem at 85% -10%, hsl(var(--primary) / 0.10), transparent 60%),
-    radial-gradient(40rem 25rem at -10% 110%, hsl(var(--secondary) / 0.08), transparent 60%);
+    radial-gradient(60rem 32rem at 90% -10%, hsl(var(--glow) / 0.9), transparent 62%),
+    radial-gradient(40rem 25rem at -10% 110%, hsl(var(--secondary) / 0.07), transparent 60%);
   background-attachment: fixed;
 }
 .pa-panel { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: 1rem; }
 .pa-letterbox { box-shadow: inset 0 14px 0 hsl(var(--background)), inset 0 -14px 0 hsl(var(--background)); }
+
+@utility btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 800;
+  font-size: 0.875rem;
+  color: hsl(var(--cta-foreground));
+  background: linear-gradient(100deg, hsl(var(--cta-from)), hsl(var(--cta-to)));
+  box-shadow: 0 10px 34px -12px hsl(var(--cta-from) / 0.75);
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  &:hover { transform: translateY(-1px); box-shadow: 0 14px 40px -12px hsl(var(--cta-to) / 0.85); }
+  &:disabled { opacity: 0.5; transform: none; cursor: not-allowed; }
+}
+@utility btn-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+  background: hsl(var(--surface-2));
+  border: 1px solid hsl(var(--line-strong));
+  transition: background 150ms ease;
+  &:hover { background: hsl(var(--line-strong) / 0.45); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+@utility text-cta-gradient {
+  background: linear-gradient(100deg, hsl(var(--highlight)), hsl(var(--cta-to)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility eyebrow {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: hsl(var(--primary));
+}
+@utility font-condensed {
+  font-stretch: 72%;
+}

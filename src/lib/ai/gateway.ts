@@ -97,3 +97,20 @@ export async function gatewayImageEdit(model: string, prompt: string, imageUrl: 
   if (!url) throw new Error("gateway_image_no_output");
   return url;
 }
+
+/** Multi-reference image composition: one instruction plus several labelled reference images. */
+export async function gatewayImageCompose(model: string, prompt: string, images: string[]): Promise<string> {
+  const res = await fetch(`${GW}/v1/chat/completions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${KEY()}` },
+    body: JSON.stringify({
+      model,
+      modalities: ["image", "text"],
+      messages: [{ role: "user", content: [{ type: "text", text: prompt }, ...images.map((url) => ({ type: "image_url", image_url: { url } }))] }],
+    }),
+  });
+  if (!res.ok) throw new Error(`gateway_image_${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const url = extractImage(await res.json());
+  if (!url) throw new Error("gateway_image_no_output");
+  return url;
+}
