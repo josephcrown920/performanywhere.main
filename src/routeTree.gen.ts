@@ -55,6 +55,7 @@ import { Route as ApiRenderPollRouteImport } from './routes/api/render/poll'
 import { Route as ApiRenderProvidersRouteImport } from './routes/api/render/providers'
 import { Route as ApiRenderRetryRouteImport } from './routes/api/render/retry'
 import { Route as ApiRenderStartRouteImport } from './routes/api/render/start'
+import { Route as ApiSceneBuildRouteImport } from './routes/api/scene/build'
 import { Route as ApiSoulGenerateRouteImport } from './routes/api/soul/generate'
 import { Route as ApiSoulProfileRouteImport } from './routes/api/soul/profile'
 import { Route as ApiVaAgentRouteImport } from './routes/api/va/agent'
@@ -314,6 +315,11 @@ const ApiRenderStartRoute = ApiRenderStartRouteImport.update({
   path: '/api/render/start',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSceneBuildRoute = ApiSceneBuildRouteImport.update({
+  id: '/api/scene/build',
+  path: '/api/scene/build',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiSoulGenerateRoute = ApiSoulGenerateRouteImport.update({
   id: '/api/soul/generate',
   path: '/api/soul/generate',
@@ -499,6 +505,7 @@ export interface FileRoutesByFullPath {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/scene/build': typeof ApiSceneBuildRoute
   '/api/soul/generate': typeof ApiSoulGenerateRoute
   '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
@@ -572,6 +579,7 @@ export interface FileRoutesByTo {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/scene/build': typeof ApiSceneBuildRoute
   '/api/soul/generate': typeof ApiSoulGenerateRoute
   '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
@@ -648,6 +656,7 @@ export interface FileRoutesById {
   '/api/render/providers': typeof ApiRenderProvidersRoute
   '/api/render/retry': typeof ApiRenderRetryRoute
   '/api/render/start': typeof ApiRenderStartRoute
+  '/api/scene/build': typeof ApiSceneBuildRoute
   '/api/soul/generate': typeof ApiSoulGenerateRoute
   '/api/soul/profile': typeof ApiSoulProfileRoute
   '/api/va/agent': typeof ApiVaAgentRoute
@@ -725,6 +734,7 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/scene/build'
     | '/api/soul/generate'
     | '/api/soul/profile'
     | '/api/va/agent'
@@ -798,6 +808,7 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/scene/build'
     | '/api/soul/generate'
     | '/api/soul/profile'
     | '/api/va/agent'
@@ -873,6 +884,7 @@ export interface FileRouteTypes {
     | '/api/render/providers'
     | '/api/render/retry'
     | '/api/render/start'
+    | '/api/scene/build'
     | '/api/soul/generate'
     | '/api/soul/profile'
     | '/api/va/agent'
@@ -938,6 +950,7 @@ export interface RootRouteChildren {
   ApiRenderProvidersRoute: typeof ApiRenderProvidersRoute
   ApiRenderRetryRoute: typeof ApiRenderRetryRoute
   ApiRenderStartRoute: typeof ApiRenderStartRoute
+  ApiSceneBuildRoute: typeof ApiSceneBuildRoute
   ApiSoulGenerateRoute: typeof ApiSoulGenerateRoute
   ApiSoulProfileRoute: typeof ApiSoulProfileRoute
   ApiVaAgentRoute: typeof ApiVaAgentRoute
@@ -1287,6 +1300,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRenderStartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/scene/build': {
+      id: '/api/scene/build'
+      path: '/api/scene/build'
+      fullPath: '/api/scene/build'
+      preLoaderRoute: typeof ApiSceneBuildRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/soul/generate': {
       id: '/api/soul/generate'
       path: '/api/soul/generate'
@@ -1602,6 +1622,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiRenderProvidersRoute: ApiRenderProvidersRoute,
   ApiRenderRetryRoute: ApiRenderRetryRoute,
   ApiRenderStartRoute: ApiRenderStartRoute,
+  ApiSceneBuildRoute: ApiSceneBuildRoute,
   ApiSoulGenerateRoute: ApiSoulGenerateRoute,
   ApiSoulProfileRoute: ApiSoulProfileRoute,
   ApiVaAgentRoute: ApiVaAgentRoute,

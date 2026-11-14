@@ -363,3 +363,6 @@
   text-transform: uppercase;
   color: hsl(var(--primary));
 }
+@utility font-condensed {
+  font-stretch: 72%;
+}
